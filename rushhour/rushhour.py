@@ -23,11 +23,24 @@ class Board():
 
         self.gameboard = []
 
-        for i in range(6):
+        for ro in range(6):
             row = []
-            for j in range(1, 7):
+            for til in range(6):
                 row.append('_')
             self.gameboard.append(row)
+
+        for k in range(len(self.boardinfo)):
+            ro = int(self.boardinfo[k][3]) - 1
+            colu = int(self.boardinfo[k][2]) - 1
+            if self.boardinfo[k][1] == 'H':
+                lengt = int(self.boardinfo[k][4])
+                for l in range(lengt):
+                    self.gameboard[ro][colu + l] = self.boardinfo[k][0]
+
+            if self.boardinfo[k][1] == 'V':
+                lengt = int(self.boardinfo[k][4])
+                for l in range(lengt):
+                    self.gameboard[ro + l][colu] = self.boardinfo[k][0]
 
     def showboard(self):
         for i in range(len(self.gameboard)):
@@ -42,9 +55,8 @@ if __name__ == "__main__":
     
     while select not in validboards:
         select = input("Select board: ")
-
+    
+    print('\n')
     rushhour = Board(select)
-
-    print(rushhour.boardinfo)
-
+    
     rushhour.showboard()
