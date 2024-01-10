@@ -1,3 +1,5 @@
+from vehicles import Car, Truck, Redcar
+
 class Board():
 
     def __init__(self, filename):
