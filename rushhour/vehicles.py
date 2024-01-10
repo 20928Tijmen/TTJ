@@ -4,11 +4,12 @@ class Car():
         pre:
         post:
         """
-        self.car_position = None
-        se
+        self.car_position = 2,2
+        self.car_direction = vertical
+
     
 class Truck():
-    def __init__(self, car_position, car_direction):
+    def __init__(self, truck_position, truck_direction):
         """
         pre:
         post:
