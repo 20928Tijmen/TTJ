@@ -43,19 +43,6 @@ class Board():
                 row.append('_')
             self.gameboard.append(row)
 
-        for k in range(len(self.boardinfo)):
-            ro = int(self.boardinfo[k][3]) - 1
-            colu = int(self.boardinfo[k][2]) - 1
-            if self.boardinfo[k][1] == 'H':
-                lengt = int(self.boardinfo[k][4])
-                for l in range(lengt):
-                    self.gameboard[ro][colu + l] = self.boardinfo[k][0]
-
-            if self.boardinfo[k][1] == 'V':
-                lengt = int(self.boardinfo[k][4])
-                for l in range(lengt):
-                    self.gameboard[ro + l][colu] = self.boardinfo[k][0]
-
     def showboard(self):
         """
         This will display the current state of the board.
@@ -67,15 +54,58 @@ class Board():
                 print(f" {self.gameboard[i][j]} ", end="")
             print("\n")
 
+class Vehicle():
+
+    def __init__(self, boardinfo, gameboard):
+        """
+        This initializer will place the vehicles o  n the board.
+        Pre: There needs to be an initialized gameboard and info
+        on what needs to be placed on the board.
+        Post: The vehicles are placed on the board.
+        """
+
+        for k in range(len(boardinfo)):
+            ro = int(boardinfo[k][3]) - 1
+            colu = int(boardinfo[k][2]) - 1
+            if boardinfo[k][1] == 'H':
+                lengt = int(boardinfo[k][4])
+                for l in range(lengt):
+                    gameboard[ro][colu + l] = boardinfo[k][0]
+
+            if boardinfo[k][1] == 'V':
+                lengt = int(boardinfo[k][4])
+                for l in range(lengt):
+                    gameboard[ro + l][colu] = boardinfo[k][0]
+
+    def move_vehicle(self, gameboard, car):
+        
+        for k in range(6):
+            for l in range(6):
+                if gameboard[k][l] == car:
+                    if gameboard[k][l + 1] == car:
+                        if gameboard[k][l - 1] == '_':
+                            gameboard[k][l - 1] = car
+                            gameboard[k][l + 1] = '_'
+
 if __name__ == "__main__":
+    
     validboards = ["Rushhour6x6_1.csv", "Rushhour6x6_2.csv", "Rushhour6x6_3.csv",  "Rushhour9x9_4.csv", "Rushhour9x9_5.csv", "Rushhour9x9_6.csv"]
     print("Available boards:\n\nRushhour6x6_1.csv\nRushhour6x6_2.csv\nRushhour6x6_3.csv\nRushhour9x9_4.csv\nRushhour9x9_5.csv\nRushhour9x9_6.csv\n")
+    
     select = 'Selection'
     
     while select not in validboards:
         select = input("Select board: ")
     
     print('\n')
-    rushhour = Board(select)
     
+    rushhour = Board(select)
+
+    vehicles = Vehicle(rushhour.boardinfo, rushhour.gameboard)
+    
+    rushhour.showboard()
+
+    vehicles.move_vehicle(rushhour.gameboard, "A")
+    vehicles.move_vehicle(rushhour.gameboard, "C")
+
     rushhour.showboard()
