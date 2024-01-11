@@ -1,28 +1,28 @@
-from vehicles import Car, Truck, Redcar
+from vehicles import Car, Redcar
 
 class Board():
 
     def __init__(self, filename):
 
+        # create list for board information
         self.boardinfo = []
 
+        # read csv excel file
         with open(filename) as file:
-
             for line in file:
-
                 if line == '\n':
                     file.close()
                     break
-                
                 datasplit = line.strip().split(',')
 
                 if datasplit[0].isupper():
-                        self.boardinfo.append(datasplit)
-                
+                    self.boardinfo.append(datasplit)
+
             file.close()
 
         self.gameboard = []
 
+        # fff
         for ro in range(6):
             row = []
             for til in range(6):
@@ -47,6 +47,8 @@ class Board():
             for j in range(len(self.gameboard[i])):
                 print(f" {self.gameboard[i][j]} ", end="")
             print("\n")
+
+
 
 if __name__ == "__main__":
     validboards = ["Rushhour6x6_1.csv", "Rushhour6x6_2.csv", "Rushhour6x6_3.csv"]
