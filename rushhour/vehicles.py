@@ -1,20 +1,16 @@
 class Car():
-    def __init__(self, car_position, car_direction):
+    def __init__(self, car_id: str, car_orientation: str, car_column: int, car_row: int, car_length: int):
         """
         pre:
         post:
         """
-        self.car_position = 2,2
-        self.car_direction = vertical
+        self.car_id = car_id
+        self.car_orientation = car_orientation
+        self.car_column = car_column
+        self.car_row = car_row
+        self.car_length = car_length
 
-    
-class Truck():
-    def __init__(self, truck_position, truck_direction):
-        """
-        pre:
-        post:
-        """
-    None
+
 
 class Redcar(Car):
     def __init__(self, car_position, car_direction):

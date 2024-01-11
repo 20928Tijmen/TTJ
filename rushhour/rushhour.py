@@ -1,5 +1,3 @@
-from vehicles import Car, Truck, Redcar
-
 class Board():
     """This class represents the gameboard"""
 
@@ -29,7 +27,7 @@ class Board():
             file.close()
 
         self.gameboard = []
-
+    
         if '6x6' in filename:
             loop = 6
         elif '9x9' in filename:
@@ -58,7 +56,7 @@ class Vehicle():
 
     def __init__(self, boardinfo, gameboard):
         """
-        This initializer will place the vehicles o  n the board.
+        This initializer will place the vehicles on the board.
         Pre: There needs to be an initialized gameboard and info
         on what needs to be placed on the board.
         Post: The vehicles are placed on the board.
@@ -106,6 +104,5 @@ if __name__ == "__main__":
     rushhour.showboard()
 
     vehicles.move_vehicle(rushhour.gameboard, "A")
-    vehicles.move_vehicle(rushhour.gameboard, "C")
-
+    print('\n')
     rushhour.showboard()
