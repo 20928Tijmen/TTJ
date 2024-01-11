@@ -44,7 +44,7 @@ class GameBoard:
 
 
     def add_cars(self):
-        with open("Rushhour6x6_1.csv", 'r') as file:
+        with open("RushHourJoost/data/Rushhour6x6_1.csv", 'r') as file:
             next(file)  # Skip the header line
             for line in file:
                 name, orientation, col, row, length = line.strip().split(sep=',')
