@@ -7,8 +7,8 @@ This version hardcodes the use of Rushhour6x6_1.csv in add_cars, needs to be in 
 
 '''
 class GameBoard:
-    def __init__(self):
-        self._board = self.get_empty_board()
+    def __init__(self, filename):
+        self._board = self.get_empty_board(filename)
         self._dictionary_of_cars = {}
         self._car_colors = {}
         self._available_colors = [
@@ -25,26 +25,46 @@ class GameBoard:
     "\033[105m", # Bright Magenta
     "\033[106m", # Bright Cyan
     "\033[107m", # Bright White
+    "\033[42m",  # Green
+    "\033[43m",  # Yellow
+    "\033[44m",  # Blue
+    "\033[45m",  # Magenta
+    "\033[46m",  # Cyan
+    "\033[47m",  # White
+    "\033[100m", # Bright Black (Gray)
+    "\033[102m", # Bright Green
+    "\033[103m", # Bright Yellow
+    "\033[104m", # Bright Blue
+    "\033[105m", # Bright Magenta
+    "\033[106m", # Bright Cyan
+    "\033[107m", # Bright White
 ]
 
-    def get_empty_board(self):
+    def get_empty_board(self, filename):
         # typehint nodig opeens, niet weghalen
-        empty_board: list[list[Any]] = [
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0],
-        ]
+        empty_board: list[list[Any]] = []
+        
+        if '6x6' in filename:
+            loop = 6
+        elif '9x9' in filename:
+            loop = 9
+        elif '12x12' in filename:
+            loop = 12
+
+        for ro in range(loop):
+            row = []
+            for til in range(loop):
+                row.append(0)
+            empty_board.append(row)
+
         return empty_board
 
     def get_board(self):
         return self._board
 
 
-    def add_cars(self):
-        with open("Rushhour6x6_1.csv", 'r') as file:
+    def add_cars(self, filename):
+        with open(filename) as file:
             next(file)  # Skip the header line
             for line in file:
                 name, orientation, col, row, length = line.strip().split(sep=',')
