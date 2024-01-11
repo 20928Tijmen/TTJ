@@ -1,4 +1,5 @@
-#from GameBoardClass import GameBoard
+from GameBoardClass import GameBoard
+from GameFileClass import GameFile
 import os
 import random
 
@@ -101,16 +102,9 @@ def pick_board_random() -> str:
 
     return random.choice(paths_all)
 
+'''
 
 if __name__ == '__main__':
-
-    if input("random?  yes/no  : ") == 'yes':
-        # voor random bord
-        file_path = pick_board_random()
-    else:
-        # for human player, pick a board with prompted questions
-        file_path = pick_board_manualy()
-
 
     validboards = ["Rushhour6x6_1.csv", "Rushhour6x6_2.csv", "Rushhour6x6_3.csv",  "Rushhour9x9_4.csv", "Rushhour9x9_5.csv", "Rushhour9x9_6.csv"]
     print("Available boards:\n\nRushhour6x6_1.csv\nRushhour6x6_2.csv\nRushhour6x6_3.csv\nRushhour9x9_4.csv\nRushhour9x9_5.csv\nRushhour9x9_6.csv\n")
@@ -122,7 +116,7 @@ if __name__ == '__main__':
     
     print('\n')
 
-    game = GameBoard(select)
+    game = GameBoard()
     game.add_cars(select)
 
     board = game.get_board()
@@ -135,4 +129,31 @@ if __name__ == '__main__':
 
         game.move_car(letter, direction)
 
+        print(game.get_board_for_player())
+'''
+
+if __name__ == '__main__':
+
+    if input("random? yes/no : ") == 'yes':
+        # For random board
+        file_path = pick_board_random()
+    else:
+        # For human player, pick a board with prompted questions
+        file_path = pick_board_manualy()
+
+    # Create a GameFile object with the chosen file path
+    game_file = GameFile(file_path)
+
+    # Initialize the game board with the GameFile object
+    game = GameBoard(game_file)
+
+    # No need to call add_cars as it's called in GameBoard's constructor
+    fancy_board = game.get_board_for_player()
+    print(fancy_board)
+
+    while True:
+        letter = input("give car letter: ")
+        direction = int(input("give direction. 1 or -1: "))
+
+        game.move_car(letter, direction)
         print(game.get_board_for_player())
