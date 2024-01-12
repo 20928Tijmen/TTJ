@@ -1,40 +1,5 @@
 
 from GameBoardClass import GameBoard
-
-
-if __name__ == '__main__':
-
-    validboards = ["Rushhour6x6_1.csv", "Rushhour6x6_2.csv", "Rushhour6x6_3.csv",  "Rushhour9x9_4.csv", "Rushhour9x9_5.csv", "Rushhour9x9_6.csv"]
-    print("Available boards:\n\nRushhour6x6_1.csv\nRushhour6x6_2.csv\nRushhour6x6_3.csv\nRushhour9x9_4.csv\nRushhour9x9_5.csv\nRushhour9x9_6.csv\n")
-    
-    select = 'Selection'
-    
-    while select not in validboards:
-        select = input("Select board: ")
-    
-    print('\n')
-
-    game = GameBoard(select)
-    game.add_cars(select)
-
-    board = game.get_board()
-    fancy_board = game.get_board_for_player()
-
-    print(fancy_board)    
-
-    while True:
-        letter = input("give car letter:  ").upper()
-        direction = int(input("give direction. 1 or -1:  " ))
-
-        game.move_car(letter, direction)
-
-        print(game.get_board_for_player())
-
-        print(game._dictionary_of_cars['X'])
-        # for i in game._dictionary_of_cars['X']:
-        #     print({Car.get_color()})
-
-from GameBoardClass import GameBoard
 from GameFileClass import GameFile
 import os
 import random
@@ -103,7 +68,7 @@ def pick_board_manualy() -> str:
     deze functie start een gesprek met de speler in de terminal
     zo kies je een spel uit
     '''
-    paths_all = load_board_opstellingen('RushHourJoost/data')
+    paths_all = load_board_opstellingen('data')
     board_size = input("What board size would like like?\nOptions: 6, 9, 12\nInput here: ")
     path_options, board_options = get_paths_of_size(paths_all, board_size)
     game_number = input(f"Boards with size {board_size}\nOptions: {', '.join(board_options)}\nInput here: ")
@@ -114,7 +79,7 @@ def pick_board_random() -> str:
     '''
     spreekt voorzich denk ik
     '''
-    return random.choice(load_board_opstellingen('RushHourJoost/data'))
+    return random.choice(load_board_opstellingen('data'))
 
 
 def main():

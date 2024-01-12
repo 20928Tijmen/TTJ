@@ -1,4 +1,4 @@
-import os
+import os # operating system
 import re # (REGEX!! gekke throwback naar DataRepresentaties)
 
 class GameFile:
@@ -53,12 +53,9 @@ class GameFile:
         return car_data
 
 
-
-
-
 if __name__ == '__main__':
 
-    folder_path = 'RushHourJoost/data'
+    folder_path = 'data'
 
     game_file_LIST = []
 
