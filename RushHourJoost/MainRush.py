@@ -1,6 +1,7 @@
 
 from GameBoardClass import GameBoard
 from GameFileClass import GameFile
+from History import History
 import os
 import random
 
@@ -86,47 +87,46 @@ def main():
     """
     Main function to run the Rush Hour game.
     """
+    # Create an instance of the History class
+    history = History()
     file_path = pick_board_random() if input("random? yes/no : ") == 'yes' else pick_board_manualy()
     game_file = GameFile(file_path)
     game = GameBoard(game_file)
     print(game.get_board_for_player())
 
     while True:
+        # ask user for input
         letter = input("give car letter: ").upper()
-        direction = int(input("give direction. 1 or -1: "))
-        game.move_car(letter, direction)
+
+        # give user the possibility to go back
+        if letter == "BACK":
+            if history.show_counter() < 1:
+                print("Must have a history of moves")
+                continue
+
+            # make the move back
+            game.make_move_back(history)
+
+            # update the history list
+            history.go_back()
+
+            # print for users
+            print(game.get_board_for_player())
+            print('Move count:',history.show_counter())
+            print(history.show_states_history_list())
+            continue
+
+        # ask user for input
+        direction = int(input("give direction. -1 or 1: "))
+
+        # Make move and add move to the history
+        if game.move_car(letter, direction) is not False:
+            history.add_move(letter, direction)
+        
         print(game.get_board_for_player())
+        print('Move count:',history.show_counter())
+        print(history.show_states_history_list())
 
 
 if __name__ == '__main__':
     main()
-
-
-'''
-if __name__ == '__main__':
-
-    validboards = ["Rushhour6x6_1.csv", "Rushhour6x6_2.csv", "Rushhour6x6_3.csv",  "Rushhour9x9_4.csv", "Rushhour9x9_5.csv", "Rushhour9x9_6.csv"]
-    print("Available boards:\n\nRushhour6x6_1.csv\nRushhour6x6_2.csv\nRushhour6x6_3.csv\nRushhour9x9_4.csv\nRushhour9x9_5.csv\nRushhour9x9_6.csv\n")
-    
-    select = 'Selection'
-    
-    while select not in validboards:
-        select = input("Select board: ")
-    
-    print('\n')
-
-    game = GameBoard()
-    game.add_cars(select)
-
-    board = game.get_board()
-    fancy_board = game.get_board_for_player()
-    print(fancy_board)    
-
-    while True:
-        letter = input("give car letter:  ")
-        direction = int(input("give direction. 1 or -1:  " ))
-
-        game.move_car(letter, direction)
-
-        print(game.get_board_for_player())
-'''

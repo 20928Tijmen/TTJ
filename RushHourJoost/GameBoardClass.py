@@ -72,7 +72,6 @@ class GameBoard:
 
         self._dictionary_of_cars = self._create_cars()
         self._board = self._create_empty_board()
-
         self._place_cars()
 
 
@@ -149,6 +148,27 @@ class GameBoard:
             new_base_col = base[1] + direction * rotation[1]
 
             self._dictionary_of_cars[car.get_name()].set_base(new_base_row, new_base_col)
+
+    
+    def make_move_back(self, history):
+        """
+        this function makes a move where you go back
+        """
+        # select from the list the last move taken and then its letter
+        last_move_letter = history.states_history[-1][0]
+
+        # select from the list the last move taken and then its direction
+        last_move_direction = history.states_history[-1][1]
+
+        # make move back in the opposite direction
+        if last_move_direction == 1:
+            self.move_car(last_move_letter, -1)
+        elif last_move_direction == -1:
+            self.move_car(last_move_letter, 1)
+        else:
+            return False
+
+        return True
 
 
     def get_board_for_player(self):
