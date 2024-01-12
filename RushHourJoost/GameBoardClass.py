@@ -22,8 +22,52 @@ class GameBoard:
 
         self._car_colors = {}
         self._available_colors = [
-            "\033[42m", "\033[43m", "\033[44m", "\033[45m", "\033[46m", "\033[47m",
-            "\033[100m", "\033[102m", "\033[103m", "\033[104m", "\033[105m", "\033[106m", "\033[107m",
+            "\033[42m",  # Green
+            "\033[43m",  # Yellow
+            "\033[44m",  # Blue
+            "\033[45m",  # Magenta
+            "\033[46m",  # Cyan
+            "\033[47m",  # White
+            "\033[100m", # Bright Black (Gray)
+            "\033[102m", # Bright Green
+            "\033[103m", # Bright Yellow
+            "\033[104m", # Bright Blue
+            "\033[105m", # Bright Magenta
+            "\033[106m", # Bright Cyan
+            "\033[107m", # Bright White
+            "\033[48;5;196m",  # Background color 196 (bright red)
+            "\033[48;5;202m",  # Background color 202 (orange)
+            "\033[48;5;220m",  # Background color 220 (light yellow)
+            "\033[48;5;27m",   # Background color 27 (dark blue)
+            "\033[48;5;39m",   # Background color 39 (dark cyan)
+            "\033[48;5;90m",   # Background color 90 (dark gray)
+            "\033[48;5;200m",  # Background color 200 (light red)
+            "\033[48;5;214m",  # Background color 214 (light orange)
+            "\033[48;5;226m",  # Background color 226 (light yellow)
+            "\033[48;5;33m",   # Background color 33 (dark green)
+            "\033[48;5;57m",   # Background color 57 (medium gray)
+            "\033[48;5;69m",   # Background color 69 (dark yellow)
+            "\033[48;5;111m",  # Background color 111 (light green)
+            "\033[48;5;128m",  # Background color 128 (maroon)
+            "\033[48;5;147m",  # Background color 147 (dark pink)
+            "\033[48;5;180m",  # Background color 180 (dark orange)
+            "\033[48;5;198m",  # Background color 198 (medium yellow)
+            "\033[48;5;213m",  # Background color 213 (light gray)
+            "\033[48;5;225m",  # Background color 225 (light orange)
+            "\033[48;5;240m",  # Background color 240 (light gray)
+            "\033[48;5;255m",  # Background color 255 (white)
+            "\033[48;5;18m",    # Background color 18 (dark blue)
+            "\033[48;5;66m",    # Background color 66 (dark green)
+            "\033[48;5;75m",    # Background color 75 (dark cyan)
+            "\033[48;5;102m",   # Background color 102 (medium green)
+            "\033[48;5;138m",   # Background color 138 (dark purple)
+            "\033[48;5;183m",   # Background color 183 (medium orange)
+            "\033[48;5;55m",    # Background color 55 (dark magenta)
+            "\033[48;5;94m",    # Background color 94 (dark grayish green)
+            "\033[48;5;123m",   # Background color 123 (dark cyan)
+            "\033[48;5;160m",   # Background color 160 (dark red)
+            "\033[48;5;177m",   # Background color 177 (medium grayish green)
+            "\033[48;5;200m",   # Background color 200 (dark rose)
         ]
 
         self._dictionary_of_cars = self._create_cars()
@@ -47,6 +91,7 @@ class GameBoard:
         car_dict = {}
         for name, orientation, row, col, length in self.game_file.car_info:
             color = random.choice(self._available_colors)
+            self._available_colors.remove(color)
             new_car = Car(name, orientation, row, col, length, color)
             car_dict[new_car.get_name()] = new_car
         return car_dict

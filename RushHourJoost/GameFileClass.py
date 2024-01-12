@@ -15,7 +15,7 @@ class GameFile:
     - game.number kan je gebruiken in main voor spel keuze
     
     + Hiermee kunnen we later wellicht makkelijk de algorithmes door alle games heen laten runnen
-    + en dan met bijvoorbeel een self.Fastest_solve of self.time_to_solve alle statistieken bijhouden voor elke game BIJ de game
+    + en dan met bijvoorbeeld een self.Fastest_solve of self.time_to_solve alle statistieken bijhouden voor elke game BIJ de game
     
     '''
     def __init__(self, path: str) -> None:
@@ -29,7 +29,6 @@ class GameFile:
         # Gebruik regex om de size direct uit de path te plukken
         # uitleg regex: 
         # kijk in self.path naar \d+, 1 op meer digits, opgevolgd door een x, dus de dimensions
-
 
     def _set_board_number(self) -> str:
         return re.search(r'(\d+).csv$', self.path).group(1)
