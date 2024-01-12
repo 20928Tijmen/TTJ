@@ -3,6 +3,10 @@ import re # (REGEX!! gekke throwback naar DataRepresentaties)
 
 class GameFile:
     '''
+    Represents a game file for the Rush Hour game, containing board and car information.
+
+    Beeld dit in als een kaartje in de doos van het spel waaropstaat hoe je de opstelling moet maken
+
     Door deze class kan je dus makkelijk een hele gamefile doorpasen
     dus je kan dan makkelijk gamefile.board_size opvragen
     voorbeelden:
@@ -24,7 +28,7 @@ class GameFile:
         return re.search(r'(\d+)x\d+_', self.path).group(1)
         # Gebruik regex om de size direct uit de path te plukken
         # uitleg regex: 
-        # kijk in self.path naar "Rushhour(1+ digits op deze plek)x(1+ digits op deze plek)"
+        # kijk in self.path naar \d+, 1 op meer digits, opgevolgd door een x, dus de dimensions
 
 
     def _set_board_number(self) -> str:
@@ -35,6 +39,11 @@ class GameFile:
         # echt top spul dit
     
     def _read_car_data(self) -> list[tuple[str, str, int, int, int]]:
+        """
+        Reads car data from the CSV file specified in the path attribute.
+        The data is read from the CSV file and stored in car_info
+        format: (name, orientation, row, column, length).
+        """
         car_data = []
         with open(self.path, 'r') as file:
             next(file)  # Skip the header line

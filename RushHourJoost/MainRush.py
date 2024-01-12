@@ -16,18 +16,13 @@ def load_board_opstellingen(path: str) -> list[str]:
     - path: string = het relative path voor de folder waarin alle csv files voor de borden in staan
     
     output:  
-    - path_list: list[string] = voor elke file in de aangewezen folder -> relatieve pad + filenaam
+    - return: list[string] = voor elke file in de aangewezen folder -> relatieve pad + filenaam
     
     '''
 
-    file_paths = []
+    return [os.path.join(path, file) for file in os.listdir(path)]
+    
 
-    for file in os.listdir(path):
-        single_file_path = os.path.join(path, file)
-        file_paths.append(single_file_path)
-    
-    return file_paths
-    
 def get_paths_of_size(file_paths: list[str], size: str):
     '''
     geef alle paths en gewenste size 
@@ -72,38 +67,41 @@ def pick_board_manualy() -> str:
     deze functie start een gesprek met de speler in de terminal
     zo kies je een spel uit
     '''
-
-    # lijst van paths naar alle bord opstellingen
-    paths_all = load_board_opstellingen('RushHourJoost/data') # Hangt af hoe de directory is opgebouwd natuurlijk
-
-    # prompt for size board
+    paths_all = load_board_opstellingen('RushHourJoost/data')
     board_size = input("What board size would like like?\nOptions: 6, 9, 12\nInput here: ")
-
-    # get a list of board with given size, and a list with their numbers to pick from
     path_options, board_options = get_paths_of_size(paths_all, board_size)
+    game_number = input(f"Boards with size {board_size}\nOptions: {', '.join(board_options)}\nInput here: ")
+    return get_path_of_number(game_number, path_options)
 
-    # make it look pretty when printed
-    formatted_board_options = ", ".join(board_options)
-
-    # prompt for which of the boards the player wants to use
-    game_number = input(f"Boards with size {board_size}\nOptions: {formatted_board_options}\nInput here: ")
-
-    # get the desired path from the options
-    path_FINAL = get_path_of_number(game_number, path_options)
-
-    return path_FINAL
 
 def pick_board_random() -> str:
     '''
     spreekt voorzich denk ik
     '''
+    return random.choice(load_board_opstellingen('RushHourJoost/data'))
 
-    paths_all = load_board_opstellingen('RushHourJoost/data') # Hangt af hoe de directory is opgebouwd natuurlijk
 
-    return random.choice(paths_all)
+def main():
+    """
+    Main function to run the Rush Hour game.
+    """
+    file_path = pick_board_random() if input("random? yes/no : ") == 'yes' else pick_board_manualy()
+    game_file = GameFile(file_path)
+    game = GameBoard(game_file)
+    print(game.get_board_for_player())
+
+    while True:
+        letter = input("give car letter: ").upper()
+        direction = int(input("give direction. 1 or -1: "))
+        game.move_car(letter, direction)
+        print(game.get_board_for_player())
+
+
+if __name__ == '__main__':
+    main()
+
 
 '''
-
 if __name__ == '__main__':
 
     validboards = ["Rushhour6x6_1.csv", "Rushhour6x6_2.csv", "Rushhour6x6_3.csv",  "Rushhour9x9_4.csv", "Rushhour9x9_5.csv", "Rushhour9x9_6.csv"]
@@ -132,28 +130,3 @@ if __name__ == '__main__':
         print(game.get_board_for_player())
 '''
 
-if __name__ == '__main__':
-
-    if input("random? yes/no : ") == 'yes':
-        # For random board
-        file_path = pick_board_random()
-    else:
-        # For human player, pick a board with prompted questions
-        file_path = pick_board_manualy()
-
-    # Create a GameFile object with the chosen file path
-    game_file = GameFile(file_path)
-
-    # Initialize the game board with the GameFile object
-    game = GameBoard(game_file)
-
-    # No need to call add_cars as it's called in GameBoard's constructor
-    fancy_board = game.get_board_for_player()
-    print(fancy_board)
-
-    while True:
-        letter = input("give car letter: ")
-        direction = int(input("give direction. 1 or -1: "))
-
-        game.move_car(letter, direction)
-        print(game.get_board_for_player())

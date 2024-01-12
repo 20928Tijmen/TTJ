@@ -5,6 +5,17 @@ import random
 
 
 class GameBoard:
+    """
+    Represents the game board for Rush Hour.
+
+    Attributes:
+        game_file (GameFile): The game file containing board information.
+        _car_colors (dict): A dictionary to store colors for each car.
+        _available_colors (list): A list of available color codes for cars.
+        _dictionary_of_cars (dict): A dictionary mapping car names to Car objects.
+        _board (list): The game board, a 2D list representing the grid.
+    """
+
     def __init__(self, game_file):
 
         self.game_file = game_file
@@ -22,28 +33,29 @@ class GameBoard:
 
 
     def _create_empty_board(self):
-        # typehint nodig opeens, niet weghalen
-        empty_board: list[list[Any]] = []
-
-        empty_board = [[0 for _ in range(int(self.game_file.board_size))] for _ in range(int(self.game_file.board_size))]
-
-        return empty_board
+        """
+        Creates an empty board based on the size specified in the game file.
+        """
+        size = int(self.game_file.board_size)
+        return [[0 for _ in range(size)] for _ in range(size)]
 
 
     def _create_cars(self):
-
+        """
+        Creates Car objects based on information in the game file.
+        """
         car_dict = {}
-
         for name, orientation, row, col, length in self.game_file.car_info:
             color = random.choice(self._available_colors)
-
             new_car = Car(name, orientation, row, col, length, color)
             car_dict[new_car.get_name()] = new_car
-
         return car_dict
 
 
     def _place_cars(self):
+        """
+        Places cars on the board based on their base position and orientation.
+        """
         for name, car in self._dictionary_of_cars.items():
             base_row, base_col = car.get_base()
             d_row, d_col = car.get_rotation()
@@ -71,10 +83,6 @@ class GameBoard:
             print("Invalid move!")
             return False
         
-        print(base)
-        print(target_row)
-        print(target_col)
-
         if self._board[target_row][target_col] != 0 or target_col < 0 or target_row < 0:
             print("You cannot go there!")
             return False
@@ -136,4 +144,7 @@ class GameBoard:
 
 
     def get_board(self):
+        """
+        Returns the current state of the game board.
+        """
         return self._board
