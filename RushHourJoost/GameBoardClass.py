@@ -56,17 +56,31 @@ class GameBoard:
         car = self._dictionary_of_cars[letter]
         base = car.get_base()
         rotation = car.get_rotation()
-        length = car.get_length()
+        length = car.get_length()        
 
         if direction == 1:
+            if (base[1] + length) >= len(self._board) or (base[0] + length) >= len(self._board):
+                print("You cannot go there!")
+                return False
             target_row = base[0] + (rotation[0] * length)
             target_col = base[1] + (rotation[1] * length)
-        else: # direction == -1
+        elif direction == -1:
             target_row = base[0] - rotation[0]
             target_col = base[1] - rotation[1]
+        else:
+            print("Invalid move!")
+            return False
+        
+        print(base)
+        print(target_row)
+        print(target_col)
 
-        if self._board[target_row][target_col] == 0:
+        if self._board[target_row][target_col] != 0 or target_col < 0 or target_row < 0:
+            print("You cannot go there!")
+            return False
 
+        elif self._board[target_row][target_col] == 0:
+            
             # Clear the current car
             for i in range(car.get_length()):
                 self._board[base[0] + i * rotation[0]][base[1] + i * rotation[1]] = 0
