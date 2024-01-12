@@ -71,11 +71,11 @@ class GameBoard:
         length = car.get_length()        
 
         if direction == 1:
-            if (base[1] + length) >= len(self._board) or (base[0] + length) >= len(self._board):
-                print("You cannot go there!")
-                return False
             target_row = base[0] + (rotation[0] * length)
             target_col = base[1] + (rotation[1] * length)
+            if target_row >= len(self._board) or target_col >= len(self._board):
+                print("You cannot go there!")
+                return False
         elif direction == -1:
             target_row = base[0] - rotation[0]
             target_col = base[1] - rotation[1]
