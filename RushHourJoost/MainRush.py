@@ -22,9 +22,13 @@ if __name__ == '__main__':
     print(fancy_board)    
 
     while True:
-        letter = input("give car letter:  ")
+        letter = input("give car letter:  ").upper()
         direction = int(input("give direction. 1 or -1:  " ))
 
         game.move_car(letter, direction)
 
         print(game.get_board_for_player())
+
+        print(game._dictionary_of_cars['X'])
+        # for i in game._dictionary_of_cars['X']:
+        #     print({Car.get_color()})
