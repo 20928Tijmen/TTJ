@@ -20,19 +20,6 @@ class GameBoard:
 
         self.game_file = game_file
 
-        self._car_colors = {}
-        self._available_colors = [
-            "\033[42m", "\033[43m", "\033[44m", "\033[45m", "\033[46m", "\033[47m",
-            "\033[100m", "\033[102m", "\033[103m", "\033[104m", "\033[105m", "\033[106m", "\033[107m",
-            "\033[48;5;196m", "\033[48;5;202m", "\033[48;5;220m", "\033[48;5;27m", "\033[48;5;39m",
-            "\033[48;5;90m", "\033[48;5;200m", "\033[48;5;214m", "\033[48;5;226m", "\033[48;5;33m",
-            "\033[48;5;57m", "\033[48;5;69m", "\033[48;5;111m", "\033[48;5;128m", "\033[48;5;147m",
-            "\033[48;5;180m", "\033[48;5;198m", "\033[48;5;213m", "\033[48;5;225m", "\033[48;5;240m",
-            "\033[48;5;255m", "\033[48;5;18m", "\033[48;5;66m", "\033[48;5;75m", "\033[48;5;102m",
-            "\033[48;5;138m", "\033[48;5;183m", "\033[48;5;55m", "\033[48;5;94m", "\033[48;5;123m",
-            "\033[48;5;160m", "\033[48;5;177m", "\033[48;5;200m"
-        ]
-
         self._dictionary_of_cars = self._create_cars()
         self._board = self._create_empty_board()
         self._place_cars()
@@ -52,9 +39,7 @@ class GameBoard:
         """
         car_dict = {}
         for name, orientation, row, col, length in self.game_file.car_info:
-            color = random.choice(self._available_colors)
-            self._available_colors.remove(color)
-            new_car = Car(name, orientation, row, col, length, color)
+            new_car = Car(name, orientation, row, col, length)
             car_dict[new_car.get_name()] = new_car
         return car_dict
 
@@ -140,35 +125,29 @@ class GameBoard:
         Red car is actually red, exit made clear also.
         Adjusts dynamically to different board sizes.
         '''
-        # Define background colors
-        bg_red = "\033[41m"  # Red background for 'X'
-        reset_color = "\033[0m"  # Reset color
-
         size = int(self.game_file.board_size)
-
         exit_row = {6: 2, 9: 4, 12: 5}.get(size, 2)
 
         # Top border
-        board_representation = "+" + "----+" * size + "\n"
+        board = "+" + "----+" * size + "\n"
 
         for i, row in enumerate(self._board):
-            board_representation += "|"
+            board += "|"
             for col in row:
-                if col == 'X':
-                    cell = f"{bg_red}{col:>3} {reset_color}"
-                elif col != 0:
-                    cell = f"{self._dictionary_of_cars[col].get_color()}{col:>3} {reset_color}"
+                if col != 0:
+                    car = self._dictionary_of_cars[col]
+                    cell = car.get_name_colored() 
                 else:
                     cell = '    '
-                board_representation += cell + "|"
+                board += cell + "|"
 
             # Border below every line (special border for exit row)
             if i == exit_row or i == exit_row - 1:
-                board_representation += "\n+" + "----+" * (size + 1) + "\n"  # Longer border for exit
+                board += "\n+" + "----+" * (size + 1) + "\n"  # Longer border for exit
             else:
-                board_representation += "\n+" + "----+" * size + "\n"
+                board += "\n+" + "----+" * size + "\n"
 
-        return board_representation
+        return board
 
 
     def get_board(self):

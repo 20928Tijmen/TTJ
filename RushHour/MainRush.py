@@ -92,6 +92,7 @@ def main():
     file_path = pick_board_random() if input("random? yes/no : ") == 'yes' else pick_board_manualy()
     game_file = GameFile(file_path)
     game = GameBoard(game_file)
+
     print(game.get_board_for_player())
 
     while True:
