@@ -51,7 +51,7 @@ class GameFile:
                 car_data.append((name, orientation, int(row), int(col), int(length)))
         return car_data
 
-
+'''
 if __name__ == '__main__':
 
     folder_path = 'data'
@@ -77,3 +77,4 @@ def Create_List_of_GameFile_Objects_From_Folder(folder_path):
         game_file_list.append(game_file)
 
     return game_file_list
+'''
