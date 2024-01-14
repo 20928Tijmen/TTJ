@@ -1,5 +1,3 @@
-from GameBoardClass import GameBoard
-from typing import Any
 
 class History():
     """
@@ -7,32 +5,46 @@ class History():
     """
     def __init__(self):
         
-        self.states_history: list[Any] = []
+        self.move_history: list[(str, int)] = [] # a move is a (letter of car, direction)
+        self.board_history: list[list[list]] = [] # the board is a list of lists, so a list of those
+
         self.counter = 0
 
-    def add_move(self, car: object, direction: int):
+    def add_move(self, car_letter: object, direction: int) -> None:
         """
-        add a move to the history
+        add a move to the move history
         """
-        move = (car, direction)
-        self.states_history.append(move)
+        move = (car_letter, direction)
+        self.move_history.append(move)
         self.counter += 1
-
-    def show_counter(self):
+    
+    def add_board(self, board: list[list]) -> list:
         """
-        shows the counter number
+        add a board to the board history
+        """
+        self.board_history.append(board)
+
+
+    def get_counter(self) -> int:
+        """
+        returns the counter number
         """
         return self.counter
     
-    def show_states_history_list(self):
+    def get_move_history(self) -> list:
         """
-        shows the list of moves made
+        returns the list of previous moves
         """
-        return self.states_history
+        return self.move_history
+
+    def get_board_history(self) -> list:
+        """
+        return the list of previous boards
+        """
     
-    def go_back(self):
+    def go_back(self) -> None:
         """
-        makes the last move dissapear of the list and counter
+        makes the last move dissapear of the history and counter
         """
-        self.states_history.pop()
+        self.move_history.pop()
         self.counter -= 1

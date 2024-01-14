@@ -100,7 +100,7 @@ def main():
 
         # give user the possibility to go back
         if letter == "BACK":
-            if history.show_counter() < 1:
+            if history.get_counter() < 1:
                 print("Must have a history of moves")
                 continue
 
@@ -112,20 +112,21 @@ def main():
 
             # print for users
             print(game.get_board_for_player())
-            print('Move count:',history.show_counter())
-            print(history.show_states_history_list())
+            print('Move count:',history.get_counter())
+            print(history.get_move_history())
             continue
 
         # ask user for input
         direction = int(input("give direction. -1 or 1: "))
 
-        # Make move and add move to the history
+        # Make move and add move and board to history
         if game.move_car(letter, direction) is not False:
             history.add_move(letter, direction)
+            history.add_board(game.get_board())
         
         print(game.get_board_for_player())
-        print('Move count:',history.show_counter())
-        print(history.show_states_history_list())
+        print('Move count:',history.get_counter())
+        print(history.get_move_history())
 
 
 if __name__ == '__main__':
