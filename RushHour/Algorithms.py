@@ -9,12 +9,9 @@ class Algorithm_1():
 
         Pre: Gameboard en History
         """
-        self.game = game
-
         self.cars = list(game._dictionary_of_cars.keys())
 
-    
-    def make_random_move(self):
+    def random_car(self):
         """
         make a random move
         pre:
@@ -22,10 +19,13 @@ class Algorithm_1():
         """
         # choose random car
         random_car = random.choice(self.cars)
+        
+        return random_car
+
+    def random_direction(self):
         # choose random move
         random_direction = random.choice([1, -1])
-        
-        return random_car, random_direction
+        return random_direction
 
 
 class Algorithm_2():
@@ -41,3 +41,4 @@ class Algorithm_2():
         self.letter = letter
         self.direction = direction
     
+        self.cars = list
