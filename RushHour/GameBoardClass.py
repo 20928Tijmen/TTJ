@@ -60,8 +60,8 @@ class GameBoard:
         Calculates the target cell for the given car based on its base position, rotation, and move direction.
         """
         if direction == 1:
-            target_row = base[0] + rotation[0] * length
-            target_col = base[1] + rotation[1] * length
+            target_row = base[0] + (rotation[0] * length)
+            target_col = base[1] + (rotation[1] * length)
         else:  # direction == -1
             target_row = base[0] - rotation[0]
             target_col = base[1] - rotation[1]
@@ -77,7 +77,7 @@ class GameBoard:
             return False
         return True
 
-    def execute_move(self, car, base, target_row, target_col):
+    def execute_move(self, car, base, target_row, target_col, direction):
         """
         Executes the car move on the board.
         """
@@ -85,11 +85,12 @@ class GameBoard:
             self._board[base[0] + i * car.get_rotation()[0]][base[1] + i * car.get_rotation()[1]] = 0
 
         for i in range(car.get_length()):
-            new_row = target_row - i * car.get_rotation()[0]
-            new_col = target_col - i * car.get_rotation()[1]
+            new_row = target_row - i * direction * car.get_rotation()[0]
+            new_col = target_col - i * direction * car.get_rotation()[1]
             self._board[new_row][new_col] = car.get_name()
 
         car.set_base(target_row, target_col)
+
 
     def move_car(self, letter: str, direction: int):
         """
@@ -105,8 +106,10 @@ class GameBoard:
         if not self._legal_move(target_row, target_col):
             print("Illegal move. Please try again.")
             return
+        
+        print(target_row, target_col)
 
-        self.execute_move(car, base, target_row, target_col)
+        self.execute_move(car, base, target_row, target_col, direction)
 
     
     def make_move_back(self, history):
