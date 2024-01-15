@@ -103,45 +103,56 @@ def main():
 
     print(game.get_board_for_player())
 
-    while True:
-        # ask user for input
-        letter = input("give car letter: ").upper()
+    gameplay = 'Game'
 
-        # give user the possibility to go back
-        if letter == "BACK":
-            if history.get_counter() < 1:
-                print("Must have a history of moves")
-                continue
+    while gameplay not in ['Automatic', 'Manual']:
+        gameplay = input("Automatic or Manual? ")
 
-            # make the move back
-            game.make_move_back(history)
+    if gameplay == 'Manual':
 
-            # update the history list
-            history.go_back()
+        while True:
+            # ask user for input
+            letter = input("give car letter: ").upper()
+
+            # give user the possibility to go back
+            if letter == "BACK":
+                if history.get_counter() < 1:
+                    print("Must have a history of moves")
+                    continue
+
+                # make the move back
+                game.make_move_back(history)
+
+                # update the history list
+                history.go_back()
+
+            # Make move and add move and board to history
+            if game.move_car(letter, direction) is not False:
+                history.add_move(letter, direction)
+                history.add_board(game.get_board())
+
+            if winning_board is True:
+                print("Congratulations, you found your way out!")
+                print('Total moves:',history.get_counter())
+                print(history.get_move_history())
+                break
 
             # print for users
             print(game.get_board_for_player())
             print('Move count:',history.get_counter())
             print(history.get_move_history())
-            continue
 
-        # ask user for input
-        direction = int(input("give direction. -1 or 1: "))
+            # ask user for input
+            direction = int(input("give direction. -1 or 1: "))
 
-        # Make move and add move and board to history
-        if game.move_car(letter, direction) is not False:
-            history.add_move(letter, direction)
-            history.add_board(game.get_board())
-
-        if winning_board is True:
-            print("Congratulations, you found your way out!")
-            print('Total moves:',history.get_counter())
-            print(history.get_move_history())
-            break
+            # Make move and add move and board to history
+            if game.move_car(letter, direction) is not False:
+                history.add_move(letter, direction)
+                history.add_board(game.get_board())
         
-        print(game.get_board_for_player())
-        print('Move count:',history.get_counter())
-        print(history.get_move_history())
+            print(game.get_board_for_player())
+            print('Move count:',history.get_counter())
+            print(history.get_move_history())
 
 
 if __name__ == '__main__':
