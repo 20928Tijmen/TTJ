@@ -104,53 +104,7 @@ def main():
 
     print(game.get_board_for_player())
 
-    if gameplay == 'Manual' or 'm' or 'M':
-
-        while True:
-            
-            # This script plays when the game is won
-            if (game._dictionary_of_cars['X'].get_base()[1]) >= ((len(game.get_board()[0])) - 2):
-                print("Congratulations, you found your way out!")
-                print('Total moves:',history.get_counter())
-                print(history.get_move_history())
-                print(history.get_board_history())
-                break
-
-            # ask user for input
-            letter = input("give car letter: ").upper()
-
-            # give user the possibility to go back
-            if letter == "BACK":
-                if history.get_counter() < 1:
-                    print("Must have a history of moves")
-                    continue
-
-                # make the move back
-                game.make_move_back(history)
-
-                # update the history list
-                history.go_back()
-
-                # print for users
-                print(game.get_board_for_player())
-                print('Move count:',history.get_counter())
-                print(history.get_move_history())
-                continue
-
-            # ask user for input
-            direction = int(input("give direction. -1 or 1: "))
-
-            # Make move and add move and board to history
-            if game.move_car(letter, direction) is not False:
-                history.add_move(letter, direction)
-                history.add_board(game.get_board())
-            
-            # print for users
-            print(game.get_board_for_player())
-            print('Move count:',history.get_counter())
-            print(history.get_move_history())
-
-    elif gameplay == 'Automatic' or 'a' or 'A':
+    if gameplay == 'Automatic' or 'a' or 'A':
 
         algo = input("Choose Algorithm: 1 or 2")
         if algo == 1:
@@ -159,6 +113,53 @@ def main():
         elif algo == 2:
             algorith_2 = Algorithm_2(game)
             print()
+
+    while True:
+    
+        # This script plays when the game is won
+        if (game._dictionary_of_cars['X'].get_base()[1]) >= ((len(game.get_board()[0])) - 2):
+            print("Congratulations, you found your way out!")
+            print('Total moves:',history.get_counter())
+            print(history.get_move_history())
+                break
+
+        # ask user for input
+        if gameplay == 'Manual' or 'm' or 'M':
+            letter = input("give car letter: ").upper()
+        elif gameplay == 'Automatic' or 'a' or 'A':
+
+        # give user the possibility to go back
+        if letter == "BACK":
+            if history.get_counter() < 1:
+                print("Must have a history of moves")
+                continue
+
+            # make the move back
+            game.make_move_back(history)
+
+            # update the history list
+            history.go_back()
+
+            # print for users
+            print(game.get_board_for_player())
+            print('Move count:',history.get_counter())
+            print(history.get_move_history())
+            continue
+
+        # ask user for input
+        if gameplay == 'Manual' or 'm' or 'M':
+            direction = int(input("give direction. -1 or 1: "))
+        elif gameplay == 'Automatic' or 'a' or 'A':
+
+        # Make move and add move and board to history
+        if game.move_car(letter, direction) is not False:
+            history.add_move(letter, direction)
+            history.add_board(game.get_board())
+            
+        # print for users
+        print(game.get_board_for_player())
+        print('Move count:',history.get_counter())
+        print(history.get_move_history())
 
 
 if __name__ == '__main__':
