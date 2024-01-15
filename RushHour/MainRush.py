@@ -83,8 +83,6 @@ def pick_board_random() -> str:
     '''
     return random.choice(load_board_opstellingen('data'))
 
-def winning_board():
-    None
 
 def main():
     """
@@ -109,11 +107,10 @@ def main():
         while True:
             
             # This script plays when the game is won
-            if (game._dictionary_of_cars['X'].get_base()[1]) >= ((len(game.get_board()[0])) - 2):
+            if game.is_won():
                 print("Congratulations, you found your way out!")
                 print('Total moves:',history.get_counter())
                 print(history.get_move_history())
-                print(history.get_board_history())
                 break
 
             # ask user for input
