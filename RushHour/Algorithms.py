@@ -1,3 +1,4 @@
+from GameBoardClass import *
 import random
 
 class Algorithm_1():

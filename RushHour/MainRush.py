@@ -83,8 +83,6 @@ def pick_board_random() -> str:
     '''
     return random.choice(load_board_opstellingen('data'))
 
-def winning_board():
-    None
 
 def main():
     """
@@ -107,14 +105,12 @@ def main():
     if gameplay == 'Manual' or gameplay == 'm' or gameplay == 'M':
 
         while True:
-            
+        
             # This script plays when the game is won
-            if (game._dictionary_of_cars['X'].get_base()[1]) >= ((len(game.get_board()[0])) - 2):
+            if game.is_won():
                 print("Congratulations, you found your way out!")
                 print('Total moves:',history.get_counter())
                 print(history.get_move_history())
-                print(history.get_board_history())
-                break
 
             # ask user for input
             letter = input("give car letter: ").upper()
@@ -144,7 +140,7 @@ def main():
             if game.move_car(letter, direction) is not False:
                 history.add_move(letter, direction)
                 history.add_board(game.get_board())
-            
+                
             # print for users
             print(game.get_board_for_player())
             print('Move count:',history.get_counter())
@@ -170,18 +166,6 @@ def main():
 
 
 
-    def make_random_move(self):
-        """
-        make a random move
-        pre:
-        post:
-        """
-        # choose random car
-        random_car = random.choice(self.cars)
-        # choose random move
-        random_direction = random.choice([1, -1])
-        
-        return random_car, random_direction
 
 
 if __name__ == '__main__':

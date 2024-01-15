@@ -151,12 +151,15 @@ class GameBoard:
 
         return board
 
+    def is_won(self):
+        if (self._dictionary_of_cars['X'].get_base()[1]) >= ((len(self.get_board()[0])) - 2):
+            return True
 
     def get_board(self):
         """
         Returns the current state of the game board.
         """
         return self._board
-
+    
     def get_car_names(self) -> list[str]:
         return list(self._dictionary_of_cars.keys())
