@@ -55,61 +55,50 @@ class GameBoard:
                 self._board[base_row + i * d_row][base_col + i * d_col] = name
 
 
-    def _get_target_location(self, base, rotation, length, direction) -> tuple[int, int]:
-        """
-        Calculates the target cell for the given car based on its base position, rotation, and move direction.
-        """
-        if direction == 1:
-            target_row = base[0] + (rotation[0] * length)
-            target_col = base[1] + (rotation[1] * length)
-        else:  # direction == -1
-            target_row = base[0] - rotation[0]
-            target_col = base[1] - rotation[1]
-        return target_row, target_col
 
-    def _legal_move(self, target_row, target_col) -> bool:
-        """
-        Checks if the move to the target cell is legal.
-        """
-        if target_row < 0 or target_col < 0 or target_row >= len(self._board) or target_col >= len(self._board[0]):
-            return False
-        if self._board[target_row][target_col] != 0:
-            return False
-        return True
-
-    def execute_move(self, car, base, target_row, target_col, direction):
-        """
-        Executes the car move on the board.
-        """
-        for i in range(car.get_length()):
-            self._board[base[0] + i * car.get_rotation()[0]][base[1] + i * car.get_rotation()[1]] = 0
-
-        for i in range(car.get_length()):
-            new_row = target_row - i * direction * car.get_rotation()[0]
-            new_col = target_col - i * direction * car.get_rotation()[1]
-            self._board[new_row][new_col] = car.get_name()
-
-        car.set_base(target_row, target_col)
-
-
-    def move_car(self, letter: str, direction: int):
-        """
-        Moves the car in the specified direction if the move is legal.
-        """
+    def move_car(self, letter: str, direction):
         car = self._dictionary_of_cars[letter]
         base = car.get_base()
         rotation = car.get_rotation()
-        length = car.get_length()
+        length = car.get_length()        
 
-        target_row, target_col = self._get_target_location(base, rotation, length, direction)
-
-        if not self._legal_move(target_row, target_col):
-            print("Illegal move. Please try again.")
-            return
+        if direction == 1:
+            target_row = base[0] + (rotation[0] * length)
+            target_col = base[1] + (rotation[1] * length)
+            if target_row >= len(self._board) or target_col >= len(self._board):
+                print("You cannot go there!")
+                return False
+        elif direction == -1:
+            target_row = base[0] - rotation[0]
+            target_col = base[1] - rotation[1]
+        else:
+            print("Invalid move!")
+            return False
         
-        print(target_row, target_col)
+        if self._board[target_row][target_col] != 0 or target_col < 0 or target_row < 0:
+            print("You cannot go there!")
+            return False
 
-        self.execute_move(car, base, target_row, target_col, direction)
+        elif self._board[target_row][target_col] == 0:
+            
+            # Clear the current car
+            for i in range(car.get_length()):
+                self._board[base[0] + i * rotation[0]][base[1] + i * rotation[1]] = 0
+
+            # Move the car to the new position
+            for i in range(car.get_length()):
+                new_row = target_row - i * direction * rotation[0]
+                new_col = target_col - i * direction * rotation[1]
+                self._board[new_row][new_col] = car.get_name()
+            
+            # Update car's base position
+            new_base_row = base[0] + direction * rotation[0]
+            new_base_col = base[1] + direction * rotation[1]
+
+            self._dictionary_of_cars[car.get_name()].set_base(new_base_row, new_base_col)
+
+            print(target_row, target_col)
+
 
     
     def make_move_back(self, history):
