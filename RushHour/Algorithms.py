@@ -25,14 +25,14 @@ class Algorithm_1():
 
 class Algorithm_2():
 
-    def __init__(self, gameboard, letter, direction) -> None:
+    def __init__(self, game, letter, direction) -> None:
         """
         Eerste Algoritme: ??
 
         Pre: Gameboard en History
         """
 
-        self.gameboard = gameboard
+        self.gameboard = game
         self.letter = letter
         self.direction = direction
     

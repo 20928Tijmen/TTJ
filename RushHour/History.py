@@ -41,6 +41,7 @@ class History():
         """
         return the list of previous boards
         """
+        return self.board_history
     
     def go_back(self) -> None:
         """

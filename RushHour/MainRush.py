@@ -113,6 +113,7 @@ def main():
                 print("Congratulations, you found your way out!")
                 print('Total moves:',history.get_counter())
                 print(history.get_move_history())
+                print(history.get_board_history())
                 break
 
             # ask user for input
@@ -130,6 +131,12 @@ def main():
                 # update the history list
                 history.go_back()
 
+                # print for users
+                print(game.get_board_for_player())
+                print('Move count:',history.get_counter())
+                print(history.get_move_history())
+                continue
+
             # ask user for input
             direction = int(input("give direction. -1 or 1: "))
 
@@ -142,6 +149,17 @@ def main():
             print(game.get_board_for_player())
             print('Move count:',history.get_counter())
             print(history.get_move_history())
+
+    elif gameplay == 'Automatic' or 'a' or 'A':
+
+        algo = input("Choose Algorithm: 1 or 2")
+        if algo == 1:
+            algorith_1 = Algorithm_1(game)
+            
+        elif algo == 2:
+            algorith_2 = Algorithm_2(game)
+            print()
+
 
 if __name__ == '__main__':
     main()
