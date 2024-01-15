@@ -107,8 +107,9 @@ def main():
     if gameplay == 'Manual':
 
         while True:
-
-            if (game._dictionary_of_cars['X'].get_base()[1]) >= 4:
+            
+            # This script plays when the game is won
+            if (game._dictionary_of_cars['X'].get_base()[1]) >= ((len(game.get_board()[0])) - 2):
                 print("Congratulations, you found your way out!")
                 print('Total moves:',history.get_counter())
                 print(history.get_move_history())
