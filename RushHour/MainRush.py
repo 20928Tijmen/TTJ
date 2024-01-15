@@ -83,15 +83,23 @@ def pick_board_random() -> str:
     return random.choice(load_board_opstellingen('data'))
 
 
+
+
 def main():
     """
     Main function to run the Rush Hour game.
     """
     # Create an instance of the History class
     history = History()
+
     file_path = pick_board_random() if input("random? yes/no : ") == 'yes' else pick_board_manualy()
     game_file = GameFile(file_path)
     game = GameBoard(game_file)
+
+    def winning_board():
+        if game._dictionary_of_cars:
+            pass
+
 
     print(game.get_board_for_player())
 
@@ -124,6 +132,12 @@ def main():
         if game.move_car(letter, direction) is not False:
             history.add_move(letter, direction)
             history.add_board(game.get_board())
+
+        if winning_board is True:
+            print("Congratulations, you found your way out!")
+            print('Total moves:',history.get_counter())
+            print(history.get_move_history())
+            break
         
         print(game.get_board_for_player())
         print('Move count:',history.get_counter())
