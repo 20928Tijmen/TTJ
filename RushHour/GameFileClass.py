@@ -51,3 +51,8 @@ class GameFile:
                 car_data.append((name, orientation, int(row), int(col), int(length)))
         return car_data
 
+    def get_car_names(self) -> list[str]:
+        """
+        Return a list of just the names of the cars in that game
+        """
+        return [car[0] for car in self.car_info]

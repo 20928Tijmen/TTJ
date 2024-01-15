@@ -8,6 +8,8 @@ class History():
         self.move_history: list[(str, int)] = [] # a move is a (letter of car, direction)
         self.board_history: list[list[list]] = [] # the board is a list of lists, so a list of those
 
+        self.previous_move: (str, int) = ()
+
         self.counter = 0
 
     def add_move(self, car_letter: object, direction: int) -> None:
@@ -17,6 +19,8 @@ class History():
         move = (car_letter, direction)
         self.move_history.append(move)
         self.counter += 1
+
+        self.previous_move = move
     
     def add_board(self, board: list[list]) -> list:
         """

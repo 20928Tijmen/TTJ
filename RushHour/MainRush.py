@@ -2,7 +2,7 @@
 from GameBoardClass import GameBoard
 from GameFileClass import GameFile
 from History import History
-from Algorithms import Algorithm_1, Algorithm_2
+from Algorithms import *
 import os
 import random
 
@@ -149,20 +149,68 @@ def main():
 
         while True:
             
-            if (game._dictionary_of_cars['X'].get_base()[1]) >= ((len(game.get_board()[0])) - 2):
+            if game.is_won():
+                print(game.get_board_for_player())
                 print("Congratulations, you found your way out!")
-                print('Total moves:',history.get_counter())
-                print(history.get_move_history())
-                print(history.get_board_history())
+                print('Total moves:', history.get_counter())
                 break
 
-            cars = list(game.get_car_names())
-            random_direction = random.choice([1, -1])
-            random_car = random.choice(cars)
+            random_car, random_direction = make_random_legal_move_biased_to_repeat_last_move(game, history)
 
-            game.move_car(random_car, random_direction)
+            if game.move_car(random_car, random_direction):
+                history.add_move(random_car, random_direction)
+                history.add_board(game.get_board())
+
+def test_main_dinges():
+
+    # needed moves word hierin opgeslagen na solve
+    total_moves = []
+
+    # illegal moves worden niet bijgehouden, dus tel OOK hoevaak de game loop gerund word
+    total_loops = []
+
+    # solve gegeven aantal keer de 12x12 game op
+    # geeft score door aan total moves en loops
+    number_of_games = 100
+    for i in range(number_of_games):
+
+        history = History()
+
+        file_path = 'data/Rushhour12x12_7.csv'
+
+        game_file = GameFile(file_path)
+        game = GameBoard(game_file)
+
+        loop_counter = 0
+
+        while True:
+            
+            if game.is_won():
+                print(f"game {i + 1} was solved in {history.get_counter()} moves, and {loop_counter} game loops")
+                total_moves.append(history.get_counter())
+                total_loops.append(loop_counter)
+                break
+
+            #   Kies je algoritme om te testen, maar 1 per keer natuurlijk
+            #   maak de rest comments, (NIET OM INPUT GAAN VRAGEN)
+            #
+            #random_car, random_direction = make_random_legal_move_biased_to_repeat_last_move(game, history)
+            #random_car, random_direction = make_random_legal_move(game)
+            #random_car, random_direction = make_random_move(game_file)
+
+            if game.move_car(random_car, random_direction):
+                history.add_move(random_car, random_direction)
+                history.add_board(game.get_board())
+            
+            loop_counter += 1
+
+    average_moves = (sum(total_moves) / len(total_moves))
+    average_loops = (sum(total_loops) / len(total_loops))
 
 
+    print(f"the average amount of moves needed for {number_of_games} games was {average_moves} moves, and {average_loops} game loops")
 
 if __name__ == '__main__':
-    main()
+
+    test_main_dinges()
+    #main()

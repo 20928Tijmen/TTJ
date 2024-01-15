@@ -154,6 +154,7 @@ class GameBoard:
     def is_won(self):
         if (self._dictionary_of_cars['X'].get_base()[1]) >= ((len(self.get_board()[0])) - 2):
             return True
+        return False
 
     def get_board(self):
         """
@@ -161,5 +162,31 @@ class GameBoard:
         """
         return self._board
     
-    def get_car_names(self) -> list[str]:
-        return list(self._dictionary_of_cars.keys())
+    def is_legal_move(self, letter, direction) -> bool:
+        """
+        ik gebruik deze in algoritme make_random_legal_move , voor nu ff zo
+        is gwn copy paste uit move car
+
+        geef naam en direction en krijg True/False terug
+
+        """
+        car = self._dictionary_of_cars[letter]
+        base = car.get_base()
+        rotation = car.get_rotation()
+        length = car.get_length()
+
+        if direction == 1:
+            target_row = base[0] + (rotation[0] * length)
+            target_col = base[1] + (rotation[1] * length)
+        elif direction == -1:
+            target_row = base[0] - rotation[0]
+            target_col = base[1] - rotation[1]
+        else:
+            return False
+
+        if (target_row >= len(self._board) or target_col >= len(self._board) or
+                target_row < 0 or target_col < 0 or
+                self._board[target_row][target_col] != 0):
+            return False
+
+        return True
