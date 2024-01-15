@@ -102,10 +102,8 @@ def main():
 
     print(game.get_board_for_player())
 
-    if gameplay == 'Manual' or gameplay == 'm' or gameplay == 'M':
-
+    if gameplay in ['Manual', 'm', 'M']:
         while True:
-        
             # This script plays when the game is won
             if game.is_won():
                 print("Congratulations, you found your way out!")
@@ -146,7 +144,7 @@ def main():
             print('Move count:',history.get_counter())
             print(history.get_move_history())
 
-    elif gameplay == 'Automatic' or gameplay == 'a' or gameplay == 'A':
+    elif gameplay in ['Automatic', 'a', 'A']:
 
 
         while True:
@@ -163,8 +161,6 @@ def main():
             random_car = random.choice(cars)
 
             game.move_car(random_car, random_direction)
-
-
 
 
 
