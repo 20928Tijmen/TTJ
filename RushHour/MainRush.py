@@ -146,9 +146,12 @@ def main():
 
 
     elif gameplay in ['Automatic', 'a', 'A']:
-        algo = input("Choose Algorithm: 1 or 2:")
+        algo = input("Choose Algorithm: 1 or 2: ")
         if algo == 1:
             algorith_1 = Algorithm_1(game)
+            while game.is_won() is False:
+                algorith_1.make_random_move()
+
 
         elif algo == 2:
             algorith_2 = Algorithm_2(game)
