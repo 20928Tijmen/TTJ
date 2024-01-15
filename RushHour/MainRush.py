@@ -97,18 +97,19 @@ def main():
     game_file = GameFile(file_path)
     game = GameBoard(game_file)
 
-    print(game.get_board_for_player())
-
     gameplay = 'Game'
 
-    while gameplay not in ['Automatic', 'Manual']:
+    while gameplay not in ['Automatic', 'Manual', 'm', 'a', 'M', 'A']:
         gameplay = input("Automatic or Manual? ")
 
-    if gameplay == 'Manual':
+    print(game.get_board_for_player())
+
+    if gameplay == 'Manual' or 'm' or 'M':
 
         while True:
-
-            if (game._dictionary_of_cars['X'].get_base()[1]) >= 4:
+            
+            # This script plays when the game is won
+            if (game._dictionary_of_cars['X'].get_base()[1]) >= ((len(game.get_board()[0])) - 2):
                 print("Congratulations, you found your way out!")
                 print('Total moves:',history.get_counter())
                 print(history.get_move_history())
