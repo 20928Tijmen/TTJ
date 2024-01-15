@@ -3,34 +3,29 @@ import random
 
 class Algorithm_1():
 
-    def __init__(self, game, letter, direction) -> None:
+    def __init__(self, game) -> None:
         """
         Eerste Algoritme: RANDOM
 
         Pre: Gameboard en History
         """
-
         self.game = game
-        self.letter = letter
-        self.direction = direction
 
-        while game.iswon() is False:
-            self.make_random_move()
+        self.cars = list(game._dictionary_of_cars.keys())
+
     
-    def make_random_move(letter, direction):
+    def make_random_move(self):
         """
         make a random move
         pre:
         post:
         """
         # choose random car
-        letter = random()
+        random_car = random.choice(self.cars)
         # choose random move
-        direction = random()
-
-
-
-
+        random_direction = random.choice([1, -1])
+        
+        return random_car, random_direction
 
 
 class Algorithm_2():
