@@ -166,5 +166,3 @@ class GameBoard:
         Returns the current state of the game board.
         """
         return self._board
-
-
