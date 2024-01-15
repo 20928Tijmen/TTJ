@@ -97,8 +97,6 @@ class GameBoard:
 
             self._dictionary_of_cars[car.get_name()].set_base(new_base_row, new_base_col)
 
-
-
         return True
 
     
