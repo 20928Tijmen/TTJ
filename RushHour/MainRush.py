@@ -100,17 +100,27 @@ def main():
     while gameplay not in ['Automatic', 'Manual', 'm', 'a', 'M', 'A']:
         gameplay = input("Automatic or Manual? ")
 
+    if gameplay == "Automatic" or gameplay == "A" or gameplay == "a":
+        algo = int(input("Which algorithm? 1, or 2? "))
+        if algo == 1:
+            algorithm = Algorithm_1(game)
+        elif algo == 2:
+            algorithm = Algorithm_2(game)
+
     print(game.get_board_for_player())
 
-    if gameplay in ['Manual', 'm', 'M']:
-        while True:
-            # This script plays when the game is won
-            if game.is_won():
-                print("Congratulations, you found your way out!")
-                print('Total moves:',history.get_counter())
-                print(history.get_move_history())
+    while True:
+    
+        # This script plays when the game is won
+        if (game.is_won()):
+            print("Congratulations, you found your way out!")
+            print('Total moves:',history.get_counter())
+            break
 
-            # ask user for input
+        # ask user for input
+        if gameplay == 'Automatic' or gameplay == 'a' or gameplay == 'A':
+            letter = algorithm.random_car()
+        elif gameplay == 'Manual' or gameplay == 'm' or gameplay == 'M':
             letter = input("give car letter: ").upper()
 
             # give user the possibility to go back
@@ -131,35 +141,16 @@ def main():
                 print(history.get_move_history())
                 continue
 
-            # ask user for input
-            direction = int(input("give direction. -1 or 1: "))
+                # Make move and add move and board to history
+                if game.move_car(letter, direction) is not False:
+                    history.add_move(letter, direction)
+                    history.add_board(game.get_board())
 
-            # Make move and add move and board to history
-            if game.move_car(letter, direction) is not False:
-                history.add_move(letter, direction)
-                history.add_board(game.get_board())
-                
             # print for users
             print(game.get_board_for_player())
             print('Move count:',history.get_counter())
             print(history.get_move_history())
 
-    elif gameplay in ['Automatic', 'a', 'A']:
-
-
-        while True:
-            
-            if game.is_won():
-                print(game.get_board_for_player())
-                print("Congratulations, you found your way out!")
-                print('Total moves:', history.get_counter())
-                break
-
-            random_car, random_direction = make_random_legal_move_biased_to_repeat_last_move(game, history)
-
-            if game.move_car(random_car, random_direction):
-                history.add_move(random_car, random_direction)
-                history.add_board(game.get_board())
 
 def test_main_dinges():
 
