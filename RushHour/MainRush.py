@@ -97,14 +97,14 @@ def main():
     game_file = GameFile(file_path)
     game = GameBoard(game_file)
 
-    print(game.get_board_for_player())
-
     gameplay = 'Game'
 
-    while gameplay not in ['Automatic', 'Manual']:
+    while gameplay not in ['Automatic', 'Manual', 'm', 'a', 'M', 'A']:
         gameplay = input("Automatic or Manual? ")
 
-    if gameplay == 'Manual':
+    print(game.get_board_for_player())
+
+    if gameplay == 'Manual' or 'm' or 'M':
 
         while True:
 

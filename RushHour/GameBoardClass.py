@@ -105,11 +105,13 @@ class GameBoard:
 
         if not self._legal_move(target_row, target_col):
             print("Illegal move. Please try again.")
-            return
+            return False
         
         print(target_row, target_col)
 
         self.execute_move(car, base, target_row, target_col, direction)
+
+        return True
 
     
     def make_move_back(self, history):
