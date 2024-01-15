@@ -102,27 +102,8 @@ def main():
 
     print(game.get_board_for_player())
 
-    if gameplay == 'Automatic' or 'a' or 'A':
-
-        algo = input("Choose Algorithm: 1 or 2")
-        if algo == 1:
-            algorith_1 = Algorithm_1(game)
-            
-            # This script plays when the game is won
-            if game.is_won():
-                print("Congratulations, you found your way out!")
-                print('Total moves:',history.get_counter())
-                print(history.get_move_history())
-
-        elif algo == 2:
-            algorith_2 = Algorithm_2(game)
-            print()
-
-    # ask user for input
-    elif gameplay == 'Manual' or 'm' or 'M':
-
+    if gameplay in ['Manual', 'm', 'M']:
         while True:
-        
             # This script plays when the game is won
             if game.is_won():
                 print("Congratulations, you found your way out!")
@@ -163,6 +144,14 @@ def main():
             print('Move count:',history.get_counter())
             print(history.get_move_history())
 
+
+    elif gameplay in ['Automatic', 'a', 'A']:
+        algo = input("Choose Algorithm: 1 or 2:")
+        if algo == 1:
+            algorith_1 = Algorithm_1(game)
+
+        elif algo == 2:
+            algorith_2 = Algorithm_2(game)
 
 if __name__ == '__main__':
     main()
