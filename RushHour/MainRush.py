@@ -2,7 +2,6 @@
 from GameBoardClass import GameBoard
 from GameFileClass import GameFile
 from History import History
-from Algorithms import Algorithm_1, Algorithm_2
 import os
 import random
 
@@ -83,8 +82,8 @@ def pick_board_random() -> str:
     '''
     return random.choice(load_board_opstellingen('data'))
 
-def winning_board():
-    None
+
+
 
 def main():
     """
@@ -97,6 +96,11 @@ def main():
     game_file = GameFile(file_path)
     game = GameBoard(game_file)
 
+    def winning_board():
+        if game._dictionary_of_cars:
+            pass
+
+
     print(game.get_board_for_player())
 
     gameplay = 'Game'
@@ -107,12 +111,11 @@ def main():
     if gameplay == 'Manual':
 
         while True:
-            if winning_board is True:
-                print("Congratulations, you found your way out!")
-                print('Total moves:',history.get_counter())
-                print(history.get_move_history())
+            
+            if (game._dictionary_of_cars['X'].get_base()[1]) >= 4:
+                print("You're winner!")
                 break
-
+            
             # ask user for input
             letter = input("give car letter: ").upper()
 
@@ -128,16 +131,24 @@ def main():
                 # update the history list
                 history.go_back()
 
+                # Make move and add move and board to history
+                if game.move_car(letter, direction) is not False:
+                    history.add_move(letter, direction)
+                    history.add_board(game.get_board())
+
+            # print for users
+            print(game.get_board_for_player())
+            print('Move count:',history.get_counter())
+            print(history.get_move_history())
+
+            # ask user for input
+            direction = int(input("give direction. -1 or 1: "))
+
             # Make move and add move and board to history
             if game.move_car(letter, direction) is not False:
                 history.add_move(letter, direction)
                 history.add_board(game.get_board())
 
-
-            # ask user for input
-            direction = int(input("give direction. -1 or 1: "))
-            
-            # print for users
             print(game.get_board_for_player())
             print('Move count:',history.get_counter())
             print(history.get_move_history())
