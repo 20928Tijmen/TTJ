@@ -104,7 +104,7 @@ def main():
 
     print(game.get_board_for_player())
 
-    if gameplay == 'Manual' or 'm' or 'M':
+    if gameplay == 'Manual' or gameplay == 'm' or gameplay == 'M':
 
         while True:
             
@@ -150,15 +150,38 @@ def main():
             print('Move count:',history.get_counter())
             print(history.get_move_history())
 
-    elif gameplay == 'Automatic' or 'a' or 'A':
+    elif gameplay == 'Automatic' or gameplay == 'a' or gameplay == 'A':
 
-        algo = input("Choose Algorithm: 1 or 2")
-        if algo == 1:
-            algorith_1 = Algorithm_1(game)
+
+        while True:
             
-        elif algo == 2:
-            algorith_2 = Algorithm_2(game)
-            print()
+            if (game._dictionary_of_cars['X'].get_base()[1]) >= ((len(game.get_board()[0])) - 2):
+                print("Congratulations, you found your way out!")
+                print('Total moves:',history.get_counter())
+                print(history.get_move_history())
+                print(history.get_board_history())
+                break
+
+            cars = list(game.get_car_names())
+            random_direction = random.choice([1, -1])
+            random_car = random.choice(cars)
+
+            game.move_car(random_car, random_direction)
+
+
+
+    def make_random_move(self):
+        """
+        make a random move
+        pre:
+        post:
+        """
+        # choose random car
+        random_car = random.choice(self.cars)
+        # choose random move
+        random_direction = random.choice([1, -1])
+        
+        return random_car, random_direction
 
 
 if __name__ == '__main__':

@@ -157,3 +157,6 @@ class GameBoard:
         Returns the current state of the game board.
         """
         return self._board
+
+    def get_car_names(self) -> list[str]:
+        return list(self._dictionary_of_cars.keys())
