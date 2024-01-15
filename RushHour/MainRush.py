@@ -2,6 +2,7 @@
 from GameBoardClass import GameBoard
 from GameFileClass import GameFile
 from History import History
+from Algorithms import Algorithm_1, Algorithm_2
 import os
 import random
 
@@ -82,6 +83,8 @@ def pick_board_random() -> str:
     '''
     return random.choice(load_board_opstellingen('data'))
 
+def winning_board():
+    None
 
 def main():
     """
@@ -89,46 +92,55 @@ def main():
     """
     # Create an instance of the History class
     history = History()
+
     file_path = pick_board_random() if input("random? yes/no : ") == 'yes' else pick_board_manualy()
     game_file = GameFile(file_path)
     game = GameBoard(game_file)
 
     print(game.get_board_for_player())
 
-    while True:
-        # ask user for input
-        letter = input("give car letter: ").upper()
+    gameplay = 'Game'
 
-        # give user the possibility to go back
-        if letter == "BACK":
-            if history.get_counter() < 1:
-                print("Must have a history of moves")
-                continue
+    while gameplay not in ['Automatic', 'Manual']:
+        gameplay = input("Automatic or Manual? ")
 
-            # make the move back
-            game.make_move_back(history)
+    if gameplay == 'Manual':
 
-            # update the history list
-            history.go_back()
+        while True:
+            if winning_board is True:
+                print("Congratulations, you found your way out!")
+                print('Total moves:',history.get_counter())
+                print(history.get_move_history())
+                break
 
+            # ask user for input
+            letter = input("give car letter: ").upper()
+
+            # give user the possibility to go back
+            if letter == "BACK":
+                if history.get_counter() < 1:
+                    print("Must have a history of moves")
+                    continue
+
+                # make the move back
+                game.make_move_back(history)
+
+                # update the history list
+                history.go_back()
+
+            # Make move and add move and board to history
+            if game.move_car(letter, direction) is not False:
+                history.add_move(letter, direction)
+                history.add_board(game.get_board())
+
+
+            # ask user for input
+            direction = int(input("give direction. -1 or 1: "))
+            
             # print for users
             print(game.get_board_for_player())
             print('Move count:',history.get_counter())
             print(history.get_move_history())
-            continue
-
-        # ask user for input
-        direction = int(input("give direction. -1 or 1: "))
-
-        # Make move and add move and board to history
-        if game.move_car(letter, direction) is not False:
-            history.add_move(letter, direction)
-            history.add_board(game.get_board())
-        
-        print(game.get_board_for_player())
-        print('Move count:',history.get_counter())
-        print(history.get_move_history())
-
 
 if __name__ == '__main__':
     main()
