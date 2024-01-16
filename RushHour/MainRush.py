@@ -2,7 +2,7 @@
 from GameBoardClass import GameBoard
 from GameFileClass import GameFile
 from History import History
-from Algorithms import *
+from Algorithms.Algorithm_random import *
 import os
 import random
 
