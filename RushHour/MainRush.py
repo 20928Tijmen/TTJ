@@ -2,7 +2,7 @@
 from GameBoardClass import GameBoard
 from GameFileClass import GameFile
 from History import History
-from Algorithms.Algorithm_random import *
+from Algorithms import *
 import os
 import random
 
@@ -71,7 +71,7 @@ def pick_board_manualy() -> str:
     zo kies je een spel uit
     '''
     paths_all = load_board_opstellingen('data')
-    board_size = input("What board size would like like?\nOptions: 6, 9, 12\nInput here: ")
+    board_size = input("What board size would you like?\nOptions: 6, 9, 12\nInput here: ")
     path_options, board_options = get_paths_of_size(paths_all, board_size)
     game_number = input(f"Boards with size {board_size}\nOptions: {', '.join(board_options)}\nInput here: ")
     return get_path_of_number(game_number, path_options)
@@ -164,7 +164,7 @@ def test_main_dinges():
 
     # solve gegeven aantal keer de 12x12 game op
     # geeft score door aan total moves en loops
-    number_of_games = 10
+    number_of_games = int(input("How many games do you want to run for this experiment? "))
     for i in range(number_of_games):
 
         history = History()
@@ -187,6 +187,7 @@ def test_main_dinges():
             #   Kies je algoritme om te testen, maar 1 per keer natuurlijk
             #   maak de rest comments, (NIET OM INPUT GAAN VRAGEN)
             #
+            #
             random_car, random_direction = make_random_legal_move_biased_to_repeat_last_move(game, history)
             #random_car, random_direction = make_random_legal_move(game)
             #random_car, random_direction = make_random_move(game_file)
@@ -200,10 +201,15 @@ def test_main_dinges():
     average_moves = (sum(total_moves) / len(total_moves))
     average_loops = (sum(total_loops) / len(total_loops))
 
-
     print(f"the average amount of moves needed for {number_of_games} games was {average_moves} moves, and {average_loops} game loops")
 
 if __name__ == '__main__':
-
-    test_main_dinges()
-    #main()
+    
+    mode = str
+    while mode not in ['v', 'e']:
+        mode = input("Do you want to run the game in Visual mode or Experiment mode? (v/e) ").lower()
+    
+    if mode == 'v':
+        main()
+    elif mode == 'e':
+        test_main_dinges()
