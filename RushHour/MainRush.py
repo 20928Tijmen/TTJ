@@ -83,7 +83,7 @@ def pick_board_random() -> str:
     return random.choice(load_board_opstellingen('data'))
 
 
-def main():
+def manual():
     """
     Main function to run the Rush Hour game.
     """
@@ -152,8 +152,38 @@ def main():
             print('Move count:',history.get_counter())
             print(history.get_move_history())
 
+def available_boards():
+    print("Available boards:")
+    # Hier staan alle borden.
+    boards_list = [
+        "data/Rushhour6x6_1.csv",
+        "data/Rushhour6x6_2.csv",
+        "data/Rushhour6x6_3.csv",
+        "data/Rushhour9x9_4.csv",
+        "data/Rushhour9x9_5.csv",
+        "data/Rushhour9x9_6.csv",
+        "data/Rushhour12x12_7.csv"
+    ]
 
-def test_main_dinges():
+    for board in boards_list:
+        print(board)
+
+    return boards_list
+
+def available_algorithms():
+    print("Available algorithms:")
+    # Hierin kun je de beschikbare algoritmes plaatsen!
+    algorithms_dictionary = {
+        "random_legal_biasedforlastmove": make_random_legal_move_biased_to_repeat_last_move,
+    }
+
+    for i in algorithms_dictionary:
+        print(i)
+
+    return algorithms_dictionary
+
+
+def experiment():
 
     # needed moves word hierin opgeslagen na solve
     total_moves = []
@@ -164,11 +194,23 @@ def test_main_dinges():
     # solve gegeven aantal keer de 12x12 game op
     # geeft score door aan total moves en loops
     number_of_games = int(input("How many games do you want to run for this experiment? "))
+    available_board_list = available_boards()
+    board_pick = str
+    while board_pick not in available_board_list:
+        board_pick = str(input("Which board will you pick? "))
+
+    algorithms = available_algorithms()
+    select_algorithm = str
+    while select_algorithm not in algorithms:
+        select_algorithm = input("Choose an algorithm: ")
+
+    selected_algorithm = algorithms[select_algorithm]
+    
     for i in range(number_of_games):
 
         history = History()
 
-        file_path = 'data/Rushhour12x12_7.csv'
+        file_path = board_pick
 
         game_file = GameFile(file_path)
         game = GameBoard(game_file)
@@ -187,7 +229,7 @@ def test_main_dinges():
             #   maak de rest comments, (NIET OM INPUT GAAN VRAGEN)
             #
             #
-            random_car, random_direction = make_random_legal_move_biased_to_repeat_last_move(game, history)
+            random_car, random_direction = selected_algorithm(game, history)
             #random_car, random_direction = make_random_legal_move(game)
             #random_car, random_direction = make_random_move(game_file)
 
@@ -202,16 +244,22 @@ def test_main_dinges():
 
     print(f"the average amount of moves needed for {number_of_games} games was {average_moves} moves, and {average_loops} game loops")
 
-if __name__ == '__main__':
-    
+
+def main():
+
     mode = str
     while mode not in ['v', 'e']:
         mode = input("Do you want to run the game in Visual mode or Experiment mode? (v/e) ").lower()
     
     if mode == 'v':
-        main()
+        manual()
     elif mode == 'e':
-        test_main_dinges()
+        experiment()
+
+    
+
+if __name__ == '__main__':
+    main()
 
 
 # file met allemaal verschillende algoritmes.
