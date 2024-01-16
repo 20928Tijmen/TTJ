@@ -1,7 +1,6 @@
 import random
 
 
-
 def make_random_move(game_file) -> (str, int):
     """
     make a random move
@@ -51,7 +50,6 @@ def make_random_legal_move(game) -> (str, int):
 def make_random_legal_move_biased_to_repeat_last_move(game, history) -> (str, int):
     """
     make a random legal move by first making a random move, but remaking if its an illegal move
-
 
     pre:    game: GameBoard = zelfde gebruik als random + je wilt is_legal_move() bereiken dus vandaar hele game 
 

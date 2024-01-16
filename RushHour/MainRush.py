@@ -103,9 +103,9 @@ def main():
     if gameplay == "Automatic" or gameplay == "A" or gameplay == "a":
         algo = int(input("Which algorithm? 1, or 2? "))
         if algo == 1:
-            algorithm = Algorithm_1(game)
+            algorithm = None
         elif algo == 2:
-            algorithm = Algorithm_2(game)
+            algorithm = None
 
     print(game.get_board_for_player())
 
@@ -141,10 +141,12 @@ def main():
                 print(history.get_move_history())
                 continue
 
-                # Make move and add move and board to history
-                if game.move_car(letter, direction) is not False:
-                    history.add_move(letter, direction)
-                    history.add_board(game.get_board())
+            direction = input("give direction: -1 or 1").upper()
+
+            # Make move and add move and board to history
+            if game.move_car(letter, direction) is not False:
+                history.add_move(letter, direction)
+                history.add_board(game.get_board())
 
             # print for users
             print(game.get_board_for_player())
@@ -162,7 +164,7 @@ def test_main_dinges():
 
     # solve gegeven aantal keer de 12x12 game op
     # geeft score door aan total moves en loops
-    number_of_games = 100
+    number_of_games = 10
     for i in range(number_of_games):
 
         history = History()
@@ -185,7 +187,7 @@ def test_main_dinges():
             #   Kies je algoritme om te testen, maar 1 per keer natuurlijk
             #   maak de rest comments, (NIET OM INPUT GAAN VRAGEN)
             #
-            #random_car, random_direction = make_random_legal_move_biased_to_repeat_last_move(game, history)
+            random_car, random_direction = make_random_legal_move_biased_to_repeat_last_move(game, history)
             #random_car, random_direction = make_random_legal_move(game)
             #random_car, random_direction = make_random_move(game_file)
 
