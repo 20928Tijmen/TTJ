@@ -247,16 +247,26 @@ def experiment():
 
 def main():
 
-    mode = str
-    while mode not in ['v', 'e']:
-        mode = input("Do you want to run the game in Visual mode or Experiment mode? (v/e) ").lower()
-    
-    if mode == 'v':
-        manual()
-    elif mode == 'e':
-        experiment()
+    while True:
 
+        mode = str
+        while mode not in ['v', 'e']:
+            mode = input("Do you want to run the game in Visual mode or Experiment mode? (v/e) ").lower()
     
+        if mode == 'v':
+            manual()
+        elif mode == 'e':
+            experiment()
+
+        continu = str
+        while continu not in ['q', 'c']:
+            continu = input("Do you want to continue, or quit? (c/q) ")
+
+        if continu == 'q':
+            break
+        elif continu == 'c':
+            continue
+
 
 if __name__ == '__main__':
     main()
