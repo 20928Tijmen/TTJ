@@ -84,7 +84,7 @@ def pick_board_random() -> str:
     return random.choice(load_board_opstellingen('data'))
 
 
-def main():
+def manual():
     """
     Main function to run the Rush Hour game.
     """
@@ -153,8 +153,15 @@ def main():
             print('Move count:',history.get_counter())
             print(history.get_move_history())
 
+def available_boards():
 
-def test_main_dinges():
+    print("\ndata/Rushhour6x6_1.csv\ndata/Rushhour6x6_2.csv\ndata/Rushhour6x6_3.csv")
+    print("data/Rushhour9x9_4.csv\ndata/Rushhour9x9_5.csv\ndata/Rushhour9x9_6.csv\ndata/Rushhour12x12_7.csv\n")
+
+def available_algorithms():
+    print("data/Algorithm_random_legal_biasedforlastmove.py\ndata/Algorithm_random.py\ndata/Algorithm_random_legal.py\n")
+
+def experiment():
 
     # needed moves word hierin opgeslagen na solve
     total_moves = []
@@ -165,11 +172,20 @@ def test_main_dinges():
     # solve gegeven aantal keer de 12x12 game op
     # geeft score door aan total moves en loops
     number_of_games = int(input("How many games do you want to run for this experiment? "))
+    available_boards()
+    available_boards_list = ["data/Rushhour6x6_1.csv", "data/Rushhour6x6_2.csv", "data/Rushhour6x6_3.csv", "data/Rushhour9x9_4.csv", "data/Rushhour9x9_5.csv", "data/Rushhour9x9_6.csv", "data/Rushhour12x12_7.csv"]
+    board_pick = str
+    while board_pick not in available_boards_list:
+        board_pick = str(input("Which board will you pick?"))
+
+    available_algorithms()
+    
+    
     for i in range(number_of_games):
 
         history = History()
 
-        file_path = 'data/Rushhour12x12_7.csv'
+        file_path = board_pick
 
         game_file = GameFile(file_path)
         game = GameBoard(game_file)
@@ -203,13 +219,17 @@ def test_main_dinges():
 
     print(f"the average amount of moves needed for {number_of_games} games was {average_moves} moves, and {average_loops} game loops")
 
-if __name__ == '__main__':
-    
+
+def main():
+
     mode = str
     while mode not in ['v', 'e']:
         mode = input("Do you want to run the game in Visual mode or Experiment mode? (v/e) ").lower()
     
     if mode == 'v':
-        main()
+        manual()
     elif mode == 'e':
-        test_main_dinges()
+        experiment()
+
+if __name__ == '__main__':
+    main()
