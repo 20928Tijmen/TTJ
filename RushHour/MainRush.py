@@ -2,12 +2,11 @@
 from GameBoardClass import GameBoard
 from GameFileClass import GameFile
 from History import History
-from Algorithms import *
 import os
 import random
+# import numpy as np
+# import matplotlib.pyplot as plt
 
-# import os voor uitlezen van een folder in load_board_opstellingen()
-# import random voor pick_board_random()
 
 def load_board_opstellingen(path: str) -> list[str]:
     '''
@@ -213,3 +212,11 @@ if __name__ == '__main__':
         main()
     elif mode == 'e':
         test_main_dinges()
+
+
+# file met allemaal verschillende algoritmes.
+# radio russia repository
+# madplotlib
+# codebase belangirjk!!
+# voor presentatie alleen kijken naar algoritmes 
+# algoritmes als classes!

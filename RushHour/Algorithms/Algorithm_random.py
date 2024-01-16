@@ -1,11 +1,5 @@
 import random
 
-# file met allemaal verschillende algoritmes.
-# radio russia repository
-# madplotlib
-# codebase belangirjk!!
-# voor presentatie alleen kijken naar algoritmes 
-# algoritmes als classes!
 
 def make_random_move(game_file) -> (str, int):
     """
