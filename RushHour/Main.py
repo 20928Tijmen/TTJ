@@ -1,10 +1,8 @@
+from Algorithms import BFS, RandomMove, RandomLegalMove, RandomLegalRepeatMove
+from Classes import GameBoard, GameFile, History
 
-from GameBoardClass import GameBoard
-from GameFileClass import GameFile
-from History import History
-import os
-import random
-from BFS import BFS
+import os, random
+
 # import numpy as np
 # import matplotlib.pyplot as plt
 
@@ -171,18 +169,15 @@ def available_boards():
 
     return boards_dictionary
 
+
 def available_algorithms():
     print("Available algorithms:")
     # Hierin kun je de beschikbare algoritmes plaatsen!
-    algorithms_dictionary = {
-<<<<<<< HEAD
+    algorithms_dictionary: dict = {
     "Algorithm_random.py",
-    "Algorithm_random_legal.py"
-=======
-        "random_legal_biasedforlastmove": make_random_legal_move_biased_to_repeat_last_move,
-        "random": make_random_move,
->>>>>>> ea5f9fd74b86530ceef254918961e59adb401267
-    }
+    "Algorithm_random_legal.py",
+    "random_legal_biasedforlastmove"
+    "random"}
 
     for i in algorithms_dictionary:
         print(i)
@@ -294,7 +289,7 @@ def main():
 
 if __name__ == '__main__':
 
- 
+    breadth_first_search1()
     
 # file met allemaal verschillende algoritmes.
 # radio russia repository

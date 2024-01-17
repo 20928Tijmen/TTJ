@@ -1,9 +1,4 @@
-
-from collections import deque
-from CarClass import Car
-from GameFileClass import GameFile
-from typing import Any
-
+from Classes.CarClass import Car
 
 class GameBoard:
     """
