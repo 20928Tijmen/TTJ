@@ -2,13 +2,12 @@
 from GameBoardClass import GameBoard
 from GameFileClass import GameFile
 from History import History
-from Algorithms import *
 import os
 import random
 from BFS import BFS
+# import numpy as np
+# import matplotlib.pyplot as plt
 
-# import os voor uitlezen van een folder in load_board_opstellingen()
-# import random voor pick_board_random()
 
 def load_board_opstellingen(path: str) -> list[str]:
     '''
@@ -72,7 +71,7 @@ def pick_board_manualy() -> str:
     zo kies je een spel uit
     '''
     paths_all = load_board_opstellingen('data')
-    board_size = input("What board size would like like?\nOptions: 6, 9, 12\nInput here: ")
+    board_size = input("What board size would you like?\nOptions: 6, 9, 12\nInput here: ")
     path_options, board_options = get_paths_of_size(paths_all, board_size)
     game_number = input(f"Boards with size {board_size}\nOptions: {', '.join(board_options)}\nInput here: ")
     return get_path_of_number(game_number, path_options)
@@ -84,8 +83,8 @@ def pick_board_random() -> str:
     '''
     return random.choice(load_board_opstellingen('data'))
 
-'''
-def main():
+
+def manual():
     """
     Main function to run the Rush Hour game.
     """
@@ -104,9 +103,9 @@ def main():
     if gameplay == "Automatic" or gameplay == "A" or gameplay == "a":
         algo = int(input("Which algorithm? 1, or 2? "))
         if algo == 1:
-            algorithm = Algorithm_1(game)
+            algorithm = None
         elif algo == 2:
-            algorithm = Algorithm_2(game)
+            algorithm = None
 
     print(game.get_board_for_player())
 
@@ -142,18 +141,56 @@ def main():
                 print(history.get_move_history())
                 continue
 
-                # Make move and add move and board to history
-                if game.move_car(letter, direction) is not False:
-                    history.add_move(letter, direction)
-                    history.add_board(game.get_board())
+            direction = input("give direction: -1 or 1").upper()
+
+            # Make move and add move and board to history
+            if game.move_car(letter, direction) is not False:
+                history.add_move(letter, direction)
+                history.add_board(game.get_board())
 
             # print for users
             print(game.get_board_for_player())
             print('Move count:',history.get_counter())
             print(history.get_move_history())
-'''
 
-def test_main_dinges():
+def available_boards():
+    print("Available boards:")
+    # Hier staan alle borden.
+    boards_dictionary = {
+        "6x6_1": "data/Rushhour6x6_1.csv",
+        "6x6_2": "data/Rushhour6x6_2.csv",
+        "6x6_3": "data/Rushhour6x6_3.csv",
+        "9x9_4": "data/Rushhour9x9_4.csv",
+        "9x9_5": "data/Rushhour9x9_5.csv",
+        "9x9_6": "data/Rushhour9x9_6.csv",
+        "12x12_7": "data/Rushhour12x12_7.csv"
+    }
+
+    for keys in boards_dictionary:
+        print(keys)
+
+    return boards_dictionary
+
+def available_algorithms():
+    print("Available algorithms:")
+    # Hierin kun je de beschikbare algoritmes plaatsen!
+    algorithms_dictionary = {
+<<<<<<< HEAD
+    "Algorithm_random.py",
+    "Algorithm_random_legal.py"
+=======
+        "random_legal_biasedforlastmove": make_random_legal_move_biased_to_repeat_last_move,
+        "random": make_random_move,
+>>>>>>> ea5f9fd74b86530ceef254918961e59adb401267
+    }
+
+    for i in algorithms_dictionary:
+        print(i)
+
+    return algorithms_dictionary
+
+
+def experiment():
 
     # needed moves word hierin opgeslagen na solve
     total_moves = []
@@ -163,12 +200,24 @@ def test_main_dinges():
 
     # solve gegeven aantal keer de 12x12 game op
     # geeft score door aan total moves en loops
-    number_of_games = 100
+    number_of_games = int(input("How many games do you want to run for this experiment? "))
+    available_board_dictionary = available_boards()
+    board_pick = str
+    while board_pick not in available_board_dictionary:
+        board_pick = str(input("Which board will you pick? "))
+
+    algorithms = available_algorithms()
+    select_algorithm = str
+    while select_algorithm not in algorithms:
+        select_algorithm = input("Choose an algorithm: ")
+
+    selected_algorithm = algorithms[select_algorithm]
+    
     for i in range(number_of_games):
 
         history = History()
 
-        file_path = 'data/Rushhour12x12_7.csv'
+        file_path = available_board_dictionary[board_pick]
 
         game_file = GameFile(file_path)
         game = GameBoard(game_file)
@@ -199,7 +248,6 @@ def test_main_dinges():
     average_moves = (sum(total_moves) / len(total_moves))
     average_loops = (sum(total_loops) / len(total_loops))
 
-
     print(f"the average amount of moves needed for {number_of_games} games was {average_moves} moves, and {average_loops} game loops")
 
 
@@ -220,8 +268,37 @@ def breadth_first_search1():
 
 
 
+
+def main():
+
+    while True:
+
+        mode = str
+        while mode not in ['v', 'e']:
+            mode = input("Do you want to run the game in Visual mode or Experiment mode? (v/e) ").lower()
+    
+        if mode == 'v':
+            manual()
+        elif mode == 'e':
+            experiment()
+
+        continu = str
+        while continu not in ['q', 'c']:
+            continu = input("Do you want to continue, or quit? (c/q) ")
+
+        if continu == 'q':
+            break
+        elif continu == 'c':
+            continue
+
+
 if __name__ == '__main__':
 
-    #test_main_dinges()
-    #main()
-    breadth_first_search1()
+ 
+    
+# file met allemaal verschillende algoritmes.
+# radio russia repository
+# madplotlib
+# codebase belangirjk!!
+# voor presentatie alleen kijken naar algoritmes 
+# algoritmes als classes!
