@@ -155,27 +155,32 @@ def manual():
 def available_boards():
     print("Available boards:")
     # Hier staan alle borden.
-    boards_list = [
-        "data/Rushhour6x6_1.csv",
-        "data/Rushhour6x6_2.csv",
-        "data/Rushhour6x6_3.csv",
-        "data/Rushhour9x9_4.csv",
-        "data/Rushhour9x9_5.csv",
-        "data/Rushhour9x9_6.csv",
-        "data/Rushhour12x12_7.csv"
-    ]
+    boards_dictionary = {
+        "6x6_1": "data/Rushhour6x6_1.csv",
+        "6x6_2": "data/Rushhour6x6_2.csv",
+        "6x6_3": "data/Rushhour6x6_3.csv",
+        "9x9_4": "data/Rushhour9x9_4.csv",
+        "9x9_5": "data/Rushhour9x9_5.csv",
+        "9x9_6": "data/Rushhour9x9_6.csv",
+        "12x12_7": "data/Rushhour12x12_7.csv"
+    }
 
-    for board in boards_list:
-        print(board)
+    for keys in boards_dictionary:
+        print(keys)
 
-    return boards_list
+    return boards_dictionary
 
 def available_algorithms():
     print("Available algorithms:")
     # Hierin kun je de beschikbare algoritmes plaatsen!
     algorithms_dictionary = {
+<<<<<<< HEAD
     "Algorithm_random.py",
     "Algorithm_random_legal.py"
+=======
+        "random_legal_biasedforlastmove": make_random_legal_move_biased_to_repeat_last_move,
+        "random": make_random_move,
+>>>>>>> ea5f9fd74b86530ceef254918961e59adb401267
     }
 
     for i in algorithms_dictionary:
@@ -195,9 +200,9 @@ def experiment():
     # solve gegeven aantal keer de 12x12 game op
     # geeft score door aan total moves en loops
     number_of_games = int(input("How many games do you want to run for this experiment? "))
-    available_board_list = available_boards()
+    available_board_dictionary = available_boards()
     board_pick = str
-    while board_pick not in available_board_list:
+    while board_pick not in available_board_dictionary:
         board_pick = str(input("Which board will you pick? "))
 
     algorithms = available_algorithms()
@@ -211,7 +216,7 @@ def experiment():
 
         history = History()
 
-        file_path = board_pick
+        file_path = available_board_dictionary[board_pick]
 
         game_file = GameFile(file_path)
         game = GameBoard(game_file)
@@ -230,7 +235,7 @@ def experiment():
             #   maak de rest comments, (NIET OM INPUT GAAN VRAGEN)
             #
             #
-            random_car, random_direction = selected_algorithm(game, history)
+            random_car, random_direction = selected_algorithm(game, history, game_file)
             #random_car, random_direction = make_random_legal_move(game)
             #random_car, random_direction = make_random_move(game_file)
 
