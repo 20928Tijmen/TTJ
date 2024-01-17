@@ -13,7 +13,7 @@ class RandomMove:
     test: the average amount of moves needed for 10 games was 95695.6 moves, and 374166.4 game loops
     """
 
-    def __init__(self, game_file):
+    def __init__(self, game, history, game_file):
         self.game_file = game_file
 
     def make_move(self):

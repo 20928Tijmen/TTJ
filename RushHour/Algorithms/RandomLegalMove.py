@@ -11,7 +11,7 @@ class RandomLegalMove:
     
     """
     
-    def __init__(self, game):
+    def __init__(self, game, history, game_file):
         self.game = game
 
     def make_move(self):

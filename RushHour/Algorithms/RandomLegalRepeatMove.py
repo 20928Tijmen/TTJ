@@ -12,7 +12,7 @@ class RandomLegalRepeatMove:
     test: the average amount of moves needed for 100 games was 21160.38 moves, and 21160.38 game loops
     """
     
-    def __init__(self, game, history):
+    def __init__(self, game, history, game_file):
         self.game = game
         self.history = history
 

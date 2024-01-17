@@ -62,7 +62,6 @@ class GameBoard:
             target_row = base[0] + (rotation[0] * length)
             target_col = base[1] + (rotation[1] * length)
             if target_row >= len(self._board) or target_col >= len(self._board):
-                print("You cannot go there!")
                 return False
         elif direction == -1:
             target_row = base[0] - rotation[0]
@@ -72,7 +71,6 @@ class GameBoard:
             return False
         
         if self._board[target_row][target_col] != 0 or target_col < 0 or target_row < 0:
-            print("You cannot go there!")
             return False
 
         elif self._board[target_row][target_col] == 0:
