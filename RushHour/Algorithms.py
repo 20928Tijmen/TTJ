@@ -1,7 +1,7 @@
 import random
 
 
-def make_random_move(game_file) -> (str, int):
+def make_random_move(game, history, game_file) -> (str, int):
     """
     make a random move
 
@@ -47,7 +47,7 @@ def make_random_legal_move(game) -> (str, int):
     return random_car, random_direction
 
 
-def make_random_legal_move_biased_to_repeat_last_move(game, history) -> (str, int):
+def make_random_legal_move_biased_to_repeat_last_move(game, history, game_file) -> (str, int):
     """
     make a random legal move by first making a random move, but remaking if its an illegal move
 

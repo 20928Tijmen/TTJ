@@ -176,6 +176,7 @@ def available_algorithms():
     # Hierin kun je de beschikbare algoritmes plaatsen!
     algorithms_dictionary = {
         "random_legal_biasedforlastmove": make_random_legal_move_biased_to_repeat_last_move,
+        "random": make_random_move,
     }
 
     for i in algorithms_dictionary:
@@ -230,7 +231,7 @@ def experiment():
             #   maak de rest comments, (NIET OM INPUT GAAN VRAGEN)
             #
             #
-            random_car, random_direction = selected_algorithm(game, history)
+            random_car, random_direction = selected_algorithm(game, history, game_file)
             #random_car, random_direction = make_random_legal_move(game)
             #random_car, random_direction = make_random_move(game_file)
 
