@@ -1,9 +1,8 @@
+from Algorithms import BFS, RandomMove, RandomLegalMove, RandomLegalRepeatMove
+from Classes import GameBoard, GameFile, History
 
-from GameBoardClass import GameBoard
-from GameFileClass import GameFile
-from History import History
-import os
-import random
+import os, random
+
 # import numpy as np
 # import matplotlib.pyplot as plt
 
@@ -162,7 +161,7 @@ def available_boards():
         "9x9_4": "data/Rushhour9x9_4.csv",
         "9x9_5": "data/Rushhour9x9_5.csv",
         "9x9_6": "data/Rushhour9x9_6.csv",
-        "12x12_7": "data/Rushhour12x12_7.csv"
+        "12x12_7": "data/Rushhour12x12_7.csv",
     }
 
     for keys in boards_dictionary:
@@ -170,16 +169,18 @@ def available_boards():
 
     return boards_dictionary
 
+
 def available_algorithms():
     print("Available algorithms:")
     # Hierin kun je de beschikbare algoritmes plaatsen!
     algorithms_dictionary = {
-        # "random_legal_biasedforlastmove": make_random_legal_move_biased_to_repeat_last_move,
-        # "random": make_random_move,
+        "randomlegalmove": RandomLegalMove,
+        "randomlegalrepeatmove": RandomLegalRepeatMove,
+        "randommove": RandomMove,
     }
 
-    for i in algorithms_dictionary:
-        print(i)
+    for keys in algorithms_dictionary:
+        print(keys)
 
     return algorithms_dictionary
 
@@ -192,9 +193,8 @@ def experiment():
     # illegal moves worden niet bijgehouden, dus tel OOK hoevaak de game loop gerund word
     total_loops = []
 
-    # solve gegeven aantal keer de 12x12 game op
-    # geeft score door aan total moves en loops
     number_of_games = int(input("How many games do you want to run for this experiment? "))
+    
     available_board_dictionary = available_boards()
     board_pick = str
     while board_pick not in available_board_dictionary:
@@ -203,7 +203,7 @@ def experiment():
     algorithms = available_algorithms()
     select_algorithm = str
     while select_algorithm not in algorithms:
-        select_algorithm = input("Choose an algorithm: ")
+        select_algorithm = input("Choose an algorithm: ").lower()
 
     selected_algorithm = algorithms[select_algorithm]
     
@@ -229,8 +229,8 @@ def experiment():
             #   Kies je algoritme om te testen, maar 1 per keer natuurlijk
             #   maak de rest comments, (NIET OM INPUT GAAN VRAGEN)
             #
-            #
-            random_car, random_direction = selected_algorithm(game, history, game_file)
+            random_move_algorithm = selected_algorithm(game, history, game_file)
+            random_car, random_direction = random_move_algorithm.make_move()
             #random_car, random_direction = make_random_legal_move(game)
             #random_car, random_direction = make_random_move(game_file)
 
@@ -244,6 +244,29 @@ def experiment():
     average_loops = (sum(total_loops) / len(total_loops))
 
     print(f"the average amount of moves needed for {number_of_games} games was {average_moves} moves, and {average_loops} game loops")
+
+
+def breadth_first_search1():
+
+    available_board_dictionary = available_boards()
+    board_pick = str
+    while board_pick not in available_board_dictionary:
+        board_pick = str(input("Which board will you pick? "))    
+
+    file_path = available_board_dictionary[board_pick]
+
+    game_file = GameFile(file_path)
+    game = GameBoard(game_file)
+    
+    print(game.get_board_for_player())
+
+    bfs = BFS(game).run()
+
+
+    for move in bfs:
+            print(f"Move car {move[0]} in direction {move[1]}")
+
+
 
 
 def main():
@@ -268,11 +291,10 @@ def main():
         elif continu == 'c':
             continue
 
-
 if __name__ == '__main__':
+
     main()
-
-
+    
 # file met allemaal verschillende algoritmes.
 # radio russia repository
 # madplotlib

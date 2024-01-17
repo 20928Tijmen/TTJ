@@ -1,7 +1,4 @@
-from CarClass import Car
-from GameFileClass import GameFile
-from typing import Any
-
+from Classes.CarClass import Car
 
 class GameBoard:
     """
@@ -55,7 +52,6 @@ class GameBoard:
                 self._board[base_row + i * d_row][base_col + i * d_col] = name
 
 
-
     def move_car(self, letter: str, direction):
         car = self._dictionary_of_cars[letter]
         base = car.get_base()
@@ -66,7 +62,6 @@ class GameBoard:
             target_row = base[0] + (rotation[0] * length)
             target_col = base[1] + (rotation[1] * length)
             if target_row >= len(self._board) or target_col >= len(self._board):
-                print("You cannot go there!")
                 return False
         elif direction == -1:
             target_row = base[0] - rotation[0]
@@ -76,7 +71,6 @@ class GameBoard:
             return False
         
         if self._board[target_row][target_col] != 0 or target_col < 0 or target_row < 0:
-            print("You cannot go there!")
             return False
 
         elif self._board[target_row][target_col] == 0:
@@ -151,10 +145,12 @@ class GameBoard:
 
         return board
 
+
     def is_won(self):
         if (self._dictionary_of_cars['X'].get_base()[1]) >= ((len(self.get_board()[0])) - 2):
             return True
         return False
+
 
     def get_board(self):
         """
@@ -162,6 +158,7 @@ class GameBoard:
         """
         return self._board
     
+
     def is_legal_move(self, letter, direction) -> bool:
         """
         ik gebruik deze in algoritme make_random_legal_move , voor nu ff zo
@@ -190,3 +187,77 @@ class GameBoard:
             return False
 
         return True
+
+
+    def get_all_legal_moves(self):
+
+        moves = []
+
+        for name in self.game_file.get_car_names():
+            for direction in [1, -1]:
+                if self.is_legal_move(name, direction):
+                    moves.append((name, direction))
+        return moves
+    
+
+    def get_board_as_hash(self):
+        """
+        Elk bord kan je zien als string ja.
+        Maak van die string een hash
+        Dit is een int uniek voor deze string
+        
+        """
+        board_string = ''
+        for row in self._board:
+            board_string += ''.join(str(row)) + ';'
+        return hash(board_string)
+
+
+    def set_board(self, new_board):
+        """
+        Sets the board to the given state and updates the positions of the cars.
+        """
+        self._board = [row[:] for row in new_board]  # je kan niet gwn = doen want list list
+        self._update_car_bases()
+
+
+    def _update_car_bases(self):
+        """
+        Updates the base of the cars in _dictionary_of_cars based on the current board state.
+        """
+        # Set car base to null null
+        for car in self._dictionary_of_cars.values():
+            car.reset_base()
+
+        # Iterate over the board and update car base
+        # The base of the car is always the first it finds
+        for row_idx, row in enumerate(self._board):
+            for col_idx, cell in enumerate(row):
+                if cell != 0: 
+                    car = self._dictionary_of_cars[cell]
+                    if not car.is_base_set():
+                        car.set_base(row_idx, col_idx) # Update the car's base
+
+
+    def generate_all_possible_succesor_boards(self):
+        """
+        Take all legal moves, execute them, and save the board along with the move made.
+        Return a list of tuples, (successor board, and the move that led to it)
+        """
+        successor_states = []
+        original_board = [row[:] for row in self._board]  # Make a copy, cant do just = 
+
+        all_legal_moves = self.get_all_legal_moves()
+
+        for move in all_legal_moves:
+            self.move_car(move[0], move[1])
+
+            # Add the board and move to list
+            new_state_board = [row[:] for row in self._board]
+            successor_states.append((new_state_board, move))
+            
+            # Reset board to original
+            self.set_board(original_board)
+
+        return successor_states
+

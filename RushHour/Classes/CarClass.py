@@ -94,3 +94,15 @@ class Car:
         Sets a new base position for the car.
         """
         self._base = [row, col]
+
+    def reset_base(self):
+        """
+        Sets the base to [0, 0]
+        """
+        self._base = [None, None]
+
+    def is_base_set(self):
+        """
+        Checks if the car's base has been set.
+        """
+        return self._base[0] is not None and self._base[1] is not None
