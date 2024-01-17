@@ -174,13 +174,8 @@ def available_algorithms():
     print("Available algorithms:")
     # Hierin kun je de beschikbare algoritmes plaatsen!
     algorithms_dictionary = {
-<<<<<<< HEAD
-    "Algorithm_random.py",
-    "Algorithm_random_legal.py"
-=======
-        "random_legal_biasedforlastmove": make_random_legal_move_biased_to_repeat_last_move,
-        "random": make_random_move,
->>>>>>> ea5f9fd74b86530ceef254918961e59adb401267
+        # "random_legal_biasedforlastmove": make_random_legal_move_biased_to_repeat_last_move,
+        # "random": make_random_move,
     }
 
     for i in algorithms_dictionary:
