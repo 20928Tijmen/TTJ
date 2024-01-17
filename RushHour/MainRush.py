@@ -5,6 +5,7 @@ from History import History
 from Algorithms import *
 import os
 import random
+from BFS import BFS
 
 # import os voor uitlezen van een folder in load_board_opstellingen()
 # import random voor pick_board_random()
@@ -83,7 +84,7 @@ def pick_board_random() -> str:
     '''
     return random.choice(load_board_opstellingen('data'))
 
-
+'''
 def main():
     """
     Main function to run the Rush Hour game.
@@ -150,7 +151,7 @@ def main():
             print(game.get_board_for_player())
             print('Move count:',history.get_counter())
             print(history.get_move_history())
-
+'''
 
 def test_main_dinges():
 
@@ -185,7 +186,7 @@ def test_main_dinges():
             #   Kies je algoritme om te testen, maar 1 per keer natuurlijk
             #   maak de rest comments, (NIET OM INPUT GAAN VRAGEN)
             #
-            #random_car, random_direction = make_random_legal_move_biased_to_repeat_last_move(game, history)
+            random_car, random_direction = make_random_legal_move_biased_to_repeat_last_move(game, history)
             #random_car, random_direction = make_random_legal_move(game)
             #random_car, random_direction = make_random_move(game_file)
 
@@ -201,7 +202,26 @@ def test_main_dinges():
 
     print(f"the average amount of moves needed for {number_of_games} games was {average_moves} moves, and {average_loops} game loops")
 
+
+def breadth_first_search1():
+
+    file_path = 'data/Rushhour6x6_1.csv'
+
+    game_file = GameFile(file_path)
+    game = GameBoard(game_file)
+    
+    print(game.get_board_for_player())
+
+    bfs = BFS(game).run()
+
+
+    for move in bfs:
+            print(f"Move car {move[0]} in direction {move[1]}")
+
+
+
 if __name__ == '__main__':
 
-    test_main_dinges()
+    #test_main_dinges()
     #main()
+    breadth_first_search1()
