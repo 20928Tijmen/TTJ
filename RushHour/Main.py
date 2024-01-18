@@ -156,35 +156,39 @@ def manual():
             print(history.get_move_history())
 
 def available_boards():
-    print("Available boards:")
+    print("\nAvailable boards:\n")
     # Hier staan alle borden.
     boards_dictionary = {
-        "6x6_1": "data/Rushhour6x6_1.csv",
-        "6x6_2": "data/Rushhour6x6_2.csv",
-        "6x6_3": "data/Rushhour6x6_3.csv",
-        "9x9_4": "data/Rushhour9x9_4.csv",
-        "9x9_5": "data/Rushhour9x9_5.csv",
-        "9x9_6": "data/Rushhour9x9_6.csv",
-        "12x12_7": "data/Rushhour12x12_7.csv",
+        '1': "data/Rushhour6x6_1.csv",
+        '2': "data/Rushhour6x6_2.csv",
+        '3': "data/Rushhour6x6_3.csv",
+        '4': "data/Rushhour9x9_4.csv",
+        '5': "data/Rushhour9x9_5.csv",
+        '6': "data/Rushhour9x9_6.csv",
+        '7': "data/Rushhour12x12_7.csv",
     }
+    
+    board_sizes = ['6x6', '6x6', '6x6', '9x9', '9x9', '9x9', '12x12']
 
-    for keys in boards_dictionary:
-        print(keys)
+    for i in range(len(boards_dictionary)):
+        print(f'{i + 1}: {board_sizes[i]}\n')
 
     return boards_dictionary
 
 
 def available_algorithms():
-    print("Available algorithms:")
+    print("\nAvailable algorithms:\n")
     # Hierin kun je de beschikbare algoritmes plaatsen!
     algorithms_dictionary = {
-        "randomlegalmove": RandomLegalMove,
-        "randomlegalrepeatmove": RandomLegalRepeatMove,
-        "randommove": RandomMove,
+        "1": RandomLegalMove,
+        "2": RandomLegalRepeatMove,
+        "3": RandomMove,
     }
 
-    for keys in algorithms_dictionary:
-        print(keys)
+    algorithm_names = ['RandomLegalMove', 'RandomLegalRepeatMove', 'RandomMove']
+
+    for i in range (len(algorithms_dictionary)):
+        print(f'{i + 1}: {algorithm_names[i]}\n')
 
     return algorithms_dictionary
 
@@ -215,7 +219,7 @@ def experiment():
     total_loops = []
 
 
-    number_of_games = int(input("How many games do you want to run for this experiment? "))
+    number_of_games = int(input("\nHow many games do you want to run for this experiment? "))
     
     available_board_dictionary = available_boards()
     board_pick = str
@@ -228,7 +232,7 @@ def experiment():
         select_algorithm = input("Choose an algorithm: ").lower()
 
     selected_algorithm = algorithms[select_algorithm]
-    
+        
     for i in range(number_of_games):
 
         history = History()
@@ -264,7 +268,7 @@ def experiment():
     # Add to list of algorithms used and their average moves made
     algorithms_used_and_their_average_moves[select_algorithm] = average_moves
 
-    print(f"the average amount of moves needed for {number_of_games} games was {average_moves} moves, and {average_loops} game loops")
+    print(f"\nThe average amount of moves needed for {number_of_games} games was {average_moves} moves, and {average_loops} game loops")
 
 def breadth_first_search1():
 
@@ -291,7 +295,7 @@ def main():
 
         mode = str
         while mode not in ['b', 'e']:
-            mode = input("Do you want to run the game in Breadth-first mode or Random-Experiment mode? (b/e) ").lower()
+            mode = input("\nDo you want to run the game with the Breadth-first algorithm, or in Random-Experiment mode? (b/e) ").lower()
     
         if mode == 'b':
             breadth_first_search1()
@@ -300,7 +304,7 @@ def main():
 
         continu = str
         while continu not in ['q', 'c']:
-            continu = input("Do you want to continue, or quit? (c/q) ")
+            continu = input("\nDo you want to continue, or quit? (c/q) ")
 
         if continu == 'q':
             # prints into a barchart
