@@ -192,12 +192,12 @@ def available_algorithms():
 def print_in_barchart(data_dict):
     X_data = list(data_dict.keys())
     Y_data = list(data_dict.values())
-    amount_of_times_run = 1000
+    amount_of_times_run = 10000
 
     plt.bar(X_data, Y_data)
-    plt.title(f'{amount_of_times_run} times run')
+    plt.title(f'Ran algorithms {amount_of_times_run} times on 6x6_1')
     plt.xlabel('Algorithms')
-    plt.ylabel('average amount of moves made')
+    plt.ylabel('Average amount of moves made')
     return plt.show()
 
 
