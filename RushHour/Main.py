@@ -49,8 +49,6 @@ def get_paths_of_size(file_paths: list[str], size: str):
             paths.append(path)
             options.append(path[-5])
 
-    options = sorted(options)
-
     return paths, options
 
 
@@ -226,13 +224,9 @@ def experiment():
                 total_loops.append(loop_counter)
                 break
 
-            #   Kies je algoritme om te testen, maar 1 per keer natuurlijk
-            #   maak de rest comments, (NIET OM INPUT GAAN VRAGEN)
-            #
+
             random_move_algorithm = selected_algorithm(game, history, game_file)
             random_car, random_direction = random_move_algorithm.make_move()
-            #random_car, random_direction = make_random_legal_move(game)
-            #random_car, random_direction = make_random_move(game_file)
 
             if game.move_car(random_car, random_direction):
                 history.add_move(random_car, random_direction)
@@ -265,6 +259,8 @@ def breadth_first_search1():
 
     for move in bfs:
             print(f"Move car {move[0]} in direction {move[1]}")
+    
+
 
 
 
@@ -291,10 +287,31 @@ def main():
         elif continu == 'c':
             continue
 
-if __name__ == '__main__':
 
-    main()
+
+def  Joosts_test_paradijs():
+
+    all_paths = load_board_opstellingen('data')
+
+    paths = get_paths_of_size(all_paths, '9')[0]
+
+    for file_path in paths:
+
+        game_file = GameFile(file_path)
+        game = GameBoard(game_file)
+
+        bfs = BFS(game)
+
+        bfs.run()
+
+        bfs.csv_output()
     
+    print('done')
+
+
+if __name__ == '__main__':
+    
+    Joosts_test_paradijs()
 # file met allemaal verschillende algoritmes.
 # radio russia repository
 # madplotlib
