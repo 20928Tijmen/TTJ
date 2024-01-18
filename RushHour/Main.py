@@ -1,10 +1,14 @@
 from Algorithms import BFS, RandomMove, RandomLegalMove, RandomLegalRepeatMove
 from Classes import GameBoard, GameFile, History
 
+# pip3 install matplotlib numpy
+    
+import numpy as np
+import matplotlib.pyplot as plt
+
 import os, random
 
-# import numpy as np
-# import matplotlib.pyplot as plt
+
 
 
 def load_board_opstellingen(path: str) -> list[str]:
@@ -185,6 +189,23 @@ def available_algorithms():
     return algorithms_dictionary
 
 
+def print_in_barchart(data_dict):
+    X_data = list(data_dict.keys())
+    Y_data = list(data_dict.values())
+    amount_of_times_run = 1000
+
+    plt.bar(X_data, Y_data)
+    plt.title(f'{amount_of_times_run} times run')
+    plt.xlabel('Algorithms')
+    plt.ylabel('average amount of moves made')
+    return plt.show()
+
+
+
+# list of algorithms used
+algorithms_used_and_their_average_moves = {}
+
+
 def experiment():
 
     # needed moves word hierin opgeslagen na solve
@@ -192,6 +213,7 @@ def experiment():
 
     # illegal moves worden niet bijgehouden, dus tel OOK hoevaak de game loop gerund word
     total_loops = []
+
 
     number_of_games = int(input("How many games do you want to run for this experiment? "))
     
@@ -226,13 +248,8 @@ def experiment():
                 total_loops.append(loop_counter)
                 break
 
-            #   Kies je algoritme om te testen, maar 1 per keer natuurlijk
-            #   maak de rest comments, (NIET OM INPUT GAAN VRAGEN)
-            #
             random_move_algorithm = selected_algorithm(game, history, game_file)
             random_car, random_direction = random_move_algorithm.make_move()
-            #random_car, random_direction = make_random_legal_move(game)
-            #random_car, random_direction = make_random_move(game_file)
 
             if game.move_car(random_car, random_direction):
                 history.add_move(random_car, random_direction)
@@ -243,8 +260,11 @@ def experiment():
     average_moves = (sum(total_moves) / len(total_moves))
     average_loops = (sum(total_loops) / len(total_loops))
 
-    print(f"the average amount of moves needed for {number_of_games} games was {average_moves} moves, and {average_loops} game loops")
+    
+    # Add to list of algorithms used and their average moves made
+    algorithms_used_and_their_average_moves[select_algorithm] = average_moves
 
+    print(f"the average amount of moves needed for {number_of_games} games was {average_moves} moves, and {average_loops} game loops")
 
 def breadth_first_search1():
 
@@ -262,12 +282,8 @@ def breadth_first_search1():
 
     bfs = BFS(game).run()
 
-
     for move in bfs:
-            print(f"Move car {move[0]} in direction {move[1]}")
-
-
-
+        print(f"Move car {move[0]} in direction {move[1]}")
 
 def main():
 
@@ -287,6 +303,8 @@ def main():
             continu = input("Do you want to continue, or quit? (c/q) ")
 
         if continu == 'q':
+            # prints into a barchart
+            print_in_barchart(algorithms_used_and_their_average_moves)
             break
         elif continu == 'c':
             continue
@@ -301,3 +319,4 @@ if __name__ == '__main__':
 # codebase belangirjk!!
 # voor presentatie alleen kijken naar algoritmes 
 # algoritmes als classes!
+    
