@@ -274,11 +274,11 @@ def main():
     while True:
 
         mode = str
-        while mode not in ['v', 'e']:
-            mode = input("Do you want to run the game in Visual mode or Experiment mode? (v/e) ").lower()
+        while mode not in ['b', 'e']:
+            mode = input("Do you want to run the game in Breadth-first mode or Random-Experiment mode? (b/e) ").lower()
     
-        if mode == 'v':
-            manual()
+        if mode == 'b':
+            breadth_first_search1()
         elif mode == 'e':
             experiment()
 
