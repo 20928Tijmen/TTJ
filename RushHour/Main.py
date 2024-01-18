@@ -1,10 +1,14 @@
 from Algorithms import BFS, RandomMove, RandomLegalMove, RandomLegalRepeatMove
 from Classes import GameBoard, GameFile, History
 
+# pip3 install matplotlib numpy
+    
+import numpy as np
+import matplotlib.pyplot as plt
+
 import os, random
 
-# import numpy as np
-# import matplotlib.pyplot as plt
+
 
 
 def load_board_opstellingen(path: str) -> list[str]:
@@ -183,6 +187,23 @@ def available_algorithms():
     return algorithms_dictionary
 
 
+def print_in_barchart(data_dict):
+    X_data = list(data_dict.keys())
+    Y_data = list(data_dict.values())
+    amount_of_times_run = 10000
+
+    plt.bar(X_data, Y_data)
+    plt.title(f'Ran algorithms {amount_of_times_run} times on 6x6_1')
+    plt.xlabel('Algorithms')
+    plt.ylabel('Average amount of moves made')
+    return plt.show()
+
+
+
+# list of algorithms used
+algorithms_used_and_their_average_moves = {}
+
+
 def experiment():
 
     # needed moves word hierin opgeslagen na solve
@@ -190,6 +211,7 @@ def experiment():
 
     # illegal moves worden niet bijgehouden, dus tel OOK hoevaak de game loop gerund word
     total_loops = []
+
 
     number_of_games = int(input("How many games do you want to run for this experiment? "))
     
@@ -237,8 +259,11 @@ def experiment():
     average_moves = (sum(total_moves) / len(total_moves))
     average_loops = (sum(total_loops) / len(total_loops))
 
-    print(f"the average amount of moves needed for {number_of_games} games was {average_moves} moves, and {average_loops} game loops")
+    
+    # Add to list of algorithms used and their average moves made
+    algorithms_used_and_their_average_moves[select_algorithm] = average_moves
 
+    print(f"the average amount of moves needed for {number_of_games} games was {average_moves} moves, and {average_loops} game loops")
 
 def breadth_first_search1():
 
@@ -256,13 +281,9 @@ def breadth_first_search1():
 
     bfs = BFS(game).run()
 
-
     for move in bfs:
             print(f"Move car {move[0]} in direction {move[1]}")
     
-
-
-
 
 
 def main():
@@ -283,6 +304,8 @@ def main():
             continu = input("Do you want to continue, or quit? (c/q) ")
 
         if continu == 'q':
+            # prints into a barchart
+            print_in_barchart(algorithms_used_and_their_average_moves)
             break
         elif continu == 'c':
             continue
