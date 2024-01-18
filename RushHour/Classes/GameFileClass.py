@@ -1,4 +1,3 @@
-import os # operating system
 import re # (REGEX!! gekke throwback naar DataRepresentaties)
 
 class GameFile:
