@@ -281,12 +281,15 @@ def breadth_first_search1():
     game_file = GameFile(file_path)
     game = GameBoard(game_file)
     
-    print(game.get_board_for_player())
+    game.show_board()
 
     bfs = BFS(game).run()
+    visual = GameBoard(game_file)
 
     for move in bfs:
-            print(f"Move car {move[0]} in direction {move[1]}")
+        print(f"Move car {move[0]} in direction {move[1]}")
+        visual.move_car(move[0], move[1])
+        visual.show_board()
     
 
 
