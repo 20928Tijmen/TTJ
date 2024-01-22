@@ -4,7 +4,7 @@ from Classes import GameBoard, GameFile, History
 # pip3 install matplotlib numpy
     
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 import os, random
 
@@ -323,7 +323,7 @@ def  Joosts_test_paradijs():
 
     all_paths = load_board_opstellingen('data')
 
-    paths = get_paths_of_size(all_paths, '9')[0]
+    paths = get_paths_of_size(all_paths, '6')[0]
 
     for file_path in paths:
 
