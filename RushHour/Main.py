@@ -1,5 +1,5 @@
 from Algorithms import BFS, RandomMove, RandomLegalMove, RandomLegalRepeatMove
-from Classes import GameBoard, GameFile, History, Results
+from Classes import GameBoard, GameFile, History
 
 # pip3 install matplotlib numpy
     
@@ -82,33 +82,37 @@ def pick_board_random() -> str:
     return random.choice(load_board_opstellingen('data'))
 
 
-def manual():
+def visual():
     """
     Main function to run the Rush Hour game.
     """
     # Create an instance of the History class
     history = History()
 
-    file_path = pick_board_random() if input("random? yes/no : ") == 'yes' else pick_board_manualy()
+    if input("Random board? yes/no : ") == 'yes':
+        file_path = pick_board_random()
+    else:
+        available_board_dictionary = available_boards()
+        board_pick = str
+        while board_pick not in available_board_dictionary:
+            board_pick = str(input("Which board will you pick? "))
+
+        file_path = available_board_dictionary[board_pick]  
+
+    algorithms = available_algorithms()
+    select_algorithm = str
+    while select_algorithm not in algorithms:
+        select_algorithm = input("Choose an algorithm: ").lower()
+
+        selected_algorithm = algorithms[select_algorithm]
+    
+    
     game_file = GameFile(file_path)
     game = GameBoard(game_file)
 
-    gameplay = 'Game'
-
-    while gameplay not in ['Automatic', 'Manual', 'm', 'a', 'M', 'A']:
-        gameplay = input("Automatic or Manual? ")
-
-    if gameplay == "Automatic" or gameplay == "A" or gameplay == "a":
-        algo = int(input("Which algorithm? 1, or 2? "))
-        if algo == 1:
-            algorithm = None
-        elif algo == 2:
-            algorithm = None
-
-    print(game.get_board_for_player())
-
     while True:
-    
+
+
         # This script plays when the game is won
         if (game.is_won()):
             print("Congratulations, you found your way out!")
@@ -116,40 +120,29 @@ def manual():
             break
 
         # ask user for input
-        if gameplay == 'Automatic' or gameplay == 'a' or gameplay == 'A':
-            letter = algorithm.random_car()
-        elif gameplay == 'Manual' or gameplay == 'm' or gameplay == 'M':
-            letter = input("give car letter: ").upper()
+        random_move_algorithm = selected_algorithm(game, history, game_file)
+        random_car, random_direction = random_move_algorithm.make_move()
+        
+        if game.move_car(random_car, random_direction) is not False:
+            history.add_move(random_car, random_direction)
+            history.add_board(game.get_board())
 
-            # give user the possibility to go back
-            if letter == "BACK":
-                if history.get_counter() < 1:
-                    print("Must have a history of moves")
-                    continue
-
-                # make the move back
-                game.make_move_back(history)
-
-                # update the history list
-                history.go_back()
-
-                # print for users
-                print(game.get_board_for_player())
-                print('Move count:',history.get_counter())
-                print(history.get_move_history())
+        game.show_board()
+        print('Move count:',history.get_counter())
+        print(history.get_move_history())
+        continue
+        
+        # give user the possibility to go back
+        if letter == "BACK":
+            if history.get_counter() < 1:
+                print("Must have a history of moves")
                 continue
 
-            direction = input("give direction: -1 or 1").upper()
+            # make the move back
+            game.make_move_back(history)
 
-            # Make move and add move and board to history
-            if game.move_car(letter, direction) is not False:
-                history.add_move(letter, direction)
-                history.add_board(game.get_board())
-
-            # print for users
-            print(game.get_board_for_player())
-            print('Move count:',history.get_counter())
-            print(history.get_move_history())
+            # update the history list
+            history.go_back()
 
 def available_boards():
     print("\nAvailable boards:\n")
@@ -266,6 +259,7 @@ def experiment():
 
     print(f"\nThe average amount of moves needed for {number_of_games} games was {average_moves} moves, and {average_loops} game loops")
 
+
 def breadth_first_search1():
 
     available_board_dictionary = available_boards()
@@ -294,13 +288,15 @@ def main():
     while True:
 
         mode = str
-        while mode not in ['b', 'e']:
-            mode = input("\nDo you want to run the game with the Breadth-first algorithm, or in Random-Experiment mode? (b/e) ").lower()
+        while mode not in ['v', 'e', 'b']:
+            mode = input("\nDo you want to run the game in the Visual mode, or in the Experiment mode, or in BFS? (v/e/b) ").lower()
     
-        if mode == 'b':
-            breadth_first_search1()
+        if mode == 'v':
+            visual()
         elif mode == 'e':
             experiment()
+        elif mode == 'b':
+            breadth_first_search1()
 
         continu = str
         while continu not in ['q', 'c']:
