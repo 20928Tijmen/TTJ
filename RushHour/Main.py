@@ -278,12 +278,15 @@ def breadth_first_search1():
     game_file = GameFile(file_path)
     game = GameBoard(game_file)
     
-    print(game.get_board_for_player())
+    game.show_board()
 
     bfs = BFS(game).run()
+    visual = GameBoard(game_file)
 
     for move in bfs:
         print(f"Move car {move[0]} in direction {move[1]}")
+        visual.move_car(move[0], move[1])
+        visual.show_board()
 
 
 def main():
@@ -316,7 +319,7 @@ def  Joosts_test_paradijs():
 
     all_paths = load_board_opstellingen('data')
 
-    paths = get_paths_of_size(all_paths, '9')[0]
+    paths = get_paths_of_size(all_paths, '6')[0]
 
     for file_path in paths:
 
@@ -336,7 +339,6 @@ if __name__ == '__main__':
     
     #Joosts_test_paradijs()
     main()
-
 
 
 # file met allemaal verschillende algoritmes.
