@@ -341,7 +341,7 @@ def  Joosts_test_paradijs():
 
 if __name__ == '__main__':
     
-    Joosts_test_paradijs()
+    main()
 # file met allemaal verschillende algoritmes.
 # radio russia repository
 # madplotlib

@@ -147,7 +147,7 @@ class GameBoard:
 
     def show_board(self):
         """
-        An alternative board that relies on print-statements.
+        An alternative and more simplified board that relies on print-statements.
         """
         size = int(self.game_file.board_size)
         exit_row = {6: 2, 9: 4, 12: 5}[size]
@@ -155,9 +155,9 @@ class GameBoard:
         def park_car(column):
             if column != 0:
                 car = self._dictionary_of_cars[column].get_name_colored()
-                print(f"{car}", end="")
+                print(f"{car}|", end="")
             else:
-                print("    ", end="")
+                print("    |", end="")
 
         def draw_line(size):
             print("\n+" + "====+" * size)
@@ -168,12 +168,11 @@ class GameBoard:
             print("|", end="")
             for column in row:
                 park_car(column)
-                print("|", end="")
 
             if i == exit_row or i == exit_row - 1:
                 draw_line(size + 1)
             else:
-                draw_line(size)     
+                draw_line(size)
 
 
     def is_won(self):
