@@ -1,5 +1,5 @@
 from Algorithms import BFS, RandomMove, RandomLegalMove, RandomLegalRepeatMove
-from Classes import GameBoard, GameFile, History
+from Classes import GameBoard, GameFile, History, Results
 
 # pip3 install matplotlib numpy
     
@@ -7,8 +7,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 import os, random
-
-
 
 
 def load_board_opstellingen(path: str) -> list[str]:
@@ -216,7 +214,6 @@ def experiment():
     # illegal moves worden niet bijgehouden, dus tel OOK hoevaak de game loop gerund word
     total_loops = []
 
-
     number_of_games = int(input("\nHow many games do you want to run for this experiment? "))
     
     available_board_dictionary = available_boards()
@@ -286,8 +283,7 @@ def breadth_first_search1():
     bfs = BFS(game).run()
 
     for move in bfs:
-            print(f"Move car {move[0]} in direction {move[1]}")
-    
+        print(f"Move car {move[0]} in direction {move[1]}")
 
 
 def main():
@@ -338,10 +334,58 @@ def  Joosts_test_paradijs():
 
 if __name__ == '__main__':
     
-    Joosts_test_paradijs()
+    #Joosts_test_paradijs()
+    main()
+
+
+
 # file met allemaal verschillende algoritmes.
 # radio russia repository
 # madplotlib
 # codebase belangirjk!!
 # voor presentatie alleen kijken naar algoritmes 
 # algoritmes als classes!
+    
+
+#lecture maandag week 3:
+    # zet de algoritmes tegenover elkaar
+        # veel resultaten!
+    #(unit)tests
+    # kloppen all tussenstappen? springt een auto over een auto heen?
+
+
+# Reproducibility!!!!! Deze is belangrijk:
+    # Deel de code
+    # Deel de input
+    # Documenteer hoe de code is ....?
+    #
+    #
+
+#Tips:
+# Schrijf scripts voor de experimenten
+# Liever te veel data, dan te weinig
+# Gebruik een "seed" bij random algoritmes.
+# Schrijf scripts voor het visualiseren van resultaten
+# requirements.txt!!!!!!!!!!!!!!! belangrijk voor matplotlib, Thijs gebruikt een oudere versie, dus anderen moeten testen of het werkt met hun versie.
+# Schijf scripts!!!
+    
+
+# algoritmes vegelijken:
+    # Tijd en ruimte
+
+    # Tijd: dezelfde computer, rapporteer specs: Proceser, deel de code, gebruik geen profiler
+
+    # median is belangrijker dan mean! Dus boxplot is wel handig denk ik
+
+# from statistics import variance, stdev
+    
+
+# kijk uit met claims
+# Buggy implementaties...?
+# under promise, over deliver
+# geef een oplossing voor de case
+    
+# one factor at a time
+# grid search : paken twee parameters en .....
+    
+
