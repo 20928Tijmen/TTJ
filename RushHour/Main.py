@@ -191,9 +191,15 @@ def print_in_barchart(data_dict):
     plt.title(f'Ran algorithms {amount_of_times_run} times on 6x6_1')
     plt.xlabel('Algorithms')
     plt.ylabel('Average amount of moves made')
-    return plt.show()
 
+    # Save the plot to a file
+    picture = plt.savefig(str(input("Picture name? ")))
 
+    # Display a message to the user
+    print(f"The result is saved as {picture}. Please check the files!")
+
+def save_data():
+    None
 
 # list of algorithms used
 algorithms_used_and_their_average_moves = {}
@@ -326,6 +332,7 @@ def Joosts_test_paradijs():
 
 if __name__ == '__main__':
     
+    # Joosts_test_paradijs()
     main()
 
 

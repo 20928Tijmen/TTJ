@@ -74,6 +74,8 @@ class History():
 
         !!!! een move met 0 is bij random dus dat 1 en -1 achter elkaar gespeeld werden !!!
 
+        Als een auto twee keer dezelfde beweging maakt dan compressed hij dat naar 1 move zeg maar.
+
         """
         compressed_history = [self.move_history[0]]
 
