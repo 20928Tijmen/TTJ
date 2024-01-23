@@ -1,3 +1,4 @@
+import random
 from Classes.CarClass import Car
 
 class GameBoard:
@@ -19,6 +20,8 @@ class GameBoard:
         self._dictionary_of_cars = self._create_cars()
         self._board = self._create_empty_board()
         self._place_cars()
+
+        self._original_board = [row[:] for row in self._board]
 
 
     def _create_empty_board(self):
@@ -229,7 +232,7 @@ class GameBoard:
         return moves
     
 
-    def get_board_as_hash(self):
+    def get_board_as_hash(self, board):
         """
         Elk bord kan je zien als string ja.
         Maak van die string een hash
@@ -237,10 +240,12 @@ class GameBoard:
         
         """
         board_string = ''
-        for row in self._board:
+        for row in board:
             board_string += ''.join(str(row)) + ';'
         return hash(board_string)
 
+    def reset_board(self):
+        self.set_board(self._original_board)
 
     def set_board(self, new_board):
         """
@@ -290,3 +295,10 @@ class GameBoard:
 
         return successor_states
 
+    def red_at_exit(self, board):
+        exit_row = {6: 2, 9: 4, 12: 5}[len(board)]
+        return board[exit_row][-1] == 'X'
+
+    def score(self, board) -> int:
+        exit_row = {6: 2, 9: 4, 12: 5}[len(board)]
+        return len(board) - board[exit_row].index('X')
