@@ -263,6 +263,7 @@ def experiment():
     average_moves = (sum(total_moves) / len(total_moves))
     average_loops = (sum(total_loops) / len(total_loops))
 
+    print(history.get_board_history())
     
     # Add to list of algorithms used and their average moves made
     algorithms_used_and_their_average_moves[select_algorithm] = average_moves
@@ -318,25 +319,18 @@ def main():
             continue
 
 
+import time 
 
-def  Joosts_test_paradijs():
+def Joosts_test_paradijs():
+    file_path = 'data/Rushhour9x9_4.csv'
+    game_file = GameFile(file_path)
 
-    all_paths = load_board_opstellingen('data')
-
-    paths = get_paths_of_size(all_paths, '6')[0]
-
-    for file_path in paths:
-
-        game_file = GameFile(file_path)
-        game = GameBoard(game_file)
-
-        bfs = BFS(game)
-
-        bfs.run()
-
-        bfs.csv_output()
+    game = GameBoard(game_file)
+    bfs = BFS(game)
     
-    print('done')
+    results = bfs.run()
+    print(len(results[0]), results[1])
+
 
 
 if __name__ == '__main__':
