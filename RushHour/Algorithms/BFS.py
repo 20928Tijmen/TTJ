@@ -86,7 +86,7 @@ class BFS:
         Zie mapje results.
 
         """
-        results_dir = 'Results'
+        results_dir = 'Results_BFS'
         if not os.path.exists(results_dir):
             os.makedirs(results_dir)
 

@@ -302,3 +302,7 @@ class GameBoard:
     def score(self, board) -> int:
         exit_row = {6: 2, 9: 4, 12: 5}[len(board)]
         return len(board) - board[exit_row].index('X')
+
+    def score(self, board) -> int:
+
+        red_close

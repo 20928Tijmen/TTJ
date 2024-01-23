@@ -314,21 +314,22 @@ def main():
 import time 
 
 def Joosts_test_paradijs():
-    file_path = 'data/Rushhour9x9_4.csv'
+    file_path = 'data/Rushhour6x6_1.csv'
     game_file = GameFile(file_path)
 
     game = GameBoard(game_file)
     bfs = BFS(game)
     
-    results = bfs.run()
-    print(len(results[0]), results[1])
+    bfs.run()
+    bfs.csv_output()
+    
 
 
 
 if __name__ == '__main__':
     
-    #Joosts_test_paradijs()
-    main()
+    Joosts_test_paradijs()
+    
 
 
 # file met allemaal verschillende algoritmes.
