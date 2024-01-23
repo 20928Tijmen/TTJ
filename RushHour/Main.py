@@ -200,7 +200,8 @@ def print_in_barchart(data_dict):
     plt.ylabel('Average amount of moves made')
     return plt.show()
 
-
+def save_data():
+    None
 
 # list of algorithms used
 algorithms_used_and_their_average_moves = {}
@@ -337,7 +338,7 @@ def  Joosts_test_paradijs():
 
 if __name__ == '__main__':
     
-    #Joosts_test_paradijs()
+    # Joosts_test_paradijs()
     main()
 
 

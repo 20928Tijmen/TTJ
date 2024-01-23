@@ -14,11 +14,11 @@ class BFS:
             current_board, path = self.queue.popleft()
             self.game.set_board(current_board)
 
-            if self.game.is_won(): 
+            if self.game.is_won():
                 self._path_found = path
                 return path 
 
-            
+
             for successor_board, move in self.game.generate_all_possible_succesor_boards():
                 self.game.set_board(successor_board)
                 board_hash = self.game.get_board_as_hash()
