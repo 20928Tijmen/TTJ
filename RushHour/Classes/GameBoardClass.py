@@ -299,10 +299,19 @@ class GameBoard:
         exit_row = {6: 2, 9: 4, 12: 5}[len(board)]
         return board[exit_row][-1] == 'X'
 
-    def score(self, board) -> int:
+    def red_score(self, board) -> int:
         exit_row = {6: 2, 9: 4, 12: 5}[len(board)]
         return len(board) - board[exit_row].index('X')
 
-    def score(self, board) -> int:
+    def cars_blocking_red(self, board) -> int:
+        exit_row = {6: 2, 9: 4, 12: 5}[len(board)]
+        red_index = board[exit_row].index('X')
 
-        red_close
+        score = 0
+        for cell in board[red_index:]:
+            if cell != 'X' and cell != 0:
+                score += 3
+        return score
+
+    def score(self, board) -> int:
+        return self.red_score(board) + self.cars_blocking_red(board)
