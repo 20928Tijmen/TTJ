@@ -84,6 +84,43 @@ def pick_board_random() -> str:
     '''
     return random.choice(load_board_opstellingen('data'))
 
+def available_boards():
+    print("\nAvailable boards:\n")
+    # Hier staan alle borden.
+    boards_dictionary = {
+        '1': "data/Rushhour6x6_1.csv",
+        '2': "data/Rushhour6x6_2.csv",
+        '3': "data/Rushhour6x6_3.csv",
+        '4': "data/Rushhour9x9_4.csv",
+        '5': "data/Rushhour9x9_5.csv",
+        '6': "data/Rushhour9x9_6.csv",
+        '7': "data/Rushhour12x12_7.csv",
+    }
+    
+    board_sizes = ['6x6', '6x6', '6x6', '9x9', '9x9', '9x9', '12x12']
+
+    for i in range(len(boards_dictionary)):
+        print(f'{i + 1}: {board_sizes[i]}\n')
+
+    return boards_dictionary
+
+
+def available_algorithms():
+    print("\nAvailable algorithms:\n")
+    # Hierin kun je de beschikbare algoritmes plaatsen!
+    algorithms_dictionary = {
+        "1": RandomLegalMove,
+        "2": RandomLegalRepeatMove,
+        "3": RandomMove,
+        "4": BFS,
+    }
+
+    algorithm_names = ['RandomLegalMove', 'RandomLegalRepeatMove', 'RandomMove', 'BFS']
+
+    for i in range (len(algorithms_dictionary)):
+        print(f'{i + 1}: {algorithm_names[i]}\n')
+
+    return algorithms_dictionary
 
 def visual():
     """
@@ -99,14 +136,24 @@ def visual():
         board_pick = str
         while board_pick not in available_board_dictionary:
             board_pick = str(input("Which board will you pick? "))
+<<<<<<< HEAD
 
         file_path = available_board_dictionary[board_pick]  
+=======
+    
+    file_path = available_board_dictionary[board_pick]
+>>>>>>> 55d1cfdd82ede54c441644e857cd4dd5a160b876
 
     algorithms = available_algorithms()
     select_algorithm = str
 
     while select_algorithm not in algorithms:
         select_algorithm = input("Choose an algorithm: ").lower()
+<<<<<<< HEAD
+=======
+    
+    if select_algorithm in ['1', '2', '3']:
+>>>>>>> 55d1cfdd82ede54c441644e857cd4dd5a160b876
         selected_algorithm = algorithms[select_algorithm]
 
     game_file = GameFile(file_path)
@@ -118,12 +165,23 @@ def visual():
         if (game.is_won()):
             print("Congratulations, you found your way out!")
             print('Total moves:', history.get_counter())
+<<<<<<< HEAD
             break
 
         # ask user for input
         random_move_algorithm = selected_algorithm(game, history, game_file)
         random_car, random_direction = random_move_algorithm.make_move()
         
+=======
+            running = False 
+
+        if select_algorithm in ['1', '2', '3']:
+            random_move_algorithm = selected_algorithm(game, history, game_file)
+            random_car, random_direction = random_move_algorithm.make_move()
+        else:
+            selected_algorithm(game).run()
+
+>>>>>>> 55d1cfdd82ede54c441644e857cd4dd5a160b876
         if game.move_car(random_car, random_direction) is not False:
             history.add_move(random_car, random_direction)
             history.add_board(game.get_board())
@@ -145,6 +203,7 @@ def visual():
             # update the history list
             history.go_back()
 
+<<<<<<< HEAD
 def available_boards():
     print("\nAvailable boards:\n")
     # Hier staan alle borden.
@@ -183,6 +242,9 @@ def available_algorithms():
         print(f'{i + 1}: {algorithm_names[i]}\n')
 
     return algorithms_dictionary
+=======
+    pygame.display.quit()
+>>>>>>> 55d1cfdd82ede54c441644e857cd4dd5a160b876
 
 
 def print_in_barchart(data_dict):
@@ -207,7 +269,6 @@ def save_data():
 # list of algorithms used
 algorithms_used_and_their_average_moves = {}
 
-
 def experiment():
 
     # needed moves word hierin opgeslagen na solve
@@ -228,8 +289,9 @@ def experiment():
     while select_algorithm not in algorithms:
         select_algorithm = input("Choose an algorithm: ").lower()
 
-    selected_algorithm = algorithms[select_algorithm]
-        
+    if select_algorithm in ['1', '2', '3']:
+        selected_algorithm = algorithms[select_algorithm]
+    
     for i in range(number_of_games):
 
         history = History()
@@ -268,8 +330,7 @@ def experiment():
     algorithms_used_and_their_average_moves[select_algorithm] = average_moves
 
     print(f"\nThe average amount of moves needed for {number_of_games} games was {average_moves} moves, and {average_loops} game loops")
-
-
+    
 def breadth_first_search1():
 
     available_board_dictionary = available_boards()
@@ -282,15 +343,34 @@ def breadth_first_search1():
     game_file = GameFile(file_path)
     game = GameBoard(game_file)
     
-    game.show_board()
+    game.get_board_for_player()
 
     bfs = BFS(game).run()
     visual = GameBoard(game_file)
 
-    for move in bfs:
+    # Pygame initialization
+    pygame.init()
+    rows = len(game._board)
+    cols = len(game._board[0])
+    screen = pygame.display.set_mode((cols * 50, rows * 50))
+    pygame.display.set_caption("Rush-Hour Board")
+    clock = pygame.time.Clock() 
+
+    for move in bfs[0]:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return
+
         print(f"Move car {move[0]} in direction {move[1]}")
         visual.move_car(move[0], move[1])
-        visual.show_board()
+        screen.fill((127, 127, 127))
+        visual.draw_board(screen)
+        pygame.display.flip()
+
+        clock.tick(15)
+
+    pygame.quit()
 
 def depth_first_search():
 

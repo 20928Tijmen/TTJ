@@ -118,7 +118,6 @@ class GameBoard:
 
         return True
 
-
     def draw_colors(self, value):
         # The colors for the squares on the Pygame board
         self.color_values = {
@@ -187,7 +186,7 @@ class GameBoard:
                     pygame.draw.rect(screen, color, (x, y, 50, 50))
                     pygame.draw.rect(screen, (85, 85, 85), (x, y, 50, 50), 2)
 
-    def show_board(self):
+    def get_board_for_player(self):
         """
         An alternative and more simplified board that relies on print-statements.
         """
