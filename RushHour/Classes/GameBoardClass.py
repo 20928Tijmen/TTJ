@@ -312,7 +312,7 @@ class GameBoard:
                         car.set_base(row_idx, col_idx) # Update the car's base
 
 
-    def generate_all_possible_succesor_boards(self):
+    def generate_all_possible_successor_boards(self):
         """
         Take all legal moves, execute them, and save the board along with the move made.
         Return a list of tuples, (successor board, and the move that led to it)

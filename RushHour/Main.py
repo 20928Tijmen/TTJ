@@ -1,6 +1,5 @@
-from Algorithms import Astar, BFS, RandomMove, RandomLegalMove, RandomLegalRepeatMove
+from Algorithms import DFS, BFS, RandomMove, RandomLegalMove, RandomLegalRepeatMove
 from Classes import GameBoard, GameFile, History
-import pygame
 
 # pip3 install matplotlib numpy
     
@@ -8,6 +7,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 import os, random
+
+import pygame
+import time 
 
 
 def load_board_opstellingen(path: str) -> list[str]:
@@ -98,55 +100,50 @@ def visual():
         while board_pick not in available_board_dictionary:
             board_pick = str(input("Which board will you pick? "))
 
-        file_path = available_board_dictionary[board_pick]
+        file_path = available_board_dictionary[board_pick]  
 
     algorithms = available_algorithms()
     select_algorithm = str
+
     while select_algorithm not in algorithms:
         select_algorithm = input("Choose an algorithm: ").lower()
-
         selected_algorithm = algorithms[select_algorithm]
 
     game_file = GameFile(file_path)
     game = GameBoard(game_file)
-    
-    # Initializes the 'pygame'-part of the code.
-    pygame.init()
 
-    # This sets up the display of the pygame.
-    rows = len(game._board)
-    cols = len(game._board[0])
-    screen = pygame.display.set_mode((cols * 50, rows * 50))
-    pygame.display.set_caption("Rush-Hour Board")
-
-    clock = pygame.time.Clock() 
-
-    running = True
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
+    while True:
 
         # This script plays when the game is won
-        if game.is_won():
+        if (game.is_won()):
             print("Congratulations, you found your way out!")
             print('Total moves:', history.get_counter())
-            running = False 
+            break
 
-
+        # ask user for input
         random_move_algorithm = selected_algorithm(game, history, game_file)
         random_car, random_direction = random_move_algorithm.make_move()
-
+        
         if game.move_car(random_car, random_direction) is not False:
             history.add_move(random_car, random_direction)
             history.add_board(game.get_board())
 
-        screen.fill((127, 127, 127))
-        # For every move, the pygame board is updated.
-        game.draw_board(screen)
-        pygame.display.flip()
+        game.show_board()
+        print('Move count:',history.get_counter())
+        print(history.get_move_history())
+        continue
+        
+        # give user the possibility to go back
+        if letter == "BACK":
+            if history.get_counter() < 1:
+                print("Must have a history of moves")
+                continue
 
-        clock.tick(15)
+            # make the move back
+            game.make_move_back(history)
+
+            # update the history list
+            history.go_back()
 
 def available_boards():
     print("\nAvailable boards:\n")
@@ -177,6 +174,7 @@ def available_algorithms():
         "2": RandomLegalRepeatMove,
         "3": RandomMove,
         "4": BFS,
+        "5": DFS,
     }
 
     algorithm_names = ['RandomLegalMove', 'RandomLegalRepeatMove', 'RandomMove', 'BFS']
@@ -294,6 +292,28 @@ def breadth_first_search1():
         visual.move_car(move[0], move[1])
         visual.show_board()
 
+def depth_first_search():
+
+    available_board_dictionary = available_boards()
+    board_pick = str
+    while board_pick not in available_board_dictionary:
+        board_pick = str(input("Which board will you pick? "))    
+
+    file_path = available_board_dictionary[board_pick]
+
+    game_file = GameFile(file_path)
+    game = GameBoard(game_file)
+    
+    game.show_board()
+
+    dfs = DFS(game).run()
+    visual = GameBoard(game_file)
+
+    for move in dfs:
+        print(f"Move car {move[0]} in direction {move[1]}")
+        visual.move_car(move[0], move[1])
+        visual.show_board()
+
 
 def main():
 
@@ -309,6 +329,8 @@ def main():
             experiment()
         elif mode == 'b':
             breadth_first_search1()
+        elif mode == 'd':
+            depth_first_search()
 
         continu = str
         while continu not in ['q', 'c']:
@@ -322,23 +344,41 @@ def main():
             continue
 
 
+
 def Joosts_test_paradijs():
     file_path = 'data/Rushhour6x6_1.csv'
     game_file = GameFile(file_path)
+
     game = GameBoard(game_file)
-    astar = Astar(game)
-    print(game.get_board_for_player())
-    results = astar.run()
-    print(game.get_board_for_player())
-    print(f"solution found with {len(results[0])} moves, boards visited: {results[1]}")
+    bfs = BFS(game)
+    
+    results = bfs.run()
+    print(len(results[0]), results[1])
 
+    bfs.csv_output()
 
+def DFS_test():
+
+    file_path = 'data/Rushhour6x6_3.csv'
+    game_file = GameFile(file_path)
+
+    game = GameBoard(game_file)
+    dfs_instance = DFS(game)
+
+    # These are the results:
+    solution_path, visited_states_count = dfs_instance.run()  # Run DFS
+    print(f"results: {len(solution_path)}, {visited_states_count}")
+
+    # Export the compressed DFS move history to a CSV file
+    dfs_instance.csv_output()  
 
 
 if __name__ == '__main__':
     
     # Joosts_test_paradijs()
-    main()
+    DFS_test()
+    # main()
+
 
 
 # file met allemaal verschillende algoritmes.
