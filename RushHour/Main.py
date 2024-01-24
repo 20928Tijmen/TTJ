@@ -266,7 +266,7 @@ def experiment():
     average_moves = (sum(total_moves) / len(total_moves))
     average_loops = (sum(total_loops) / len(total_loops))
 
-    print(history.get_board_history())
+    # print(history.get_board_history())
     
     # Add to list of algorithms used and their average moves made
     algorithms_used_and_their_average_moves[select_algorithm] = average_moves
@@ -326,24 +326,42 @@ def depth_first_search():
     game_file = GameFile(file_path)
     game = GameBoard(game_file)
     
-    game.show_board()
+    game.get_board_for_player()
 
     dfs = DFS(game).run()
     visual = GameBoard(game_file)
 
-    for move in dfs:
+    # Pygame initialization
+    pygame.init()
+    rows = len(game._board)
+    cols = len(game._board[0])
+    screen = pygame.display.set_mode((cols * 50, rows * 50))
+    pygame.display.set_caption("Rush-Hour Board")
+    clock = pygame.time.Clock() 
+
+    for move in dfs[0]:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return
+
         print(f"Move car {move[0]} in direction {move[1]}")
         visual.move_car(move[0], move[1])
-        visual.show_board()
+        screen.fill((127, 127, 127))
+        visual.draw_board(screen)
+        pygame.display.flip()
 
+        clock.tick(15)
+
+    pygame.quit()
 
 def main():
 
     while True:
 
         mode = str
-        while mode not in ['v', 'e', 'b']:
-            mode = input("\nDo you want to run the game in the Visual mode, or in the Experiment mode, or in BFS? (v/e/b) ").lower()
+        while mode not in ['v', 'e', 'b', 'd']:
+            mode = input("\nDo you want to run the game in the Visual mode, or in the Experiment mode, BFS, or DFS? (v/e/b/d) ").lower()
     
         if mode == 'v':
             visual()
@@ -364,7 +382,6 @@ def main():
             break
         elif continu == 'c':
             continue
-
 
 
 def Joosts_test_paradijs():
@@ -398,6 +415,6 @@ def DFS_test():
 if __name__ == '__main__':
     
     # Joosts_test_paradijs()
-    DFS_test()
-    # main()
+    # DFS_test()
+    main()
 
