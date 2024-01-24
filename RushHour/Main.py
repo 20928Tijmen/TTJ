@@ -172,9 +172,10 @@ def available_algorithms():
         "1": RandomLegalMove,
         "2": RandomLegalRepeatMove,
         "3": RandomMove,
+        "4": BFS,
     }
 
-    algorithm_names = ['RandomLegalMove', 'RandomLegalRepeatMove', 'RandomMove']
+    algorithm_names = ['RandomLegalMove', 'RandomLegalRepeatMove', 'RandomMove', 'BFS']
 
     for i in range (len(algorithms_dictionary)):
         print(f'{i + 1}: {algorithm_names[i]}\n')
@@ -387,3 +388,11 @@ if __name__ == '__main__':
 # grid search : paken twee parameters en .....
     
 
+#constructieve algoritme maken
+    
+
+    #introductie:wij zijn ttj,oftewel tijmen, thijs, joost. Rushhour is een schuifpuzzel die in de jaren 70 bedacht is door Nobuyuki Yoshigahara.
+    # case uitleggen 
+    # statespase uitleggen: twee tot de macht n, waar n bordlengte keer bordlengte is
+    # nooit een auto ervoor horizontaal, auto is altijd met XX en rood aangegeven
+    #  uitleggen dat we in stappen van 1 en winst is dat de auto daar rechts staat
