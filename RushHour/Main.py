@@ -10,6 +10,9 @@ import os, random
 
 import pygame
 import time 
+import timeit
+
+import csv
 
 
 def load_board_opstellingen(path: str) -> list[str]:
@@ -112,10 +115,9 @@ def available_algorithms():
         "1": RandomLegalMove,
         "2": RandomLegalRepeatMove,
         "3": RandomMove,
-        "4": BFS,
     }
 
-    algorithm_names = ['RandomLegalMove', 'RandomLegalRepeatMove', 'RandomMove', 'BFS']
+    algorithm_names = ['RandomLegalMove', 'RandomLegalRepeatMove', 'RandomMove']
 
     for i in range (len(algorithms_dictionary)):
         print(f'{i + 1}: {algorithm_names[i]}\n')
@@ -169,7 +171,7 @@ def visual():
             history.add_move(random_car, random_direction)
             history.add_board(game.get_board())
 
-        game.show_board()
+        game.get_board_for_player()
         print('Move count:',history.get_counter())
         print(history.get_move_history())
         continue
@@ -187,23 +189,6 @@ def visual():
             history.go_back()
 
     pygame.display.quit()
-
-
-def print_in_barchart(data_dict):
-    X_data = list(data_dict.keys())
-    Y_data = list(data_dict.values())
-    amount_of_times_run = 10000
-
-    plt.bar(X_data, Y_data)
-    plt.title(f'Ran algorithms {amount_of_times_run} times on 6x6_1')
-    plt.xlabel('Algorithms')
-    plt.ylabel('Average amount of moves made')
-
-    # Save the plot to a file
-    picture = plt.savefig(str(input("Picture name? ")))
-
-    # Display a message to the user
-    print(f"The result is saved as {picture}. Please check the files!")
 
 def save_data():
     None
@@ -273,13 +258,13 @@ def experiment():
 
     print(f"\nThe average amount of moves needed for {number_of_games} games was {average_moves} moves, and {average_loops} game loops")
     
-def breadth_first_search1():
+def breadth_first_search():
 
+    # pick board and thus its filepath
     available_board_dictionary = available_boards()
     board_pick = str
     while board_pick not in available_board_dictionary:
-        board_pick = str(input("Which board will you pick? "))    
-
+        board_pick = str(input("Which board will you pick? "))
     file_path = available_board_dictionary[board_pick]
 
     game_file = GameFile(file_path)
@@ -287,40 +272,37 @@ def breadth_first_search1():
     
     game.get_board_for_player()
 
+    # start timer for data here
+    start_time = timeit.default_timer()
+
     bfs = BFS(game).run()
-    visual = GameBoard(game_file)
 
-    # Pygame initialization
-    pygame.init()
-    rows = len(game._board)
-    cols = len(game._board[0])
-    screen = pygame.display.set_mode((cols * 50, rows * 50))
-    pygame.display.set_caption("Rush-Hour Board")
-    clock = pygame.time.Clock() 
+    # end timer for data here
+    end_time = timeit.default_timer()
+    compute_time = end_time - start_time
+    print(f"It took this algorithm {compute_time} seconds to compute a solution.")
 
-    for move in bfs[0]:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                return
+    # These are the results:
+    solution_path, visited_states_count = bfs  # Run BFS
+    print(f"results: \n solution_path = {len(solution_path)}\n visited_states_count: {visited_states_count}")
 
-        print(f"Move car {move[0]} in direction {move[1]}")
-        visual.move_car(move[0], move[1])
-        screen.fill((127, 127, 127))
-        visual.draw_board(screen)
-        pygame.display.flip()
+    # Store data in a CSV file
+    output_file_path = "data/algoritmen_data.csv"
+    with open(output_file_path, mode='a', newline='') as file:
+        writer = csv.writer(file)
+        # writer.writerow(["Algorithm", "Board", "Compute Time", "Solution Path Length", "Visited States Count"])
+        writer.writerow(["BFS", file_path, compute_time, len(solution_path), visited_states_count])
 
-        clock.tick(15)
+    print(f"Results saved in {output_file_path}")
 
-    pygame.quit()
 
 def depth_first_search():
 
+    # pick board and thus its filepath
     available_board_dictionary = available_boards()
     board_pick = str
     while board_pick not in available_board_dictionary:
         board_pick = str(input("Which board will you pick? "))    
-
     file_path = available_board_dictionary[board_pick]
 
     game_file = GameFile(file_path)
@@ -328,60 +310,28 @@ def depth_first_search():
     
     game.get_board_for_player()
 
+    # start timer for data here
+    start_time = timeit.default_timer()
+
     dfs = DFS(game).run()
-    visual = GameBoard(game_file)
 
-    # Pygame initialization
-    pygame.init()
-    rows = len(game._board)
-    cols = len(game._board[0])
-    screen = pygame.display.set_mode((cols * 50, rows * 50))
-    pygame.display.set_caption("Rush-Hour Board")
-    clock = pygame.time.Clock() 
+    # end timer for data here
+    end_time = timeit.default_timer()
+    compute_time = end_time - start_time
+    print(f"It took this algorithm {compute_time} seconds to compute a solution.")
 
-    for move in dfs[0]:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                return
+    # These are the results:
+    solution_path, visited_states_count = dfs  # Run DFS
+    print(f"results: \n solution_path = {len(solution_path)}\n visited_states_count: {visited_states_count}")
 
-        print(f"Move car {move[0]} in direction {move[1]}")
-        visual.move_car(move[0], move[1])
-        screen.fill((127, 127, 127))
-        visual.draw_board(screen)
-        pygame.display.flip()
+    # Store data in a CSV file
+    output_file_path = "data/algoritmen_data.csv"
+    with open(output_file_path, mode='a', newline='') as file:
+        writer = csv.writer(file)
+        # writer.writerow(["Algorithm", "Board", "Compute Time", "Solution Path Length", "Visited States Count"])
+        writer.writerow(["DFS", file_path, compute_time, len(solution_path), visited_states_count])
 
-        clock.tick(15)
-
-    pygame.quit()
-
-def main():
-
-    while True:
-
-        mode = str
-        while mode not in ['v', 'e', 'b', 'd']:
-            mode = input("\nDo you want to run the game in the Visual mode, or in the Experiment mode, BFS, or DFS? (v/e/b/d) ").lower()
-    
-        if mode == 'v':
-            visual()
-        elif mode == 'e':
-            experiment()
-        elif mode == 'b':
-            breadth_first_search1()
-        elif mode == 'd':
-            depth_first_search()
-
-        continu = str
-        while continu not in ['q', 'c']:
-            continu = input("\nDo you want to continue, or quit? (c/q) ")
-
-        if continu == 'q':
-            # prints into a barchart
-            print_in_barchart(algorithms_used_and_their_average_moves)
-            break
-        elif continu == 'c':
-            continue
+    print(f"Results saved in {output_file_path}")
 
 
 def Joosts_test_paradijs():
@@ -396,13 +346,16 @@ def Joosts_test_paradijs():
 
     bfs.csv_output()
 
+
 def DFS_test():
 
-    file_path = 'data/Rushhour6x6_3.csv'
+    file_path = 'data/Rushhour6x6_1.csv'
     game_file = GameFile(file_path)
 
     game = GameBoard(game_file)
     dfs_instance = DFS(game)
+
+    start_time = timeit.default_timer()
 
     # These are the results:
     solution_path, visited_states_count = dfs_instance.run()  # Run DFS
@@ -411,10 +364,149 @@ def DFS_test():
     # Export the compressed DFS move history to a CSV file
     dfs_instance.csv_output()  
 
+    end_time = timeit.default_timer()
+    print(f"It took this algorithm {end_time - start_time} seconds to compute a solution.")
+
+
+def print_in_barchart(data_dict):
+    """
+    Prints a barchart with matplotlib
+    """
+    X_data = list(data_dict.keys())
+    Y_data = list(data_dict.values())
+    amount_of_times_run = 10000
+
+    plt.bar(X_data, Y_data)
+    plt.title(f'Ran algorithms {amount_of_times_run} times on 6x6_1')
+    plt.xlabel('Algorithms')
+    plt.ylabel('Average amount of moves made')
+
+    # Save the plot to a file
+    picture = plt.savefig(str(input("Picture name? ")))
+
+    # Display a message to the user
+    print(f"The result is saved as {picture}. Please check the files!")
+
+def compare_BFS_DFS(csv_data_file):
+    """
+    Reads the data file made by running algo_comparisons()
+    Makes a barchart from it?....
+    """
+    # Open the CSV file for reading
+    with open(csv_data_file, mode='r') as file:
+        reader = csv.reader(file)
+
+        # Read and print each row in the CSV file
+        for row in reader:
+            print(row)
+
+
+def main():
+
+    while True:
+
+        mode = str
+        while mode not in ['v', 'e', 'b', 'd']:
+            mode = input("\nDo you want to run the game in the Visual mode, or in the Experiment mode, BFS, or DFS? (v/e/b/d) ").lower()
+    
+        if mode == 'v':
+            visual()
+        elif mode == 'e':
+            experiment()
+        elif mode == 'b':
+            breadth_first_search()
+        elif mode == 'd':
+            depth_first_search()
+
+        continu = str
+        while continu not in ['q', 'c']:
+            continu = input("\nDo you want to continue, or quit? (c/q) ")
+
+        if continu == 'q':
+            # prints into a barchart
+            # print_in_barchart(algorithms_used_and_their_average_moves)
+            compare_BFS_DFS()
+            break
+        elif continu == 'c':
+            continue
+
+def algo_comparisons():
+
+    # list of BFS and DFS results! Data om te printen
+    bfs_dfs_data = {}
+
+    while True:
+
+        mode = str
+        while mode not in ['b', 'd', 'q']:
+            mode = input("\nbfs or dfs or q?").lower()
+        if mode == 'b':
+            breadth_first_search()
+        elif mode == 'd':
+            depth_first_search()
+        elif mode == 'q':
+            csv_data_file = 'data/algoritmen_data.csv'
+            compare_BFS_DFS(csv_data_file)
+
+        continu = str
+        while continu not in ['q', 'c']:
+            continu = input("\nDo you want to continue, or quit? (c/q) ")
+
+        if continu == 'q':
+            # prints into a barchart
+            # print_in_barchart(algorithms_used_and_their_average_moves)
+            csv_data_file = 'data/algoritmen_data.csv'
+            compare_BFS_DFS(csv_data_file)
+            break
+        elif continu == 'c':
+            continue
+
 
 if __name__ == '__main__':
-    
-    # Joosts_test_paradijs()
-    # DFS_test()
-    main()
+    print("Choose an option:")
+    print("1. Joost's Test Paradijs")
+    print("2. DFS Test")
+    print("3. Main")
+    print("4. Algo_comparisons")
+    choice = input("Enter the number of your choice: ")
 
+    if choice == '1':
+        Joosts_test_paradijs()
+    elif choice == '2':
+        DFS_test()
+    elif choice == '3':
+        main()
+    elif choice == '4':
+        algo_comparisons()
+    else:
+        print("Invalid choice. Please enter a number between 1 and 4.")
+
+
+
+# pygames add to depth_first_search:
+
+    # visual = GameBoard(game_file)
+
+    # Pygame initialization
+    # pygame.init()
+    # rows = len(game._board)
+    # cols = len(game._board[0])
+    # screen = pygame.display.set_mode((cols * 50, rows * 50))
+    # pygame.display.set_caption("Rush-Hour Board")
+    # clock = pygame.time.Clock() 
+
+    # for move in dfs[0]:
+    #     for event in pygame.event.get():
+    #         if event.type == pygame.QUIT:
+    #             pygame.quit()
+    #             return
+
+    #     print(f"Move car {move[0]} in direction {move[1]}")
+    #     visual.move_car(move[0], move[1])
+    #     screen.fill((127, 127, 127))
+    #     visual.draw_board(screen)
+    #     pygame.display.flip()
+
+    #     clock.tick(15)
+
+    # pygame.quit()
