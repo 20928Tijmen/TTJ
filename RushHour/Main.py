@@ -1,4 +1,4 @@
-from Algorithms import DFS, BFS, RandomMove, RandomLegalMove, RandomLegalRepeatMove
+from Algorithms import DFS, BFS, Astar, RandomMove, RandomLegalMove, RandomLegalRepeatMove
 from Classes import GameBoard, GameFile, History
 
 # pip3 install matplotlib numpy
@@ -258,6 +258,51 @@ def experiment():
     algorithms_used_and_their_average_moves[select_algorithm] = average_moves
 
     print(f"\nThe average amount of moves needed for {number_of_games} games was {average_moves} moves, and {average_loops} game loops")
+
+def astar_algorithm():
+
+    # pick board and thus its filepath
+    available_board_dictionary = available_boards()
+    board_pick = str
+    while board_pick not in available_board_dictionary:
+        board_pick = str(input("Which board will you pick? "))
+    file_path = available_board_dictionary[board_pick]
+
+    game_file = GameFile(file_path)
+    game = GameBoard(game_file)
+    
+    game.get_board_for_player()
+
+    # start timer for data here
+    start_time = timeit.default_timer()
+
+    astar = Astar(game).run()
+
+    visual = GameBoard(game_file)
+
+    # Pygame initialization
+    pygame.init()
+    rows = len(game._board)
+    cols = len(game._board[0])
+    screen = pygame.display.set_mode((cols * 50, rows * 50))
+    pygame.display.set_caption("Rush-Hour Board")
+    clock = pygame.time.Clock() 
+
+    for move in astar[0]:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return
+
+        print(f"Move car {move[0]} in direction {move[1]}")
+        visual.move_car(move[0], move[1])
+        screen.fill((127, 127, 127))
+        visual.draw_board(screen)
+        pygame.display.flip()
+
+        clock.tick(15)
+
+    pygame.quit()
     
 def breadth_first_search():
 
@@ -333,7 +378,6 @@ def depth_first_search():
         writer.writerow(["DFS", file_path, compute_time, len(solution_path), visited_states_count])
 
     print(f"Results saved in {output_file_path}")
-
 
 def Joosts_test_paradijs():
     file_path = 'data/Rushhour6x6_1.csv'
@@ -464,6 +508,10 @@ def algo_comparisons():
 
 
 if __name__ == '__main__':
+
+    astar_algorithm()
+
+
     print("Choose an option:")
     print("1. Joost's Test Paradijs")
     print("2. DFS Test")
