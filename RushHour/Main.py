@@ -392,54 +392,73 @@ def astar_algorithm(board_path=None):
         print("Astar did not find a solution.")
 
 
-def print_in_barchart(data_dict):
-    """
-    Prints a barchart with matplotlib
-    """
-    X_data = list(data_dict.keys())
-    Y_data = list(data_dict.values())
-    amount_of_times_run = 10000
-
-    plt.bar(X_data, Y_data)
-    plt.title(f'Ran algorithms {amount_of_times_run} times on 6x6_1')
-    plt.xlabel('Algorithms')
-    plt.ylabel('Average amount of moves made')
-
-    # Save the plot to a file
-    picture = plt.savefig(str(input("Picture name? ")))
-
-    # Display a message to the user
-    print(f"The result is saved as {picture}. Please check the files!")
-
 def compare_BFS_DFS_ASTAR(csv_data_file):
     """
     Reads the data file made by running algo_comparisons()
     Makes a barchart from it?....
+    Niet af! Work in progress!
+
+    Algorithm,Board,Compute Time,Solution Path Length,Visited States Count
+
     """
     # Open the CSV file for reading
     with open(csv_data_file, mode='r') as file:
         reader = csv.reader(file)
 
+        Algorithms = ['BFS', 'DFS', 'ASTAR']
+        BFS_data = []
+        DFS_data = []
+        ASTAR_data = []
 
-        X_data = []
-        Y_data = []
-
-        # Read and print each row in the CSV file
+       # Read and print each row in the CSV file
+        # to change the data to a simpler form i used chatgpt for help
         for row in reader:
             if row[0].startswith('BFS'):
-                
-                print('test BFS')
+                BFS_data.append([value.split('/')[1].replace('Rushhour', '').replace('.csv', '') if i == 0 else value for i, value in enumerate(row[1:])])
             elif row[0].startswith('DFS'):
-                print('test DFS')
+                DFS_data.append([value.split('/')[1].replace('Rushhour', '').replace('.csv', '') if i == 0 else value for i, value in enumerate(row[1:])])
             elif row[0].startswith('ASTAR'):
-                print('test ASTAR')
-            print(row)
+                ASTAR_data.append([value.split('/')[1].replace('Rushhour', '').replace('.csv', '') if i == 0 else value for i, value in enumerate(row[1:])])
 
 
-    plt.bar(X_data, Y_data)
-    plt.title(f'Ran BFS, DFS, ASTAR algorithms on 6x6 boards')
-    plt.xlabel('Algorithms')
-    plt.ylabel('Moves')
+    # Convert strings to floats for plotting
+    BFS_data = [[float(value) if i != 0 else value for i, value in enumerate(sublist)] for sublist in BFS_data]
+    DFS_data = [[float(value) if i != 0 else value for i, value in enumerate(sublist)] for sublist in DFS_data]
+    ASTAR_data = [[float(value) if i != 0 else value for i, value in enumerate(sublist)] for sublist in ASTAR_data]
+
+    # Extract data for plotting
+    X_data = [data[0] for data in BFS_data]
+    Y_data_BFS = [data[1] for data in BFS_data]
+    Y_data_DFS = [data[1] for data in DFS_data]
+    Y_data_ASTAR = [data[1] for data in ASTAR_data]
+
+    # Set up bar positions
+    num_experiments = len(X_data)
+    bar_width = 0.2
+    index = range(num_experiments)
+
+    # Create bars for each algorithm
+    plt.bar(index, Y_data_BFS, width=bar_width, label='BFS')
+    plt.bar([i + bar_width for i in index], Y_data_DFS, width=bar_width, label='DFS')
+    plt.bar([i + 2 * bar_width for i in index], Y_data_ASTAR, width=bar_width, label='ASTAR')
+
+    # Set labels and title
+    plt.xlabel('Boards')
+    plt.ylabel('Solution Path Length')
+    plt.title('Algorithm Comparison')
+    plt.xticks([i + bar_width for i in index], X_data)
+    plt.legend()
+
+    # Show the plot
+    plt.show()
+
+
+    # # Save the plot to a file
+    # picture = plt.savefig(str(input("Picture name? ")))
+
+    # # Display a message to the user
+    # print(f"The result is saved as {picture}. Please check the files!")
+
 
 
 def manual_algo_comparisons():
@@ -501,9 +520,9 @@ def main():
     while True:
 
         mode = str
-        while mode not in ['v', 'e', 'b', 'd', 'a','algo', 'auto']:
-            mode = input("\nDo you want to run the game in the Visual mode, or in the Experiment mode, BFS, or DFS, or astar, OR algo_comparison OR \
-    run the script Automatically? (v/e/b/d/a/algo/auto) ").lower()
+        while mode not in ['v', 'e', 'b', 'd', 'a','algo', 'auto', 'p']:
+            mode = input("\nDo you want to run the game in the Visual mode, or in the Experiment mode, BFS, or DFS, or astar, OR algo_comparison OR print OR \
+    run the script Automatically? (v/e/b/d/a/algo/p/auto) ").lower()
     
         if mode == 'v':
             visual()
@@ -519,6 +538,10 @@ def main():
             manual_algo_comparisons()
         elif mode == 'auto':
             run_algorithms_on_6x6_boards()
+        elif mode == 'p':
+            csv_data_file = 'data/algoritmen_data.csv'
+            compare_BFS_DFS_ASTAR(csv_data_file)
+
 
         continu = str
         while continu not in ['q', 'c']:

@@ -1,9 +1,7 @@
-<<<<<<< HEAD
 from collections import deque
 import csv, os
 
 class BFS:
-
 
     def __init__(self, game):
         self.game = game
@@ -76,82 +74,3 @@ class BFS:
             writer.writerow(['car', 'move'])
             for move in compressed_history:
                 writer.writerow(move)
-=======
-from collections import deque
-import csv, os
-
-class BFS:
-
-
-    def __init__(self, game):
-        self.game = game
-        self._path_found = []
-
-
-    def run(self):
-
-        self.queue = deque()
-        self.visited = set()
-
-        self.queue.append((self.game.get_board(), []))
-        self.visited.add(self.game.get_board_as_hash(self.game.get_board()))
-
-        while self.queue:
-            current_board, path = self.queue.popleft()
-            self.game.set_board(current_board)
-
-            for successor_board, move in self.game.generate_all_possible_successor_boards():
-
-                board_hash = self.game.get_board_as_hash(successor_board)
-
-                if board_hash not in self.visited:
-
-                    if self.game.red_at_exit(successor_board): 
-                        self._path_found = path + [move]
-                        self.game.set_board(successor_board)
-                        return path, len(self.visited)
-                    
-                    self.visited.add(board_hash)
-
-                    new_path = path + [move]
-
-                    self.queue.append((successor_board, new_path))
-
-        return None  # No solution found
-
-
-    def csv_output(self):
-        """
-        Exports the compressed BFS move history to a CSV file.
-
-        Zie mapje results.
-
-        """
-        results_dir = 'Results_BFS'
-        if not os.path.exists(results_dir):
-            os.makedirs(results_dir)
-
-        file_name = 'output_' + str(self.game.game_file.board_size) + '_' + str(self.game.game_file.number) + '.csv'
-
-        file_path = os.path.join(results_dir, file_name)
-
-        if os.path.exists(file_path):
-            print(f"{file_name} already exists. csv not created.")
-            return 
-
-        compressed_history = [self._path_found[0]]
-
-        for move in self._path_found[1:]:
-            last_move = compressed_history[-1]
-            if move[0] == last_move[0]:
-                new_move = (move[0], last_move[1] + move[1])
-                compressed_history[-1] = new_move
-            else:
-                compressed_history.append(move)
-
-        with open(file_path, mode='w') as file:
-            writer = csv.writer(file)
-            writer.writerow(['car', 'move'])
-            for move in compressed_history:
-                writer.writerow(move)
->>>>>>> 3e2960fc5d7ce10524e0508aa97c9c65f18caf8b
