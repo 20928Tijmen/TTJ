@@ -522,9 +522,6 @@ def Joosts_test_paradijs():
 
 if __name__ == '__main__':
 
-    astar_algorithm()
-
-
     print("Choose an option:")
     print("1. Joost's Test Paradijs")
     print("2. DFS Test")

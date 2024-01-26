@@ -6,6 +6,9 @@ class GameBoard:
     """
     Represents the game board for Rush Hour.
 
+    Input
+    game_file: GameFile = The game file object containing board information.
+
     Attributes:
         game_file (GameFile): The game file containing board information.
         _car_colors (dict): A dictionary to store colors for each car.
@@ -56,12 +59,26 @@ class GameBoard:
                 self._board[base_row + i * d_row][base_col + i * d_col] = name
 
 
-    def move_car(self, letter: str, direction):
+    def move_car(self, letter: str, direction: int) -> bool:
+        """
+        this method is called to move a car on the board. legality of the move is dealt with also.
+
+        input
+        - letter: string = the letter of the car to move
+        - direction: int = forwards:backwards -> 1:-1
+
+        output
+        - bool: used to signify if the move was legal and therefore made
+
+        main effect
+        - moves car with name 'letter' in direction 'direction' if possible
+        """
         car = self._dictionary_of_cars[letter]
         base = car.get_base()
         rotation = car.get_rotation()
         length = car.get_length()        
 
+        # Target cell is based on car base, length and input direction
         if direction == 1:
             target_row = base[0] + (rotation[0] * length)
             target_col = base[1] + (rotation[1] * length)
@@ -74,6 +91,7 @@ class GameBoard:
             print("Invalid move!")
             return False
         
+        # Check if target cell is empty / within (lower?) bound of the board
         if self._board[target_row][target_col] != 0 or target_col < 0 or target_row < 0:
             return False
 
@@ -89,12 +107,12 @@ class GameBoard:
                 new_col = target_col - i * direction * rotation[1]
                 self._board[new_row][new_col] = car.get_name()
             
-            # Update car's base position
+            # Update car base position
             new_base_row = base[0] + direction * rotation[0]
             new_base_col = base[1] + direction * rotation[1]
-
             self._dictionary_of_cars[car.get_name()].set_base(new_base_row, new_base_col)
 
+        # Return true after move is made
         return True
 
     
@@ -222,19 +240,25 @@ class GameBoard:
         return False
 
 
-    def get_board(self):
+    def get_board(self) -> list(list()):
         """
-        Returns the current state of the game board.
+        Returns board as 2d array
         """
         return self._board
     
 
-    def is_legal_move(self, letter, direction) -> bool:
+    def is_legal_move(self, letter: str, direction: int) -> bool:
         """
-        ik gebruik deze in algoritme make_random_legal_move , voor nu ff zo
-        is gwn copy paste uit move car
+        Checks is a given move is legal on the current board
+        Uses the same logic as in move car (repeated code. i know)
+        Does NOT actually move the car
 
-        geef naam en direction en krijg True/False terug
+        input
+        - letter: string = the letter of the car to move
+        - direction: int = forwards:backwards -> 1:-1
+
+        output
+        - bool: if the move is legal
 
         """
         car = self._dictionary_of_cars[letter]
@@ -259,7 +283,10 @@ class GameBoard:
         return True
 
 
-    def get_all_legal_moves(self):
+    def get_all_legal_moves(self) -> list:
+        """
+        Returns a list of all legal moves possible on the current board
+        """
 
         moves = []
 
@@ -270,30 +297,40 @@ class GameBoard:
         return moves
     
 
-    def get_board_as_hash(self, board):
+    def get_board_as_hash(self, board: list(list)) -> int:
         """
-        Elk bord kan je zien als string ja.
-        Maak van die string een hash
-        Dit is een int uniek voor deze string
-        
+        Returns a hashed version of the board.
+        Used in algorithms for supposed quicker lookup time of visited boards        
+
+        input
+        board: list(list) = 2d array board
+
+        output
+        board hash: int = integer unique for given board
         """
         board_string = ''
         for row in board:
             board_string += ''.join(str(row)) + ';'
         return hash(board_string)
 
-    def reset_board(self):
+    def reset_board(self) -> None:
+        """
+        Resets the board to the starting state
+        """
         self.set_board(self._original_board)
 
-    def set_board(self, new_board):
+    def set_board(self, new_board) -> None:
         """
         Sets the board to the given state and updates the positions of the cars.
+
+        input
+        new_board: list(list) = a 2d array board
         """
         self._board = [row[:] for row in new_board]  # je kan niet gwn = doen want list list
         self._update_car_bases()
 
 
-    def _update_car_bases(self):
+    def _update_car_bases(self) -> None:
         """
         Updates the base of the cars in _dictionary_of_cars based on the current board state.
         """
@@ -311,7 +348,7 @@ class GameBoard:
                         car.set_base(row_idx, col_idx) # Update the car's base
 
 
-    def generate_all_possible_successor_boards(self):
+    def generate_all_possible_successor_boards(self) -> list:
         """
         Take all legal moves, execute them, and save the board along with the move made.
         Return a list of tuples, (successor board, and the move that led to it)
@@ -333,15 +370,47 @@ class GameBoard:
 
         return successor_states
 
-    def red_at_exit(self, board):
+    def red_at_exit(self, board: list(list)) -> bool:
+        """
+        Checks if the red car is at the exit
+
+        input
+        board: list(list) = a 2d array board
+
+        output
+        bool: 'car is at exit'
+        """
         exit_row = {6: 2, 9: 4, 12: 5}[len(board)]
         return board[exit_row][-1] == 'X'
 
-    def red_score(self, board) -> int:
+    def red_score(self, board: list(list)) -> int:
+        """
+        Heuristical score used in A* searching algorithm.
+        Score is based on distance of red car to exit.
+        close to exit returns a low score, which is 'good'
+
+        input
+        board: list(list) = a 2d array board
+
+        output
+        score: int = 1 point for every cell the red car base is away from exit 
+
+        """
         exit_row = {6: 2, 9: 4, 12: 5}[len(board)]
         return len(board) - board[exit_row].index('X')
 
-    def cars_blocking_red(self, board) -> int:
+    def cars_blocking_red(self, board: list(list)) -> int:
+        """
+        Heuristical score used in A* searching algorithm.
+        Counts how many cars are between red car and exit
+        more car is bad so higher score
+
+        input
+        board: list(list) = a 2d array board
+
+        output
+        score: int = 1 point for every car between red and exit
+        """
         exit_row = {6: 2, 9: 4, 12: 5}[len(board)]
         red_index = board[exit_row].index('X')
 
@@ -351,5 +420,15 @@ class GameBoard:
                 score += 1
         return score
 
-    def score(self, board) -> int:
+    def score(self, board: list(list)) -> int:
+        """
+        Heuristical score used in A* searching algorithm.
+        This method only combines the score of the two methods used
+
+        input
+        board: list(list) = a 2d array board
+
+        output
+        score: int = a board with lower score is gets priority in A* search
+        """
         return self.red_score(board) + self.cars_blocking_red(board)
