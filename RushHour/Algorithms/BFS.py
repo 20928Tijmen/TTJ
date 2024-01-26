@@ -21,8 +21,7 @@ class BFS:
             current_board, path = self.queue.popleft()
             self.game.set_board(current_board)
 
-            
-            for successor_board, move in self.game.generate_all_possible_succesor_boards():
+            for successor_board, move in self.game.generate_all_possible_successor_boards():
 
                 board_hash = self.game.get_board_as_hash(successor_board)
 
