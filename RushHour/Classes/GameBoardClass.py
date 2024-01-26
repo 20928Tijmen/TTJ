@@ -6,15 +6,16 @@ class GameBoard:
     """
     Represents the game board for Rush Hour.
 
+
     Input
     game_file: GameFile = The game file object containing board information.
 
-    Attributes:
-        game_file (GameFile): The game file containing board information.
-        _car_colors (dict): A dictionary to store colors for each car.
-        _available_colors (list): A list of available color codes for cars.
-        _dictionary_of_cars (dict): A dictionary mapping car names to Car objects.
-        _board (list): The game board, a 2D list representing the grid.
+    Attributes
+    game_file: GameFile = The game file containing board information.
+    _car_colors: dict = A dictionary to store colors for each car.
+    _available_colors: list = A list of available color codes for cars.
+     _dictionary_of_cars: dict(string, Car) = A dictionary mapping car names to Car objects.
+     _board: list(list) = The game board, a 2D list representing the grid.
     """
 
     def __init__(self, game_file):

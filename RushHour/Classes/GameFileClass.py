@@ -3,19 +3,16 @@ import re # (REGEX!! gekke throwback naar DataRepresentaties)
 class GameFile:
     '''
     Represents a game file for the Rush Hour game, containing board and car information.
+    Picture this class as the cards in the box of the game with the board setups on them
 
-    Beeld dit in als een kaartje in de doos van het spel waaropstaat hoe je de opstelling moet maken
+    input:
+    path: string = this is the path to the board csv files
 
-    Door deze class kan je dus makkelijk een hele gamefile doorpasen
-    dus je kan dan makkelijk gamefile.board_size opvragen
-    voorbeelden:
-    - in _add_cars() kan je open(game.path, 'r') doen
-    - in _create_empty_board kan je: for row in range(game.board_size)
-    - game.number kan je gebruiken in main voor spel keuze
-    
-    + Hiermee kunnen we later wellicht makkelijk de algorithmes door alle games heen laten runnen
-    + en dan met bijvoorbeeld een self.Fastest_solve of self.time_to_solve alle statistieken bijhouden voor elke game BIJ de game
-    
+    Attributes
+    path: string = this is the path to the board csv files
+    board_size: str = the width of the board
+    number: int = boards of same width have differnt numbers
+    car_info = all data from the csv file
     '''
     def __init__(self, path: str) -> None:
         self.path: str = path
