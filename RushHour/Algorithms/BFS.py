@@ -16,12 +16,12 @@ class BFS:
     """
 
 
-    def __init__(self, game):
+    def __init__(self, game) -> None:
         self.game = game
         self._path_found = []
 
 
-    def run(self):
+    def run(self) -> list:
         self.queue = deque()
         self.visited = set()
 

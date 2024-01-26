@@ -28,7 +28,7 @@ class Astar:
         self.game = game
         self._path_found = []
 
-    def run(self):
+    def run(self) -> list:
         depth = 0
         priority_q = []
         visited = set()
