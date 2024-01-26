@@ -310,7 +310,7 @@ class GameBoard:
         score = 0
         for cell in board[red_index:]:
             if cell != 'X' and cell != 0:
-                score += 3
+                score += 1
         return score
 
     def score(self, board) -> int:

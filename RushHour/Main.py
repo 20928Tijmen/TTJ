@@ -318,10 +318,10 @@ def main():
 
 
 def Joosts_test_paradijs():
-    file_path = 'data/Rushhour6x6_1.csv'
+    file_path = 'data/Rushhour6x6_3.csv'
     game_file = GameFile(file_path)
     game = GameBoard(game_file)
-    astar = Astar(game)
+    astar = BFS(game)
     print(game.get_board_for_player())
     results = astar.run()
     print(game.get_board_for_player())
@@ -332,8 +332,8 @@ def Joosts_test_paradijs():
 
 if __name__ == '__main__':
     
-    # Joosts_test_paradijs()
-    main()
+    Joosts_test_paradijs()
+    
 
 
 # file met allemaal verschillende algoritmes.
