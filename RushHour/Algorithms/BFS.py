@@ -22,7 +22,6 @@ class BFS:
 
 
     def run(self):
-
         self.queue = deque()
         self.visited = set()
 
