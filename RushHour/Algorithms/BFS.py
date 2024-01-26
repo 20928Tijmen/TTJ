@@ -63,7 +63,7 @@ class BFS:
         if not os.path.exists(results_dir):
             os.makedirs(results_dir)
 
-        file_name = 'output_' + str(self.game.game_file.board_size) + '_' + str(self.game.game_file.number) + '.csv'
+        file_name = 'BFS_output_' + str(self.game.game_file.board_size) + '_' + str(self.game.game_file.number) + '.csv'
 
         file_path = os.path.join(results_dir, file_name)
 

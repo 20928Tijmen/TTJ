@@ -259,59 +259,17 @@ def experiment():
 
     print(f"\nThe average amount of moves needed for {number_of_games} games was {average_moves} moves, and {average_loops} game loops")
 
-def astar_algorithm():
+def breadth_first_search(board_path=None):
 
-    # pick board and thus its filepath
-    available_board_dictionary = available_boards()
-    board_pick = str
-    while board_pick not in available_board_dictionary:
-        board_pick = str(input("Which board will you pick? "))
-    file_path = available_board_dictionary[board_pick]
-
-    game_file = GameFile(file_path)
-    game = GameBoard(game_file)
-    
-    game.get_board_for_player()
-
-    # start timer for data here
-    start_time = timeit.default_timer()
-
-    astar = Astar(game).run()
-
-    visual = GameBoard(game_file)
-
-    # Pygame initialization
-    pygame.init()
-    rows = len(game._board)
-    cols = len(game._board[0])
-    screen = pygame.display.set_mode((cols * 50, rows * 50))
-    pygame.display.set_caption("Rush-Hour Board")
-    clock = pygame.time.Clock() 
-
-    for move in astar[0]:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                return
-
-        print(f"Move car {move[0]} in direction {move[1]}")
-        visual.move_car(move[0], move[1])
-        screen.fill((127, 127, 127))
-        visual.draw_board(screen)
-        pygame.display.flip()
-
-        clock.tick(15)
-
-    pygame.quit()
-    
-def breadth_first_search():
-
-    # pick board and thus its filepath
-    available_board_dictionary = available_boards()
-    board_pick = str
-    while board_pick not in available_board_dictionary:
-        board_pick = str(input("Which board will you pick? "))
-    file_path = available_board_dictionary[board_pick]
+    # If board_path is not provided, prompt the user
+    if board_path is None:
+        available_board_dictionary = available_boards()
+        board_pick = str
+        while board_pick not in available_board_dictionary:
+            board_pick = str(input("Which board will you pick? "))
+        file_path = available_board_dictionary[board_pick]
+    else:
+        file_path = board_path
 
     game_file = GameFile(file_path)
     game = GameBoard(game_file)
@@ -321,35 +279,41 @@ def breadth_first_search():
     # start timer for data here
     start_time = timeit.default_timer()
 
-    bfs = BFS(game).run()
+    bfs_instance = BFS(game)
+    bfs_result = bfs_instance.run()
 
     # end timer for data here
     end_time = timeit.default_timer()
     compute_time = end_time - start_time
-    print(f"It took this algorithm {compute_time} seconds to compute a solution.")
 
-    # These are the results:
-    solution_path, visited_states_count = bfs  # Run BFS
-    print(f"results: \n solution_path = {len(solution_path)}\n visited_states_count: {visited_states_count}")
+    if bfs_result is not None:
+        solution_path, visited_states_count = bfs_result 
+        print(f"results: \n solution_path = {len(solution_path)}\n visited_states_count: {visited_states_count}")
 
-    # Store data in a CSV file
-    output_file_path = "data/algoritmen_data.csv"
-    with open(output_file_path, mode='a', newline='') as file:
-        writer = csv.writer(file)
-        # writer.writerow(["Algorithm", "Board", "Compute Time", "Solution Path Length", "Visited States Count"])
-        writer.writerow(["BFS", file_path, compute_time, len(solution_path), visited_states_count])
+        # Export the compressed BFS move history to a CSV file
+        bfs_instance.csv_output()
 
-    print(f"Results saved in {output_file_path}")
+        # Store data in a CSV file
+        output_file_path = "data/algoritmen_data.csv"
+        with open(output_file_path, mode='a', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(["BFS", file_path, compute_time, len(solution_path), visited_states_count])
+
+        print(f"Results saved in {output_file_path}")
+    else:
+        print("BFS did not find a solution.")
 
 
-def depth_first_search():
-
-    # pick board and thus its filepath
-    available_board_dictionary = available_boards()
-    board_pick = str
-    while board_pick not in available_board_dictionary:
-        board_pick = str(input("Which board will you pick? "))    
-    file_path = available_board_dictionary[board_pick]
+def depth_first_search(board_path=None):
+    # If board_path is not provided, prompt the user
+    if board_path is None:
+        available_board_dictionary = available_boards()
+        board_pick = str
+        while board_pick not in available_board_dictionary:
+            board_pick = str(input("Which board will you pick? "))
+        file_path = available_board_dictionary[board_pick]
+    else:
+        file_path = board_path
 
     game_file = GameFile(file_path)
     game = GameBoard(game_file)
@@ -359,91 +323,196 @@ def depth_first_search():
     # start timer for data here
     start_time = timeit.default_timer()
 
-    dfs = DFS(game).run()
-
-    # end timer for data here
-    end_time = timeit.default_timer()
-    compute_time = end_time - start_time
-    print(f"It took this algorithm {compute_time} seconds to compute a solution.")
-
-    # These are the results:
-    solution_path, visited_states_count = dfs  # Run DFS
-    print(f"results: \n solution_path = {len(solution_path)}\n visited_states_count: {visited_states_count}")
-
-    # Store data in a CSV file
-    output_file_path = "data/algoritmen_data.csv"
-    with open(output_file_path, mode='a', newline='') as file:
-        writer = csv.writer(file)
-        # writer.writerow(["Algorithm", "Board", "Compute Time", "Solution Path Length", "Visited States Count"])
-        writer.writerow(["DFS", file_path, compute_time, len(solution_path), visited_states_count])
-
-    print(f"Results saved in {output_file_path}")
-
-def Joosts_test_paradijs():
-    file_path = 'data/Rushhour6x6_1.csv'
-    game_file = GameFile(file_path)
-
-    game = GameBoard(game_file)
-    bfs = BFS(game)
-    
-    results = bfs.run()
-    print(len(results[0]), results[1])
-
-    bfs.csv_output()
-
-
-def DFS_test():
-
-    file_path = 'data/Rushhour6x6_1.csv'
-    game_file = GameFile(file_path)
-
-    game = GameBoard(game_file)
     dfs_instance = DFS(game)
+    dfs_result = dfs_instance.run()
 
+    # end timer for data here
+    end_time = timeit.default_timer()
+    compute_time = end_time - start_time
+
+    if dfs_result is not None:
+        solution_path, visited_states_count = dfs_result 
+        print(f"results: \n solution_path = {len(solution_path)}\n visited_states_count: {visited_states_count}")
+
+        # Export the compressed DFS move history to a CSV file
+        dfs_instance.csv_output()
+
+        # Store data in a CSV file
+        output_file_path = "data/algoritmen_data.csv"
+        with open(output_file_path, mode='a', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(["DFS", file_path, compute_time, len(solution_path), visited_states_count])
+
+        print(f"Results saved in {output_file_path}")
+    else:
+        print("DFS did not find a solution.")
+
+def astar_algorithm(board_path=None):
+    # If board_path is not provided, prompt the user
+    if board_path is None:
+        available_board_dictionary = available_boards()
+        board_pick = str
+        while board_pick not in available_board_dictionary:
+            board_pick = str(input("Which board will you pick? "))
+        file_path = available_board_dictionary[board_pick]
+    else:
+        file_path = board_path
+
+    game_file = GameFile(file_path)
+    game = GameBoard(game_file)
+    
+    game.get_board_for_player()
+
+    # start timer for data here
     start_time = timeit.default_timer()
 
-    # These are the results:
-    solution_path, visited_states_count = dfs_instance.run()  # Run DFS
-    print(f"results: {len(solution_path)}, {visited_states_count}")
+    astar_instance = Astar(game)
+    astar_result = astar_instance.run()
 
-    # Export the compressed DFS move history to a CSV file
-    dfs_instance.csv_output()  
-
+    # end timer for data here
     end_time = timeit.default_timer()
-    print(f"It took this algorithm {end_time - start_time} seconds to compute a solution.")
+    compute_time = end_time - start_time
+
+    if astar_result is not None:
+        solution_path, visited_states_count = astar_result 
+        print(f"results: \n solution_path = {len(solution_path)}\n visited_states_count: {visited_states_count}")
+
+        # Export the compressed Astar move history to a CSV file
+        astar_instance.csv_output()
+
+        # Store data in a CSV file
+        output_file_path = "data/algoritmen_data.csv"
+        with open(output_file_path, mode='a', newline='') as file:
+            writer = csv.writer(file)
+            # writer.writerow(["Algorithm", "Board", "Compute Time", "Solution Path Length", "Visited States Count"])
+            writer.writerow(["ASTAR", file_path, compute_time, len(solution_path), visited_states_count])
+
+        print(f"Results saved in {output_file_path}")
+    else:
+        print("Astar did not find a solution.")
 
 
-def print_in_barchart(data_dict):
-    """
-    Prints a barchart with matplotlib
-    """
-    X_data = list(data_dict.keys())
-    Y_data = list(data_dict.values())
-    amount_of_times_run = 10000
-
-    plt.bar(X_data, Y_data)
-    plt.title(f'Ran algorithms {amount_of_times_run} times on 6x6_1')
-    plt.xlabel('Algorithms')
-    plt.ylabel('Average amount of moves made')
-
-    # Save the plot to a file
-    picture = plt.savefig(str(input("Picture name? ")))
-
-    # Display a message to the user
-    print(f"The result is saved as {picture}. Please check the files!")
-
-def compare_BFS_DFS(csv_data_file):
+def compare_BFS_DFS_ASTAR(csv_data_file):
     """
     Reads the data file made by running algo_comparisons()
     Makes a barchart from it?....
+    Niet af! Work in progress!
+
+    Algorithm,Board,Compute Time,Solution Path Length,Visited States Count
+
     """
     # Open the CSV file for reading
     with open(csv_data_file, mode='r') as file:
         reader = csv.reader(file)
 
-        # Read and print each row in the CSV file
+        Algorithms = ['BFS', 'DFS', 'ASTAR']
+        BFS_data = []
+        DFS_data = []
+        ASTAR_data = []
+
+       # Read and print each row in the CSV file
+        # to change the data to a simpler form i used chatgpt for help
         for row in reader:
-            print(row)
+            if row[0].startswith('BFS'):
+                BFS_data.append([value.split('/')[1].replace('Rushhour', '').replace('.csv', '') if i == 0 else value for i, value in enumerate(row[1:])])
+            elif row[0].startswith('DFS'):
+                DFS_data.append([value.split('/')[1].replace('Rushhour', '').replace('.csv', '') if i == 0 else value for i, value in enumerate(row[1:])])
+            elif row[0].startswith('ASTAR'):
+                ASTAR_data.append([value.split('/')[1].replace('Rushhour', '').replace('.csv', '') if i == 0 else value for i, value in enumerate(row[1:])])
+
+
+    # Convert strings to floats for plotting
+    BFS_data = [[float(value) if i != 0 else value for i, value in enumerate(sublist)] for sublist in BFS_data]
+    DFS_data = [[float(value) if i != 0 else value for i, value in enumerate(sublist)] for sublist in DFS_data]
+    ASTAR_data = [[float(value) if i != 0 else value for i, value in enumerate(sublist)] for sublist in ASTAR_data]
+
+    # Extract data for plotting
+    X_data = [data[0] for data in BFS_data]
+    Y_data_BFS = [data[1] for data in BFS_data]
+    Y_data_DFS = [data[1] for data in DFS_data]
+    Y_data_ASTAR = [data[1] for data in ASTAR_data]
+
+    # Set up bar positions
+    num_experiments = len(X_data)
+    bar_width = 0.2
+    index = range(num_experiments)
+
+    # Create bars for each algorithm
+    plt.bar(index, Y_data_BFS, width=bar_width, label='BFS')
+    plt.bar([i + bar_width for i in index], Y_data_DFS, width=bar_width, label='DFS')
+    plt.bar([i + 2 * bar_width for i in index], Y_data_ASTAR, width=bar_width, label='ASTAR')
+
+    # Set labels and title
+    plt.xlabel('Boards')
+    plt.ylabel('Solution Path Length')
+    plt.title('Algorithm Comparison')
+    plt.xticks([i + bar_width for i in index], X_data)
+    plt.legend()
+
+    # Show the plot
+    plt.show()
+
+
+    # # Save the plot to a file
+    # picture = plt.savefig(str(input("Picture name? ")))
+
+    # # Display a message to the user
+    # print(f"The result is saved as {picture}. Please check the files!")
+
+
+
+def manual_algo_comparisons():
+
+    while True:
+
+        mode = str
+        while mode not in ['b', 'd', 'q','a']:
+            mode = input("\nbfs or dfs or astar or q?").lower()
+        if mode == 'b':
+            breadth_first_search()
+        elif mode == 'd':
+            depth_first_search()
+        elif mode == 'a':
+            astar_algorithm()
+        elif mode == 'q':
+            csv_data_file = 'data/algoritmen_data.csv'
+            compare_BFS_DFS_ASTAR(csv_data_file)
+
+        continu = str
+        while continu not in ['q', 'c']:
+            continu = input("\nDo you want to continue, or quit? (c/q) ")
+
+        if continu == 'q':
+            # prints into a barchart
+            # print_in_barchart(algorithms_used_and_their_average_moves)
+            csv_data_file = 'data/algoritmen_data.csv'
+            compare_BFS_DFS_ASTAR(csv_data_file)
+            break
+        elif continu == 'c':
+            continue
+
+
+def run_algorithms_on_6x6_boards():
+    board_paths = [
+        "data/Rushhour6x6_1.csv",
+        "data/Rushhour6x6_2.csv",
+        "data/Rushhour6x6_3.csv"
+    ]
+
+    for board_path in board_paths:
+        print(f"\nRunning algorithms on board: {board_path}")
+        
+        # BFS
+        print("Running BFS:")
+        breadth_first_search(board_path)
+
+        # DFS
+        print("Running DFS:")
+        depth_first_search(board_path)
+
+        # Astar
+        print("Running Astar:")
+        astar_algorithm(board_path)
 
 
 def main():
@@ -451,8 +520,9 @@ def main():
     while True:
 
         mode = str
-        while mode not in ['v', 'e', 'b', 'd']:
-            mode = input("\nDo you want to run the game in the Visual mode, or in the Experiment mode, BFS, or DFS? (v/e/b/d) ").lower()
+        while mode not in ['v', 'e', 'b', 'd', 'a','algo', 'auto', 'p']:
+            mode = input("\nDo you want to run the game in the Visual mode, or in the Experiment mode, BFS, or DFS, or astar, OR algo_comparison OR print OR \
+    run the script Automatically? (v/e/b/d/a/algo/p/auto) ").lower()
     
         if mode == 'v':
             visual()
@@ -462,36 +532,16 @@ def main():
             breadth_first_search()
         elif mode == 'd':
             depth_first_search()
-
-        continu = str
-        while continu not in ['q', 'c']:
-            continu = input("\nDo you want to continue, or quit? (c/q) ")
-
-        if continu == 'q':
-            # prints into a barchart
-            # print_in_barchart(algorithms_used_and_their_average_moves)
-            compare_BFS_DFS()
-            break
-        elif continu == 'c':
-            continue
-
-def algo_comparisons():
-
-    # list of BFS and DFS results! Data om te printen
-    bfs_dfs_data = {}
-
-    while True:
-
-        mode = str
-        while mode not in ['b', 'd', 'q']:
-            mode = input("\nbfs or dfs or q?").lower()
-        if mode == 'b':
-            breadth_first_search()
-        elif mode == 'd':
-            depth_first_search()
-        elif mode == 'q':
+        elif mode == 'a':
+            astar_algorithm()
+        elif mode == 'algo':
+            manual_algo_comparisons()
+        elif mode == 'auto':
+            run_algorithms_on_6x6_boards()
+        elif mode == 'p':
             csv_data_file = 'data/algoritmen_data.csv'
-            compare_BFS_DFS(csv_data_file)
+            compare_BFS_DFS_ASTAR(csv_data_file)
+
 
         continu = str
         while continu not in ['q', 'c']:
@@ -501,7 +551,7 @@ def algo_comparisons():
             # prints into a barchart
             # print_in_barchart(algorithms_used_and_their_average_moves)
             csv_data_file = 'data/algoritmen_data.csv'
-            compare_BFS_DFS(csv_data_file)
+            compare_BFS_DFS_ASTAR(csv_data_file)
             break
         elif continu == 'c':
             continue
@@ -522,23 +572,7 @@ def Joosts_test_paradijs():
 
 if __name__ == '__main__':
 
-    print("Choose an option:")
-    print("1. Joost's Test Paradijs")
-    print("2. DFS Test")
-    print("3. Main")
-    print("4. Algo_comparisons")
-    choice = input("Enter the number of your choice: ")
-
-    if choice == '1':
-        Joosts_test_paradijs()
-    elif choice == '2':
-        DFS_test()
-    elif choice == '3':
-        main()
-    elif choice == '4':
-        algo_comparisons()
-    else:
-        print("Invalid choice. Please enter a number between 1 and 4.")
+    main()
 
 
 
