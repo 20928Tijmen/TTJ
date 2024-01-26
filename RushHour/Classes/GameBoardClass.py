@@ -298,7 +298,7 @@ class GameBoard:
         return moves
     
 
-    def get_board_as_hash(self, board: list(list)) -> int:
+    def get_board_as_hash(self, board: list(list())) -> int:
         """
         Returns a hashed version of the board.
         Used in algorithms for supposed quicker lookup time of visited boards        
@@ -371,7 +371,7 @@ class GameBoard:
 
         return successor_states
 
-    def red_at_exit(self, board: list(list)) -> bool:
+    def red_at_exit(self, board: list(list())) -> bool:
         """
         Checks if the red car is at the exit
 
@@ -384,7 +384,7 @@ class GameBoard:
         exit_row = {6: 2, 9: 4, 12: 5}[len(board)]
         return board[exit_row][-1] == 'X'
 
-    def red_score(self, board: list(list)) -> int:
+    def red_score(self, board: list(list())) -> int:
         """
         Heuristical score used in A* searching algorithm.
         Score is based on distance of red car to exit.
@@ -400,7 +400,7 @@ class GameBoard:
         exit_row = {6: 2, 9: 4, 12: 5}[len(board)]
         return len(board) - board[exit_row].index('X')
 
-    def cars_blocking_red(self, board: list(list)) -> int:
+    def cars_blocking_red(self, board: list(list())) -> int:
         """
         Heuristical score used in A* searching algorithm.
         Counts how many cars are between red car and exit
@@ -421,7 +421,7 @@ class GameBoard:
                 score += 1
         return score
 
-    def score(self, board: list(list)) -> int:
+    def score(self, board: list(list())) -> int:
         """
         Heuristical score used in A* searching algorithm.
         This method only combines the score of the two methods used
