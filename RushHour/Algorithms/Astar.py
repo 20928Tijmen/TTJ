@@ -4,12 +4,32 @@ import csv, os
 
 
 class Astar:
-    
+    """
+    Implementation of a A* searching algorithm based on our version of rushhour
+    Works similar to BFS, but the difference lies in the order of exploration of child nodes
+
+    The order in which child nodes are explored is based on each board heuristical score
+    lower score = higer priority
+
+    score is calculated based on depth, red car distance, blocking vehicles
+    depth = the amount of moves needed to get to this board
+    red car score = how many cell is the red car away from the exit
+    blocking vehicles = how many cars are in the way of red and the exit
+
+    input:
+    game: GameBoard = A gameboard for the algorithm to "solve"
+
+    methods:
+    run = the actual search algoritm. returns found path + stores it in path_found
+
+    """
+
+
     def __init__(self, game):
         self.game = game
         self._path_found = []
 
-    def run(self):
+    def run(self) -> list:
         depth = 0
         priority_q = []
         visited = set()

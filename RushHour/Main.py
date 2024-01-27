@@ -561,7 +561,7 @@ def Joosts_test_paradijs():
     file_path = 'data/Rushhour6x6_3.csv'
     game_file = GameFile(file_path)
     game = GameBoard(game_file)
-    astar = BFS(game)
+    astar = Astar(game)
     print(game.get_board_for_player())
     results = astar.run()
     print(game.get_board_for_player())

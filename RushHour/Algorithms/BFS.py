@@ -2,14 +2,26 @@ from collections import deque
 import csv, os
 
 class BFS:
+    """
+    Implementation of a breadth first searching algorithm based on our version of rushhour
+    Goos threw every possible board, starting board -> all their childeren -> all THEIR childer etc.
 
-    def __init__(self, game):
+    input:
+    game: GameBoard = A gameboard for the algorithm to "solve"
+
+    methods:
+    run = the actual search algoritm. returns found path + stores it in path_found
+    csv_output = turns the found path into a csv file where repeated moves are compressed
+    
+    """
+
+
+    def __init__(self, game) -> None:
         self.game = game
         self._path_found = []
 
 
-    def run(self):
-
+    def run(self) -> list:
         self.queue = deque()
         self.visited = set()
 
