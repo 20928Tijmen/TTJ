@@ -4,6 +4,12 @@ class Car:
     """
     Represents a car in the Rush Hour game.
 
+    input:
+    name: string = the letter representing the car
+    orientation: string = either H for horizontal, V for vertical
+    row, col: int = the row, col the cars base it at 
+    length: int = how many cells long the car is
+
     Attributes:
         _name (str): Identifier for the car, 1 or 2 letters
         _orientation (str): Orientation of the car, 'H' for horizontal or 'V' for vertical.
@@ -32,13 +38,13 @@ class Car:
 
 
     def __init__(self, name, orientation, row, col, length):
-        self._name = name
-        self._orientation = orientation
-        self._row = int(row)
-        self._col = int(col)
-        self._length = int(length)
+        self._name: str = name
+        self._orientation: str = orientation
+        self._row: int = int(row)
+        self._col: int = int(col)
+        self._length: int = int(length)
 
-        self._base = [self._row - 1, self._col - 1]
+        self._base: list = [self._row - 1, self._col - 1]
 
         self._available_colors = self.colors
         self._color = self._set_color()
