@@ -288,6 +288,7 @@ def breadth_first_search(board_path=None):
 
     if bfs_result is not None:
         solution_path, visited_states_count = bfs_result 
+        iterative_gameplay(solution_path, file_path)
         print(f"results: \n solution_path = {len(solution_path)}\n visited_states_count: {visited_states_count}")
 
         # Export the compressed BFS move history to a CSV file
@@ -331,7 +332,8 @@ def depth_first_search(board_path=None):
     compute_time = end_time - start_time
 
     if dfs_result is not None:
-        solution_path, visited_states_count = dfs_result 
+        solution_path, visited_states_count = dfs_result
+        iterative_gameplay(solution_path, file_path)
         print(f"results: \n solution_path = {len(solution_path)}\n visited_states_count: {visited_states_count}")
 
         # Export the compressed DFS move history to a CSV file
@@ -375,6 +377,7 @@ def astar_algorithm(board_path=None):
 
     if astar_result is not None:
         solution_path, visited_states_count = astar_result 
+        iterative_gameplay(solution_path, file_path)
         print(f"results: \n solution_path = {len(solution_path)}\n visited_states_count: {visited_states_count}")
 
         # Export the compressed Astar move history to a CSV file
@@ -544,6 +547,32 @@ def Joosts_test_paradijs():
     print(game.get_board_for_player())
     print(f"solution found with {len(results[0])} moves, boards visited: {results[1]}")
 
+def iterative_gameplay(paths, file):
+
+    game_file = GameFile(file)
+    visual = GameBoard(game_file)
+
+    pygame.init()
+    rows = len(visual._board)
+    cols = len(visual._board[0])
+    screen = pygame.display.set_mode((cols * 50, rows * 50))
+    pygame.display.set_caption("Rush-Hour Board")
+    clock = pygame.time.Clock() 
+
+    for move in paths:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return
+
+        visual.move_car(move[0], move[1])
+        screen.fill((127, 127, 127))
+        visual.draw_board(screen)
+        pygame.display.flip()
+
+        clock.tick(15)
+
+    pygame.quit() 
 
 
 
@@ -553,30 +582,3 @@ if __name__ == '__main__':
 
 
 
-# pygames add to depth_first_search:
-
-    # visual = GameBoard(game_file)
-
-    # Pygame initialization
-    # pygame.init()
-    # rows = len(game._board)
-    # cols = len(game._board[0])
-    # screen = pygame.display.set_mode((cols * 50, rows * 50))
-    # pygame.display.set_caption("Rush-Hour Board")
-    # clock = pygame.time.Clock() 
-
-    # for move in dfs[0]:
-    #     for event in pygame.event.get():
-    #         if event.type == pygame.QUIT:
-    #             pygame.quit()
-    #             return
-
-    #     print(f"Move car {move[0]} in direction {move[1]}")
-    #     visual.move_car(move[0], move[1])
-    #     screen.fill((127, 127, 127))
-    #     visual.draw_board(screen)
-    #     pygame.display.flip()
-
-    #     clock.tick(15)
-
-    # pygame.quit()

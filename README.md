@@ -21,9 +21,36 @@
 
 # AAN DE SLAG!
 
+Allereerst moet men deze repository en de bijbehorende afhankelijkheden downloaden. *Requirements.txt* legt uit hoe men dit moet doen.
+
 Om de resultaten van de case te kunnen reproduceren, moet men allereerst de 'main' afspelen in de terminal.
 
-Bij het starten van de 'main' krijgt men een startscherm te zien, waarbij de 'main' is voorzien van een interface dat de gebruiker goed op weg helpt.
+Bij het starten van de 'main' krijgt men een startscherm te zien, waarbij de 'main' is voorzien van een interface dat de gebruiker goed op weg helpt. Het eerste scherm dat men ziet, noemen we het 'introductiescherm'.
 
+![screenshotone](https://github.com/20928Tijmen/TTJ/assets/144214560/2b06d5fc-b2e3-4937-be8f-4a0010683a37)
 
+Als men kiest voor 'v' (voor 'Visual'), kan men kiezen tussen een reeks borden. Daarna kan men met behulp van de interface kiezen welke van de drie 'Random'-algoritmes moet worden afgespeeld.
 
+Na het kiezen van een 'Random' algoritme, wordt een 'pygame'-venster geopend. Deze pygame vertoont elke zet van het random-algoritme als bewegingen van de auto's op het bord.
+
+![screenshottwo](https://github.com/20928Tijmen/TTJ/assets/144214560/46081226-b8c5-4a16-ad35-b80dedd3e3c5)
+
+Zodra het spel voorbij is, sluit pygame automatisch af, waarna de terminal uitlegt hoeveel zetten nodig waren. Hierna krijgt men de optie om óf door te gaan door 'c' in te drukken (waarna men gebruik kan maken van een andere functie in de main), of het spel af te sluiten.
+
+![screenshotthree](https://github.com/20928Tijmen/TTJ/assets/144214560/875c58da-7ba7-490a-ad16-ea198bd11924)
+
+Als men op het introductiescherm kiest voor 'e', wordt er gevraagd hoe vaak je een spel wil laten afspelen. Daarna wordt gevraagd welk bord je wil gebruiken, waarna wordt gevraagd welk algoritme je wil gebruiken voor het experiment.
+
+![screenshotfour](https://github.com/20928Tijmen/TTJ/assets/144214560/24a5fbd9-dff7-4663-b66e-1f722a6ffd08)
+
+Na het klikken op 'Enter', speelt het programma meerdere spellen af, waarbij voor elk spel de hoeveelheid moves wordt vertoond op het scherm. Indien alle spellen zijn afgespeeld, krijgt men het eindresultaat met het gemiddeld aantal moves.
+
+![screenshotfive](https://github.com/20928Tijmen/TTJ/assets/144214560/6b8a5f65-8663-4c12-8793-d5b80c03f353)
+
+Als men voor 'b', 'd', of 'a', kiest op het introductiescherm, wordt respectievelijk gekozen voor BFS, DFS of Astar. In alle drie de gevallen krijgt men de vraag welk bord ze willen kiezen. Zodra dat is gedaan, wordt elke move die één van deze drie algoritmes aflegd, afgespeeld als bewegingen op een pygame-bord.
+
+![itworks](https://github.com/20928Tijmen/TTJ/assets/144214560/f0795c54-595d-4bac-85e3-96190e8f22d8)
+
+Nadat de rode auto de exit heeft bereikt, ziet men een boodschap waarin staat dat de resultaten in een bepaald 'output'-bestand zijn opgeslagen.
+
+![itworks2](https://github.com/20928Tijmen/TTJ/assets/144214560/2ea04859-f608-4caf-a8f0-1acbf6c2b34e)
