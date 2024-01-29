@@ -400,15 +400,18 @@ def compare_BFS_DFS_ASTAR(csv_data_file):
 
     Algorithm,Board,Compute Time,Solution Path Length,Visited States Count
 
-    """
+
+        """
+
+
+    Algorithms = ['BFS', 'DFS', 'ASTAR']
+    BFS_data = []
+    DFS_data = []
+    ASTAR_data = []
+    
     # Open the CSV file for reading
     with open(csv_data_file, mode='r') as file:
         reader = csv.reader(file)
-
-        Algorithms = ['BFS', 'DFS', 'ASTAR']
-        BFS_data = []
-        DFS_data = []
-        ASTAR_data = []
 
        # Read and print each row in the CSV file
         # to change the data to a simpler form i used chatgpt for help
@@ -514,6 +517,25 @@ def run_algorithms_on_6x6_boards():
         print("Running Astar:")
         astar_algorithm(board_path)
 
+def run_algorithms_on_9x9_boards():
+    board_paths = [
+        "data/Rushhour9x9_5.csv",
+    ]
+
+    for board_path in board_paths:
+        print(f"\nRunning algorithms on board: {board_path}")
+        
+        # BFS
+        #print("Running BFS:")
+        #breadth_first_search(board_path)
+
+        # DFS
+        #print("Running DFS:")
+        #depth_first_search(board_path)
+
+        # Astar
+        print("Running Astar:")
+        astar_algorithm(board_path)
 
 def main():
 
@@ -537,7 +559,8 @@ def main():
         elif mode == 'algo':
             manual_algo_comparisons()
         elif mode == 'auto':
-            run_algorithms_on_6x6_boards()
+            # run_algorithms_on_6x6_boards()
+            run_algorithms_on_9x9_boards()
         elif mode == 'p':
             csv_data_file = 'data/algoritmen_data.csv'
             compare_BFS_DFS_ASTAR(csv_data_file)
