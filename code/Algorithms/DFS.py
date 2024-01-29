@@ -63,13 +63,16 @@ class DFS:
         Exports the compressed DFS move history to a CSV file.
         Zie mapje results.
         """
-        results_DFS_dir = 'Results_DFS'
-        if not os.path.exists(results_DFS_dir):
-            os.makedirs(results_DFS_dir)
+        data_dir = 'data'
+        results_subdir = 'results_DFS'
+        results_dir = os.path.join(data_dir, results_subdir)
+
+        if not os.path.exists(results_dir):
+            os.makedirs(results_dir)
 
         file_name = 'DFS_output_' + str(self.game.game_file.board_size) + '_' + str(self.game.game_file.number) + '.csv'
 
-        file_path = os.path.join(results_DFS_dir, file_name)
+        file_path = os.path.join(results_dir, file_name)
 
         if os.path.exists(file_path):
             print(f"{file_name} already exists. csv not created.")

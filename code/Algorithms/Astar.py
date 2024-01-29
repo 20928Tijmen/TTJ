@@ -65,7 +65,11 @@ class Astar:
         Zie mapje results.
 
         """
-        results_dir = 'Results_ASTAR'
+
+        data_dir = 'data'
+        results_subdir = 'results_Astar'
+        results_dir = os.path.join(data_dir, results_subdir)
+
         if not os.path.exists(results_dir):
             os.makedirs(results_dir)
 
