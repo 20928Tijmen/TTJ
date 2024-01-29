@@ -58,3 +58,7 @@ Nadat de rode auto de exit heeft bereikt, ziet men een boodschap waarin staat da
 ![itworks2](https://github.com/20928Tijmen/TTJ/assets/144214560/2ea04859-f608-4caf-a8f0-1acbf6c2b34e)
 
 Als je in het introductiescherm voor 'algo' gaat, krijg je de mogelijkheid om algoritmen te testen en te vergelijken. In deze modus krijg je dan weer de mogelijkheid om te kiezen of je BFS, DFS of Astar wil laten afspelen. Nadat je dat hebt gedaan, kun je weer op 'c' of 'q' indrukken. Als je hier op 'q' drukt wordt het programma niet meteen afgesloten - in plaats daarvan krijg je eerst een resultatenlijst waarin men ziet hoe elk algoritme in de 'algo'-modus heeft gepresteerd. Elk algoritme wordt beoordeeld op verscheidene attributen. Dit geeft mogelijkheid om elk algoritme te vergelijken.
+
+![screenshotsix](https://github.com/20928Tijmen/TTJ/assets/144214560/f691ad9d-b695-48b5-af10-0c9a6b8c6f66)
+
+Als men in het introductiescherm voor 'auto' kiest, spelen alledrie de algoritmen 'BFS', 'DFS' en 'Astar' opeenvolgend af, waarbij elk algoritme drie keer wordt afgespeeld (één keer voor elk 6x6 bord). Ook hiervoor wordt bij elke game het pygame-bord vertoond om elke move te vertonen als bewegingen op een spelbord.
