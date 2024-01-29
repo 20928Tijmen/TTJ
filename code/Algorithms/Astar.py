@@ -1,4 +1,4 @@
-from Classes import Node
+from code.Classes import Node
 import heapq
 import csv, os
 

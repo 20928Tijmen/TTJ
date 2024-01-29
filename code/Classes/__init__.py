@@ -1,7 +1,7 @@
 
-from Classes.History import History
-from Classes.GameFileClass import GameFile
-from Classes.GameBoardClass import GameBoard
-from Classes.CarClass import Car
-from Classes.Node import Node
-from Classes.ResultsClass import Results
+from code.Classes.History import History
+from code.Classes.GameFileClass import GameFile
+from code.Classes.GameBoardClass import GameBoard
+from code.Classes.CarClass import Car
+from code.Classes.Node import Node
+from code.Classes.ResultsClass import Results

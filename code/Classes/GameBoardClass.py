@@ -1,5 +1,5 @@
 import random
-from Classes.CarClass import Car
+from code.Classes.CarClass import Car
 import pygame
 
 class GameBoard:
