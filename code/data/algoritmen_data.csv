@@ -1,19 +1,6 @@
-<<<<<<< HEAD
 Algorithm,Board,Compute Time,Solution Path Length,Visited States Count
 BFS,data/Rushhour6x6_2.csv,0.6308030359999748,28,3829
 DFS,data/Rushhour6x6_2.csv,0.045320894999974826,218,861
 ASTAR,data/Rushhour6x6_2.csv,0.42476810799996656,28,2897
 ASTAR,data/Rushhour6x6_2.csv,0.4329025739999679,28,2897
-=======
-Algorithm,Board,Compute Time,Solution Path Length,Visited States Count
-BFS,data/Rushhour6x6_1.csv,0.09951217801426537,34,588
-DFS,data/Rushhour6x6_1.csv,0.0334280579991173,141,397
-ASTAR,data/Rushhour6x6_1.csv,0.06542701899888925,34,365
-BFS,data/Rushhour6x6_2.csv,0.7701759799965657,28,3829
-DFS,data/Rushhour6x6_2.csv,0.05337052000686526,218,861
-ASTAR,data/Rushhour6x6_2.csv,0.550397847982822,28,2897
-BFS,data/Rushhour6x6_3.csv,1.7092544299957808,82,8677
-DFS,data/Rushhour6x6_3.csv,0.4997359990084078,1447,5711
-ASTAR,data/Rushhour6x6_3.csv,1.6818501740053762,82,8516
-BFS,data/Rushhour6x6_1.csv,0.14044861299998956,34,588
->>>>>>> f137e6ca50ca091c74b0b76170d38e19afd71390
+BFS,data/Rushhour6x6_2.csv,0.6242282039999907,28,3829
