@@ -1,0 +1,21 @@
+Om de codes en het programma van de case 'Rush Hour' te kunnen afspelen op de computer, heeft men de volgende componenten nodig:
+
+- Een passende terminal (zoals Ubuntu/PowerShell) die python-programma's kan afspelen.
+- Pygame.
+- Numpy.
+- Matplotlib.
+
+Modules als 'random' horen al bij python.
+
+Installatie van Ubuntu via PowerShell vindt men hier:
+https://prog1.proglab.nl/extra/installatie
+
+Zodra men de terminal heeft, kan men met de volgende command-lines de benodigde componenten installeren. Dit gaat het beste met 'pip'.
+
+Hier ziet men elke component, gevolgd door de juiste command-line om deze te installeren:
+
+Pygame: python3 -m pip install -U pygame --user
+Numpy: pip install numpy
+Matplotlib: python -m pip install -U matplotlib
+
+Zodra deze afhankelijkheden geïnstalleerd zijn, kan men met behulp van de groene 'Code'-knop deze repository klonen/downloaden om het programma zelf uit te proberen.
