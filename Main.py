@@ -1,8 +1,6 @@
 from code.Algorithms import DFS, BFS, Astar, RandomMove, RandomLegalMove, RandomLegalRepeatMove
 from code.Classes import GameBoard, GameFile, History
 from code.Visualisation import visualise
-
-# pip3 install matplotlib numpy
     
 import numpy as np
 import matplotlib.pyplot as plt
@@ -191,9 +189,6 @@ def visual():
 
     pygame.display.quit()
 
-def save_data():
-    None
-
 # list of algorithms used
 algorithms_used_and_their_average_moves = {}
 
@@ -251,8 +246,6 @@ def experiment():
 
     average_moves = (sum(total_moves) / len(total_moves))
     average_loops = (sum(total_loops) / len(total_loops))
-
-    # print(history.get_board_history())
     
     # Add to list of algorithms used and their average moves made
     algorithms_used_and_their_average_moves[select_algorithm] = average_moves
@@ -303,7 +296,6 @@ def breadth_first_search(board_path=None):
         print(f"Results saved in {output_file_path}")
     else:
         print("BFS did not find a solution.")
-
 
 def depth_first_search(board_path=None):
     # If board_path is not provided, prompt the user
@@ -394,78 +386,91 @@ def astar_algorithm(board_path=None):
     else:
         print("Astar did not find a solution.")
 
-
 def compare_BFS_DFS_ASTAR(csv_data_file):
     """
-    Reads the data file made by running algo_comparisons()
-    Makes a barchart from it?....
-    Niet af! Work in progress!
-
-    Algorithm,Board,Compute Time,Solution Path Length,Visited States Count
-
+    Reads the data file made by running algo_comparisons() or "auto" mode functions
+    Makes a barchart from the data in your algoritmen_data.csv file
     """
 
-    Algorithms = ['BFS', 'DFS', 'ASTAR']
+    Algorithms = []
     Board = []
     Compute_Time = []
     Solution_Path_Length = []
     Visited_States_Count = []
 
-
     # Open the CSV file for reading
     with open(csv_data_file, mode='r') as file:
         reader = csv.reader(file)
+        # Skip the header row
+        next(reader)
 
-
-
-       # Read and print each row in the CSV file
-        # to change the data to a simpler form i used chatgpt for help
+        # Read data from each row and append to respective lists
         for row in reader:
-            if row[0].startswith('BFS'):
-                BFS_data.append([value.split('/')[1].replace('Rushhour', '').replace('.csv', '') if i == 0 else value for i, value in enumerate(row[1:])])
-            elif row[0].startswith('DFS'):
-                DFS_data.append([value.split('/')[1].replace('Rushhour', '').replace('.csv', '') if i == 0 else value for i, value in enumerate(row[1:])])
-            elif row[0].startswith('ASTAR'):
-                ASTAR_data.append([value.split('/')[1].replace('Rushhour', '').replace('.csv', '') if i == 0 else value for i, value in enumerate(row[1:])])
+            Algorithms.append(row[0])
+            Board.append(row[1])
+            Compute_Time.append(float(row[2]))
+            Solution_Path_Length.append(int(row[3]))
+            Visited_States_Count.append(int(row[4]))
 
+    # Identify unique algorithms and boards
+    unique_algorithms = sorted(list(set(Algorithms)))
+    unique_boards = sorted(list(set(Board)))
 
-    # Convert strings to floats for plotting
-    BFS_data = [[float(value) if i != 0 else value for i, value in enumerate(sublist)] for sublist in BFS_data]
-    DFS_data = [[float(value) if i != 0 else value for i, value in enumerate(sublist)] for sublist in DFS_data]
-    ASTAR_data = [[float(value) if i != 0 else value for i, value in enumerate(sublist)] for sublist in ASTAR_data]
+    # Create grouped bar chart for Solution Path Length
+    x_pos = np.arange(len(unique_boards))
+    width = 0.25  # the width of the bars
 
-    # Extract data for plotting
-    X_data = [data[0] for data in BFS_data]
-    Y_data_BFS = [data[1] for data in BFS_data]
-    Y_data_DFS = [data[1] for data in DFS_data]
-    Y_data_ASTAR = [data[1] for data in ASTAR_data]
+    # Generated with chatgpt because of its complexity
+    for i, algorithm in enumerate(unique_algorithms):
+        algorithm_indices = [j for j, alg in enumerate(Algorithms) if alg == algorithm]
+        values = [Solution_Path_Length[idx] for idx in algorithm_indices]
 
-    # Set up bar positions
-    num_experiments = len(X_data)
-    bar_width = 0.2
-    index = range(num_experiments)
+        plt.bar(x_pos + (i - 1) * width, values, width, label=algorithm)
 
-    # Create bars for each algorithm
-    plt.bar(index, Y_data_BFS, width=bar_width, label='BFS')
-    plt.bar([i + bar_width for i in index], Y_data_DFS, width=bar_width, label='DFS')
-    plt.bar([i + 2 * bar_width for i in index], Y_data_ASTAR, width=bar_width, label='ASTAR')
+        # Add numbers above the bars
+        for j, value in enumerate(values):
+            plt.text(x_pos[j] + (i - 1) * width, value + 0.1, str(value), ha='center', va='bottom')
 
-    # Set labels and title
-    plt.xlabel('Boards')
-    plt.ylabel('Solution Path Length')
-    plt.title('Algorithm Comparison')
-    plt.xticks([i + bar_width for i in index], X_data)
+    plt.xlabel("Boards")
+    plt.ylabel("Solution Path Length")
+    plt.title("Comparison of Solution Path Length on 6x6 boards")
+    plt.xticks(x_pos, unique_boards)
     plt.legend()
 
-    # Show the plot
     plt.show()
 
+    # Save the plot to a file
+    picture_solution_path = str(input("Picture name for Solution Path Length? "))
+    plt.savefig(picture_solution_path)
 
-    # # Save the plot to a file
-    # picture = plt.savefig(str(input("Picture name? ")))
 
-    # # Display a message to the user
-    # print(f"The result is saved as {picture}. Please check the files!")
+    # Display a message to the user
+    print(f"The result for Solution Path Length is saved as {picture_solution_path}. Please check the files!")
+
+
+    # Create grouped bar chart for Visited States Count
+    # Generated with chatgpt because of its complexity
+    for i, algorithm in enumerate(unique_algorithms):
+        algorithm_indices = [j for j, alg in enumerate(Algorithms) if alg == algorithm]
+        values = [Visited_States_Count[idx] for idx in algorithm_indices]
+
+        plt.bar(x_pos + (i - 1) * width, values, width, label=algorithm)
+
+        # Add numbers above the bars
+        for j, value in enumerate(values):
+            plt.text(x_pos[j] + (i - 1) * width, value + 0.1, str(value), ha='center', va='bottom')
+
+    plt.xlabel("Boards")
+    plt.ylabel("Visited States Count")
+    plt.title("Comparison of Visited States Count on 6x6 boards")
+    plt.xticks(x_pos, unique_boards)
+    plt.legend()
+
+    plt.show()
+    
+    # Save the plot to a file
+    picture_visited_states = str(input("Picture name for Visited States Count? "))
+    plt.savefig(picture_visited_states)
 
 
 
@@ -475,7 +480,7 @@ def manual_algo_comparisons():
 
         mode = str
         while mode not in ['b', 'd', 'q','a']:
-            mode = input("\nbfs or dfs or astar or q?").lower()
+            mode = input("\nbfs or dfs or astar or q? (b/d/a) ").lower()
         if mode == 'b':
             breadth_first_search()
         elif mode == 'd':
@@ -564,52 +569,6 @@ def run_algorithms_on_12x12_board():
         print("Running Astar:")
         astar_algorithm(board_path)
 
-def main():
-
-    while True:
-
-        mode = str
-        while mode not in ['v', 'e', 'b', 'd', 'a','algo', 'auto', 'p']:
-            mode = input("\nDo you want to run the game in the Visual mode, or in the Experiment mode, BFS, or DFS, or astar, OR algo_comparison OR print OR \
-    run the script Automatically? (v/e/b/d/a/algo/p/auto) ").lower()
-    
-        if mode == 'v':
-            visual()
-        elif mode == 'e':
-            experiment()
-        elif mode == 'b':
-            breadth_first_search()
-        elif mode == 'd':
-            depth_first_search()
-        elif mode == 'a':
-            astar_algorithm()
-        elif mode == 'algo':
-            manual_algo_comparisons()
-        elif mode == 'auto':
-            board_size = input("on which boards? 6, 9, or 12 ")
-            if board_size == 6:
-                run_algorithms_on_6x6_boards()
-            elif board_size == 9:
-                run_algorithms_on_9x9_boards()
-            elif board_size == 12:
-                run_algorithms_on_12x12_board()
-        elif mode == 'p':
-            csv_data_file = 'data/algoritmen_data.csv'
-            compare_BFS_DFS_ASTAR(csv_data_file)
-
-
-        continu = str
-        while continu not in ['q', 'c']:
-            continu = input("\nDo you want to continue, or quit? (c/q) ")
-
-        if continu == 'q':
-            # prints into a barchart
-            # print_in_barchart(algorithms_used_and_their_average_moves)
-            csv_data_file = 'data/algoritmen_data.csv'
-            compare_BFS_DFS_ASTAR(csv_data_file)
-            break
-        elif continu == 'c':
-            continue
 
 def iterative_gameplay(paths: list[tuple[int, int]], file: str) -> None:
     """
@@ -643,37 +602,42 @@ def iterative_gameplay(paths: list[tuple[int, int]], file: str) -> None:
 
     pygame.quit()    
 
+def main():
+
+    while True:
+        mode = str
+        while mode not in ['v', 'e','algo','auto','p']:
+            mode = input("\nDo you want to run the game in the Visual mode, Experiment mode, manual_algo_comparison,\
+print results OR automatical_algo_comparison? (v/e/algo/p/auto) ").lower()
+        if mode == 'v':
+            visual()
+        elif mode == 'e':
+            experiment()
+        elif mode == 'algo':
+            manual_algo_comparisons()
+        elif mode == 'auto':
+            board_size = int(input("on which boards? 6, 9, or 12 "))
+            if board_size == 6:
+                run_algorithms_on_6x6_boards()
+            elif board_size == 9:
+                run_algorithms_on_9x9_boards()
+            elif board_size == 12:
+                run_algorithms_on_12x12_board()
+        elif mode == 'p':
+            csv_data_file = 'data/algoritmen_data.csv'
+            compare_BFS_DFS_ASTAR(csv_data_file)
+            break
+
+        continu = str
+        while continu not in ['q', 'c']:
+            continu = input("\nDo you want to continue, or quit? (c/q) ")
+
+        if continu == 'q':
+            csv_data_file = 'data/algoritmen_data.csv'
+            compare_BFS_DFS_ASTAR(csv_data_file)
+            break
+        elif continu == 'c':
+            continue
 
 if __name__ == '__main__':
-
     main()
-
-
-
-# pygames add to depth_first_search:
-
-    # visual = GameBoard(game_file)
-
-    # Pygame initialization
-    # pygame.init()
-    # rows = len(game._board)
-    # cols = len(game._board[0])
-    # screen = pygame.display.set_mode((cols * 50, rows * 50))
-    # pygame.display.set_caption("Rush-Hour Board")
-    # clock = pygame.time.Clock() 
-
-    # for move in dfs[0]:
-    #     for event in pygame.event.get():
-    #         if event.type == pygame.QUIT:
-    #             pygame.quit()
-    #             return
-
-    #     print(f"Move car {move[0]} in direction {move[1]}")
-    #     visual.move_car(move[0], move[1])
-    #     screen.fill((127, 127, 127))
-    #     visual.draw_board(screen)
-    #     pygame.display.flip()
-
-    #     clock.tick(15)
-
-    # pygame.quit()
