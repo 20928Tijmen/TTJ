@@ -2,9 +2,9 @@ import pygame
 
 class Visualisers:
 
-    def draw_colors(self, value):
+    def draw_colors(self, value: str) -> [tuple[int, int, int]]:
         # The colors for the squares on the Pygame board
-        self.color_values = {
+        self.color_values: Dict[str, Tuple[int, int, int]] = {
             'A': (0, 0, 0),
             'B': (0, 0, 85),
             'C': (0, 0, 170),
@@ -54,8 +54,8 @@ class Visualisers:
         return self.color_values.get(value)
 
     # This defines a new board with pygame!
-    def draw_board(self, screen):
-        
+    def draw_board(self, screen: pygame.Surface) -> None:
+
         # These loops decide the size of the code
         for row_index, row in enumerate(self._board):
             for col_index, cell_value in enumerate(row):
@@ -69,31 +69,3 @@ class Visualisers:
                     # New cells are drawn on each board with the appropriate colors.
                     pygame.draw.rect(screen, color, (x, y, 50, 50))
                     pygame.draw.rect(screen, (85, 85, 85), (x, y, 50, 50), 2)
-
-    def iterative_gameplay(paths, file):
-
-        game_file = GameFile(file)
-        visual = GameBoard(game_file)
-
-        pygame.init()
-        rows = len(visual._board)
-        cols = len(visual._board[0])
-        screen = pygame.display.set_mode((cols * 50, rows * 50))
-        pygame.display.set_caption("Rush-Hour Board")
-        clock = pygame.time.Clock() 
-
-        for move in paths:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    return
-
-            visual.move_car(move[0], move[1])
-            screen.fill((127, 127, 127))
-            visual.draw_board(screen)
-            pygame.display.flip()
-
-            clock.tick(15)
-
-        pygame.quit() 
-    

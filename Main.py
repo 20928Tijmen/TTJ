@@ -611,20 +611,13 @@ def main():
         elif continu == 'c':
             continue
 
+def iterative_gameplay(paths: list[tuple[int, int]], file: str) -> None:
+    """
+    This function simulates gameplay on a Rush-Hour board using provided move paths.
 
-def Joosts_test_paradijs():
-    file_path = 'data/Rushhour6x6_3.csv'
-    game_file = GameFile(file_path)
-    game = GameBoard(game_file)
-    astar = Astar(game)
-    print(game.get_board_for_player())
-    results = astar.run()
-    print(game.get_board_for_player())
-    print(f"solution found with {len(results[0])} moves, boards visited: {results[1]}")
-
-
-def iterative_gameplay(paths, file):
-
+    Pre: A path, including all the moves, is given, alongside game_file for simulation.
+    Post: A pygame, displaying all the moves, is shown.
+    """
     game_file = GameFile(file)
     visual = GameBoard(game_file)
 
@@ -648,8 +641,7 @@ def iterative_gameplay(paths, file):
 
         clock.tick(15)
 
-    pygame.quit() 
-    
+    pygame.quit()    
 
 
 if __name__ == '__main__':
