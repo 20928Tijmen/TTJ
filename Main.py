@@ -1,5 +1,6 @@
 from code.Algorithms import DFS, BFS, Astar, RandomMove, RandomLegalMove, RandomLegalRepeatMove
 from code.Classes import GameBoard, GameFile, History
+from code.Visualisation import visualise
 
 # pip3 install matplotlib numpy
     
