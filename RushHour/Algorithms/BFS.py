@@ -20,23 +20,34 @@ class BFS:
         self.game = game
         self._path_found = []
 
+        self.total_boards_per_depth = {0: 1}
+        self.unique_boards_per_depth = {0: 1}
+
 
     def run(self) -> list:
         self.queue = deque()
         self.visited = set()
 
-        self.queue.append((self.game.get_board(), []))
+        self.total_boards_per_depth = {0: 1}
+        self.unique_boards_per_depth = {0: 1}
+
+        self.queue.append((self.game.get_board(), [], 0))
         self.visited.add(self.game.get_board_as_hash(self.game.get_board()))
 
+
         while self.queue:
-            current_board, path = self.queue.popleft()
+            current_board, path, depth = self.queue.popleft()
             self.game.set_board(current_board)
 
             for successor_board, move in self.game.generate_all_possible_successor_boards():
 
-                board_hash = self.game.get_board_as_hash(successor_board)
+                self.total_boards_per_depth[depth + 1] = self.total_boards_per_depth.get(depth + 1, 0) + 1
 
+                board_hash = self.game.get_board_as_hash(successor_board)
+                               
                 if board_hash not in self.visited:
+
+                    self.unique_boards_per_depth[depth + 1] = self.unique_boards_per_depth.get(depth + 1, 0) + 1
 
                     if self.game.red_at_exit(successor_board): 
                         self._path_found = path + [move]
@@ -47,7 +58,7 @@ class BFS:
 
                     new_path = path + [move]
 
-                    self.queue.append((successor_board, new_path))
+                    self.queue.append((successor_board, new_path, depth + 1))
 
         return None  # No solution found
 
@@ -86,3 +97,57 @@ class BFS:
             writer.writerow(['car', 'move'])
             for move in compressed_history:
                 writer.writerow(move)
+
+    def layered_depth_data_csv_output(self):
+        """
+        Exports the depth data to a CSV file.
+        """
+        results_dir = 'Layered_data_BFS'
+        if not os.path.exists(results_dir):
+            os.makedirs(results_dir)
+
+        file_name = 'Layered_Data_BFS_' + str(self.game.game_file.board_size) + '_' + str(self.game.game_file.number) + '.csv'
+        file_path = os.path.join(results_dir, file_name)
+
+        if os.path.exists(file_path):
+            print(f"{file_name} already exists. CSV not created.")
+            return 
+
+        with open(file_path, mode='w') as file:
+            writer = csv.writer(file)
+            writer.writerow(['depth', 'total_boards', 'unique_boards'])
+            for depth in range(len(self.total_boards_per_depth)):
+                total_boards = self.total_boards_per_depth.get(depth, 0)
+                unique_boards = self.unique_boards_per_depth.get(depth, 0)
+                writer.writerow([depth, total_boards, unique_boards])
+
+
+    def summed_depth_data_csv_output(self):
+        """
+        Exports the summed depth data to a CSV file.
+        """
+        results_dir = 'Summed_Data_BFS'
+        if not os.path.exists(results_dir):
+            os.makedirs(results_dir)
+
+        file_name = 'Summed_Data_BFS_' + str(self.game.game_file.board_size) + '_' + str(self.game.game_file.number) + '.csv'
+        file_path = os.path.join(results_dir, file_name)
+
+        if os.path.exists(file_path):
+            print(f"{file_name} already exists. CSV not created.")
+            return 
+
+        summed_total_boards = 0
+        summed_unique_boards = 0
+
+        with open(file_path, mode='w') as file:
+            writer = csv.writer(file)
+            writer.writerow(['depth', 'summed_total_boards', 'summed_unique_boards'])
+            for depth in range(len(self.total_boards_per_depth)):
+                total_boards = self.total_boards_per_depth.get(depth, 0)
+                unique_boards = self.unique_boards_per_depth.get(depth, 0)
+
+                summed_total_boards += total_boards
+                summed_unique_boards += unique_boards
+
+                writer.writerow([depth, summed_total_boards, summed_unique_boards])
