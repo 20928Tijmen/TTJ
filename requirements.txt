@@ -18,4 +18,4 @@ Pygame: python3 -m pip install -U pygame --user
 Numpy: pip install numpy
 Matplotlib: python -m pip install -U matplotlib
 
-Zodra deze afhankelijkheden geïnstalleerd zijn, kan men aan de slag gaan met Rush Hour.
+Zodra deze afhankelijkheden geïnstalleerd zijn, kan men met behulp van de groene 'Code'-knop deze repository klonen/downloaden om het programma zelf uit te proberen.
