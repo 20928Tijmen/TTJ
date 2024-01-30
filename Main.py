@@ -475,12 +475,17 @@ def compare_BFS_DFS_ASTAR(csv_data_file):
 
 
 def manual_algo_comparisons():
+    """
+    Compare the algorithms on each board manually
+    """
+    # Get the initial number of rows in the CSV file
+    csv_data_file = 'data/algoritmen_data.csv'
+    initial_row_count = get_csv_row_count(csv_data_file)
 
     while True:
-
         mode = str
         while mode not in ['b', 'd', 'q','a']:
-            mode = input("\nbfs or dfs or astar or q? (b/d/a) ").lower()
+            mode = input("\nbfs or dfs or astar or quit? (b/d/a/q) ").lower()
         if mode == 'b':
             breadth_first_search()
         elif mode == 'd':
@@ -488,21 +493,41 @@ def manual_algo_comparisons():
         elif mode == 'a':
             astar_algorithm()
         elif mode == 'q':
-            csv_data_file = 'data/algoritmen_data.csv'
-            compare_BFS_DFS_ASTAR(csv_data_file)
+            break
 
         continu = str
         while continu not in ['q', 'c']:
             continu = input("\nDo you want to continue, or quit? (c/q) ")
 
         if continu == 'q':
-            # prints into a barchart
-            # print_in_barchart(algorithms_used_and_their_average_moves)
-            csv_data_file = 'data/algoritmen_data.csv'
-            compare_BFS_DFS_ASTAR(csv_data_file)
+            # Print only the rows added after running the tests
+            new_row_count = get_csv_row_count(csv_data_file)
+            print_added_rows(csv_data_file, initial_row_count, new_row_count)
             break
         elif continu == 'c':
             continue
+
+def get_csv_row_count(csv_file):
+    """
+    looks at the algoritmen_data.csv file row count
+    """
+    with open(csv_file, mode='r') as file:
+        reader = csv.reader(file)
+        return sum(1 for _ in reader)
+
+def print_added_rows(csv_file, initial_row_count, new_row_count):
+    """
+    prints the newest rows added to the algoritmen_data.csv when using algo mode
+    """
+    with open(csv_file, mode='r') as file:
+        reader = csv.reader(file)
+        rows = list(reader)[initial_row_count:new_row_count]
+        
+        header = ["Algorithm", "Board", "Compute Time", "Solution Path Length", "Visited States Count"]
+        for row in rows:
+            print(f"\nNew Test Results:")
+            for key, value in zip(header, row):
+                print(f"{key}: {value}")
 
 
 def run_algorithms_on_6x6_boards():
@@ -608,7 +633,7 @@ def main():
         mode = str
         while mode not in ['v', 'e','algo','auto','p']:
             mode = input("\nDo you want to run the game in the Visual mode, Experiment mode, manual_algo_comparison,\
-print results OR automatical_algo_comparison? (v/e/algo/p/auto) ").lower()
+OR automatical_algo_comparison OR print results from automatical_algo_comparison? (v/e/algo/auto/p) ").lower()
         if mode == 'v':
             visual()
         elif mode == 'e':
