@@ -31,7 +31,7 @@ Bij het starten van de 'main' krijgt men een startscherm te zien, waarbij de 'ma
 
 ![431465DF-8E34-4CC1-9034-ED0336DDFAC3](https://github.com/20928Tijmen/TTJ/assets/144214560/ba39d982-46e9-47da-abce-a1267e4259cf)
 
-Als men kiest voor 'v' (voor 'visualize-random'), kan men kiezen tussen een reeks borden. Daarna kan men met behulp van de interface kiezen welke van de drie 'Random'-algoritmes moet worden afgespeeld.
+Als men kiest voor 'v' (voor 'visualize-random'), wordt men eerst gevraagd of deze een willekeurig bord wil zien. Zo ja, dan krijgt men een bord met allemaal willekeurige auto's op willekeurige plaatsen. Zo nee, dan men kiezen tussen een reeks borden. Daarna kan je met behulp van de interface kiezen welke van de drie 'Random'-algoritmes moet worden afgespeeld.
 
 Na het kiezen van een 'Random' algoritme, wordt een 'pygame'-venster geopend. Deze pygame vertoont elke zet van het random-algoritme als bewegingen van de auto's op het bord.
 
