@@ -96,7 +96,7 @@ Zodra het uitgespeeld is met de 6x6 borden is er een mogelijkheid om het te prin
 
 ![hallo](https://github.com/20928Tijmen/TTJ/assets/144214560/99c5c4c1-2825-4c69-ba12-99ec504dd1a6)
 
-De twee matplot-libgrafieken kan je op een mac systeem saven door middel van plt.show, maar anders hebben wij het voor windows users zo ingesteld dat je met plt.savefig de grafieken kan saven. De optie om de grafieken te zien krijg je als je quit drukt. Lukt dat niet? Dan kan je main.py weer runnen en p als input typen.
+De twee matplot-libgrafieken kan je op een mac systeem saven door middel van plt.show, maar anders hebben wij het voor windows users zo ingesteld dat je met plt.savefig de grafieken kan saven. De optie om de grafieken te zien krijg je als je quit drukt. Lukt dat niet? Dan moet je misschien het bestand 'data/algoritmen_data.csv' opschonen. Je kunt ook main.py runnen en p als input typen als je negen resultaten in het bestand hebt en (een extra) afbeelding van de resultaten wil laten maken.
 
 ![pictar](https://github.com/20928Tijmen/TTJ/assets/144214560/9d6c0355-c52e-40d7-9412-b3f33f0d2c85)
 
