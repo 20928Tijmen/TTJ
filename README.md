@@ -29,7 +29,8 @@ Om de resultaten van de case te kunnen reproduceren, moet men allereerst de 'mai
 
 Bij het starten van de 'main' krijgt men een startscherm te zien, waarbij de 'main' is voorzien van een interface dat de gebruiker goed op weg helpt. Het eerste scherm dat men ziet, noemen we het 'introductiescherm'.
 
-![screenshotone](https://github.com/20928Tijmen/TTJ/assets/144214560/2b06d5fc-b2e3-4937-be8f-4a0010683a37)
+![431465DF-8E34-4CC1-9034-ED0336DDFAC3](https://github.com/20928Tijmen/TTJ/assets/144214560/ba39d982-46e9-47da-abce-a1267e4259cf)
+
 
 Als men kiest voor 'v' (voor 'visualize-random'), kan men kiezen tussen een reeks borden. Daarna kan men met behulp van de interface kiezen welke van de drie 'Random'-algoritmes moet worden afgespeeld.
 
