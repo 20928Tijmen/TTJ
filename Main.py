@@ -1,4 +1,5 @@
-from code.Algorithms import DFS, BFS, Astar, RandomMove, RandomLegalMove, RandomLegalRepeatMove
+from code.Algorithms import DFS, BFS, Astar,\
+RandomMove, RandomLegalMove, RandomLegalRepeatMove
 from code.Classes import GameBoard, GameFile, History
 from code.Visualisation import visualise
     
@@ -137,8 +138,6 @@ def visualize_random():
 
     pygame.display.quit()
 
-# list of algorithms used
-algorithms_used_and_their_average_moves = {}
 
 def experiment():
 
@@ -195,8 +194,6 @@ def experiment():
     average_moves = (sum(total_moves) / len(total_moves))
     average_loops = (sum(total_loops) / len(total_loops))
     
-    # Add to list of algorithms used and their average moves made
-    algorithms_used_and_their_average_moves[select_algorithm] = average_moves
 
     print(f"\nThe average amount of moves needed for {number_of_games} games was {average_moves} moves, and {average_loops} game loops")
 
