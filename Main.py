@@ -334,60 +334,64 @@ def compare_BFS_DFS_ASTAR(csv_data_file):
             Compute_Time.append(float(row[2]))
             Solution_Path_Length.append(int(row[3]))
             Visited_States_Count.append(int(row[4]))
-
+    
+    # The forloops were generated with chatgpt because of its complexity
     # Identify unique algorithms and boards
     unique_algorithms = sorted(list(set(Algorithms)))
     unique_boards = sorted(list(set(Board)))
 
     # Create grouped bar chart for Solution Path Length
-    x_pos = np.arange(len(unique_boards))
+    x_pos_solution = np.arange(len(unique_boards))
     width = 0.25  # the width of the bars
 
-    # Generated with chatgpt because of its complexity
+    plt.figure(figsize=(12, 6))  # Set the figure size
+
+    # Create subplot for Solution Path Length
+    plt.subplot(1, 2, 1)
+
     for i, algorithm in enumerate(unique_algorithms):
         algorithm_indices = [j for j, alg in enumerate(Algorithms) if alg == algorithm]
         values = [Solution_Path_Length[idx] for idx in algorithm_indices]
 
-        plt.bar(x_pos + (i - 1) * width, values, width, label=algorithm)
+        plt.bar(x_pos_solution + i * width, values, width, label=algorithm)
 
         # Add numbers above the bars
         for j, value in enumerate(values):
-            plt.text(x_pos[j] + (i - 1) * width, value + 0.1, str(value), ha='center', va='bottom')
+            plt.text(x_pos_solution[j] + i * width, value + 0.1, str(value), ha='center', va='bottom')
 
     plt.xlabel("Boards")
     plt.ylabel("Solution Path Length")
     plt.title("Comparison of Solution Path Length on 6x6 boards")
-    plt.xticks(x_pos, unique_boards)
+    plt.xticks(x_pos_solution + (len(unique_algorithms) - 1) * width / 2, unique_boards, rotation=45)  # Adjust xticks position and rotation
     plt.legend()
 
-    # Save the plot to a file
-    picture_solution_path = str(input("Picture name for Solution Path Length? "))
-    plt.savefig(picture_solution_path)
+    # Create subplot for Visited States Count
+    plt.subplot(1, 2, 2)
 
-    # Display a message to the user
-    print(f"The result for Solution Path Length is saved as {picture_solution_path}. Please check the files!")
+    x_pos_visited_states = np.arange(len(unique_boards))
 
-    # Create grouped bar chart for Visited States Count
-    # Generated with chatgpt because of its complexity
     for i, algorithm in enumerate(unique_algorithms):
         algorithm_indices = [j for j, alg in enumerate(Algorithms) if alg == algorithm]
         values = [Visited_States_Count[idx] for idx in algorithm_indices]
 
-        plt.bar(x_pos + (i - 1) * width, values, width, label=algorithm)
+        plt.bar(x_pos_visited_states + i * width, values, width, label=algorithm)
 
-        # Add numbers above the bars
+        # Add numbers above the bars with an offset for the second set of bars
         for j, value in enumerate(values):
-            plt.text(x_pos[j] + (i - 1) * width, value + 0.1, str(value), ha='center', va='bottom')
+            plt.text(x_pos_visited_states[j] + i * width, value + 0.1, str(value), ha='center', va='bottom')
 
     plt.xlabel("Boards")
     plt.ylabel("Visited States Count")
     plt.title("Comparison of Visited States Count on 6x6 boards")
-    plt.xticks(x_pos, unique_boards)
+    plt.xticks(x_pos_visited_states + (len(unique_algorithms) - 1) * width / 2, unique_boards, rotation=45)  # Adjust xticks position and rotation
     plt.legend()
 
     # Save the plot to a file
-    picture_visited_states = str(input("Picture name for Visited States Count? "))
-    plt.savefig(picture_visited_states)
+    picture_path = str(input("Picture name? "))
+    plt.savefig(picture_path)
+    # Display a message to the user
+    print(f"The result is saved as {picture_path}. Please check the files!")
+
 
 
 def manual_algo_comparisons():
