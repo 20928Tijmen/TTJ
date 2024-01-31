@@ -606,6 +606,7 @@ def iterative_gameplay(paths: list[tuple[int, int]], file: str) -> None:
     visual = GameBoard(game_file)
 
     pygame.init()
+    # The screen is established with the size of the rows and colums
     rows = len(visual._board)
     cols = len(visual._board[0])
     screen = pygame.display.set_mode((cols * 50, rows * 50))
@@ -618,6 +619,7 @@ def iterative_gameplay(paths: list[tuple[int, int]], file: str) -> None:
                 pygame.quit()
                 return
 
+        # For every move in the given path, the board is updated.
         visual.move_car(move[0], move[1])
         screen.fill((127, 127, 127))
         visual.draw_board(screen)
@@ -632,7 +634,7 @@ def main():
     while True:
         mode = str
         while mode not in ['v', 'e','algo','auto','p']:
-            mode = input("\nDo you want to run the game in the Visual mode, Experiment mode, manual_algo_comparison,\
+            mode = input("\nDo you want to run the game in the Visualize-random mode, Experiment mode, manual_algo_comparison,\
 OR automatical_algo_comparison OR print results from automatical_algo_comparison? (v/e/algo/auto/p) ").lower()
         if mode == 'v':
             visual()

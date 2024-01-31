@@ -15,9 +15,9 @@
 
 **RandomLegalRepeatMove**: Dit bouwt voort uit **RandomLegalMove** en fungeert als verbetering ervan. Bij **RandomLegalRepeatMove** kiest de code met *import random* een willekeurige auto op het bord. Het verschil met **RandomLegalMove** is dat er een geldige move wordt gekozen, waarna het algoritme deze geldige move blijft herhalen totdat deze niet meer geldig is. Als het algoritme een auto naar rechts wil schuiven, en er zijn rechts van die auto drie plekken vrij, dan zal de auto drie keer naar rechts worden geschoven.
 
-**BFS**: Bij een **breadth_first_search**-algoritme begint het programma bij het startbord, waarna alle mogelijke zetten vanuit dat bord worden onderzocht, waarna het programma alle mogelijke borden vanuit die zetten onderzoekt. Bij elk nieuw bord wordt gecontroleerd of het al is bezocht, en zo nee, dan wordt het aan een queue toegevoegd. Deze queue bestaat om borden en paden bij te houden. Bij elk bord wordt gecontroleerd of de auto de uitgang heeft gevonden. Zo ja, dan wordt het pad teruggegeven. Dit algoritme zoekt altijd naar de kortste oplossing. Nadelig is wel dat het proces bij grote borden veel tijd en ruimte in beslag kan nemen.
+**BFS**: Bij een **breadth_first_search**-algoritme begint het programma bij het startbord, waarna alle mogelijke zetten vanuit dat bord worden onderzocht, waarna het programma alle mogelijke borden vanuit die zetten onderzoekt. Bij elk nieuw bord wordt gecontroleerd of het al is bezocht, en zo zo niet, dan wordt het aan een queue toegevoegd. Deze queue bestaat om borden en paden bij te houden. Bij elk bord wordt gecontroleerd of de auto de uitgang heeft gevonden. Zo ja, dan wordt het pad teruggegeven. Dit algoritme zoekt altijd naar de kortste oplossing. Nadelig is wel dat het proces bij grote borden veel tijd en ruimte in beslag kan nemen.
 
-**DFS**: Een **depth_first_search**-algoritme verschilt met BFS: terwijl BFS alle mogelijke zetten op een bepaald niveau verkent, gaat DFS zo diep mogelijk in op een bepaald pad voordat er een ander pad wordt verkend. In dit geval begint het algoritme met een startbord, waarna deze zoveel mogelijk zetten genereert en verkent. Voor elk nieuw bord wordt gekeken of het al is bezocht, en zo nee, dan wordt het aan een 'stack' toegevoegd. Als er een bord is gevonden waar de rode auto tegen de uitgang staat, wordt er een pad teruggeven. Het nadeel is dat dit algoritme niet de kortste route garandeert, maar het neemt wel minder ruimte en tijd in beslag.
+**DFS**: Een **depth_first_search**-algoritme verschilt met BFS. In tegenstelling tot BFS gaat DFS zo diep mogelijk in op een bepaald pad voordat het naar andere paden gaat. Het algoritme begint met een startbord en genereert zoveel mogelijk zetten. De code implementeert DFS dan ook met een stack en een set om bezochte borden bij te houden, waarbij er voor elk nieuw bord wordt gecontroleerd of het al is bezocht. Zo niet, dan wordt het aan de stack toegevoegd. Wanneer de rode auto de uitgang bereikt, wordt het gevonden pad teruggegeven. Het algoritme eindigt zodra het een bord vind waar de rode auto de uitgang heeft bereikt. Hoewel het niet de kortste oplossing garandeert, is DFS efficiënter dan BFS op het gebied van ruimte en tijd.
 
 **Astar**: Een **Astar**-algoritme komt in de buurt van BFS op gebied van werking, maar de volgorde van de verkenning van de bordconfiguraties (hier in nodes) wordt gebaseerd op een heuristieke score die elk bord krijgt. Deze score is berekend op basis van de hoeveelheid zetten die nodig zijn om naar een bepaald bord te gaan, de afstand van de auto naar de exit, en alle voertuigen die in de weg staan. Hoe lager de score, hoe meer prioriteit deze krijgt van het algoritme. Ook dit algoritme gaat voor de kortst mogelijke oplossing.
 
@@ -29,9 +29,10 @@ Om de resultaten van de case te kunnen reproduceren, moet men allereerst de 'mai
 
 Bij het starten van de 'main' krijgt men een startscherm te zien, waarbij de 'main' is voorzien van een interface dat de gebruiker goed op weg helpt. Het eerste scherm dat men ziet, noemen we het 'introductiescherm'.
 
-![screenshotone](https://github.com/20928Tijmen/TTJ/assets/144214560/2b06d5fc-b2e3-4937-be8f-4a0010683a37)
+![431465DF-8E34-4CC1-9034-ED0336DDFAC3](https://github.com/20928Tijmen/TTJ/assets/144214560/ba39d982-46e9-47da-abce-a1267e4259cf)
 
-Als men kiest voor 'v' (voor 'Visual'), kan men kiezen tussen een reeks borden. Daarna kan men met behulp van de interface kiezen welke van de drie 'Random'-algoritmes moet worden afgespeeld.
+
+Als men kiest voor 'v' (voor 'visualize-random'), kan men kiezen tussen een reeks borden. Daarna kan men met behulp van de interface kiezen welke van de drie 'Random'-algoritmes moet worden afgespeeld.
 
 Na het kiezen van een 'Random' algoritme, wordt een 'pygame'-venster geopend. Deze pygame vertoont elke zet van het random-algoritme als bewegingen van de auto's op het bord.
 
@@ -61,5 +62,11 @@ Als je in het introductiescherm voor 'algo' gaat, krijg je de mogelijkheid om al
 
 ![screenshotsix](https://github.com/20928Tijmen/TTJ/assets/144214560/f691ad9d-b695-48b5-af10-0c9a6b8c6f66)
 
-*** De script als het ware is dit: Auto ***
-Als men in het introductiescherm voor 'auto' kiest, spelen alledrie de algoritmen 'BFS', 'DFS' en 'Astar' opeenvolgend af, waarbij elk algoritme drie keer wordt afgespeeld (één keer voor elk 6x6 bord). Ook hiervoor wordt bij elke game het pygame-bord vertoond om elke move te vertonen als bewegingen op een spelbord. Zodra het gespeeld is op de 6x6 borden is er een mogelijkheid om het te printen in twee matplotlib grafieken(bij 6x6 is dit geimplementeerd omdat bij 9x9 het te lang duurt om alle data te verzamelen). Om ervoor te zorgen dat dit werkt moet je algoritmen_data.csv alleen de negen results hebben van auto. De twee grafieken kan je op een mac systeem saven door middel van plt.show, maar anders hebben wij het voor windows users zo ingesteld dat je met plt.savefig de grafieken kan saven.
+*** De "script" is dit: Auto ***
+Als men in het introductiescherm voor 'auto' kiest, spelen alledrie de algoritmen 'BFS', 'DFS' en 'Astar' opeenvolgend af, waarbij elk algoritme drie keer wordt afgespeeld (één keer voor elk Grootte-bij-Grootte bord).
+
+Na het kiezen van 'auto' krijg je dan ook de keuze tussen het afspelen van de 6x6, de 9x9, of de 12x12 borden.
+
+Ook hiervoor wordt bij elke game het pygame-bord vertoond om elke move te vertonen als bewegingen op een spelbord.
+
+Zodra het gespeeld is op de 6x6 borden is er een mogelijkheid om het te printen in twee matplotlib grafieken (bij 6x6 is dit geimplementeerd omdat bij 9x9 het te lang duurt om alle data te verzamelen). Om ervoor te zorgen dat dit werkt moet je algoritmen_data.csv alleen de negen results hebben van auto. De twee grafieken kan je op een mac systeem saven door middel van plt.show, maar anders hebben wij het voor windows users zo ingesteld dat je met plt.savefig de grafieken kan saven.
