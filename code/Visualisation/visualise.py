@@ -69,37 +69,3 @@ class Visualisers:
                     # New cells are drawn on each board with the appropriate colors.
                     pygame.draw.rect(screen, color, (x, y, 50, 50))
                     pygame.draw.rect(screen, (85, 85, 85), (x, y, 50, 50), 2)
-
-    def iterative_gameplay(paths: list[tuple[int, int]], file: str) -> None:
-        """
-        This function simulates gameplay on a Rush-Hour board using provided move paths.
-
-        Pre: A path, including all the moves, is given, alongside game_file for simulation.
-        Post: A pygame, displaying all the moves, is shown.
-        """
-        game_file = GameFile(file)
-        visual = GameBoard(game_file)
-
-        pygame.init()
-        # The screen is established with the size of the rows and colums
-        rows = len(visual._board)
-        cols = len(visual._board[0])
-        screen = pygame.display.set_mode((cols * 50, rows * 50))
-        pygame.display.set_caption("Rush-Hour Board")
-        clock = pygame.time.Clock() 
-
-        for move in paths:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    return
-
-            # For every move in the given path, the board is updated.
-            visual.move_car(move[0], move[1])
-            screen.fill((127, 127, 127))
-            visual.draw_board(screen)
-            pygame.display.flip()
-
-            clock.tick(15)
-
-        pygame.quit()   
