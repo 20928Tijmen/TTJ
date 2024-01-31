@@ -1,10 +1,1 @@
 Algorithm,Board,Compute Time,Solution Path Length,Visited States Count
-BFS,data/Rushhour6x6_1.csv,0.1363486530026421,34,588
-DFS,data/Rushhour6x6_1.csv,0.0459955949918367,141,397
-ASTAR,data/Rushhour6x6_1.csv,0.06630355800734833,34,365
-BFS,data/Rushhour6x6_2.csv,0.8523306589922868,28,3829
-DFS,data/Rushhour6x6_2.csv,0.05924913100898266,218,861
-ASTAR,data/Rushhour6x6_2.csv,0.5875894600176252,28,2897
-BFS,data/Rushhour6x6_3.csv,1.703302773006726,82,8677
-DFS,data/Rushhour6x6_3.csv,0.5107304489938542,1447,5711
-ASTAR,data/Rushhour6x6_3.csv,1.9370864930097014,82,8516
