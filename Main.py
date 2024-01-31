@@ -12,6 +12,21 @@ import timeit
 
 import csv
 
+def load_board_opstellingen(path: str) -> list[str]:
+    '''
+    Zet alle gegeven bord csv's in een folder
+    geef van deze folder de path als input
+    krijg een mooie lijst me paths naar elke bord file terug
+    input: 
+    - path: string = het relative path voor de folder waarin alle csv files voor de borden in staan
+    
+    output:  
+    - return: list[string] = voor elke file in de aangewezen folder -> relatieve pad + filenaam
+    
+    '''
+
+    return [os.path.join(path, file) for file in os.listdir(path)]
+
 def pick_board_random() -> str:
     '''
     spreekt voorzich denk ik
@@ -516,7 +531,6 @@ def iterative_gameplay(paths: list[tuple[int, int]], file: str) -> None:
         clock.tick(15)
 
     pygame.quit()   
-
 
 def main():
 
