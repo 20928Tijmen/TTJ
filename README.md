@@ -24,7 +24,7 @@
 
 **/code**: Hierin staat alle code die nodig is om het programma draaiende te krijgen.
 
-**/data**: Hierin staat 'algoritmen_data.csv', een belangrijk bestand dat snelle statistieken bijhoud van algoritmische prestaties. Ook staan hier de drie 'Results'-mappen, die bijhouden hoeveel zetten een algoritme nodig had om in een Rush Hour-spel de finishlijn te halen.
+**/data**: Hierin staat 'algoritmen_data.csv', een belangrijk bestand dat snelle statistieken bijhoud van algoritmische prestaties. Ook worden hier - bij het gebruik van de algoritmen DFS, BFS, en Astar - drie 'Results'-mappen aangemaakt via gebruik van de Main, die bijhouden hoeveel zetten een algoritme nodig had om in een Rush Hour-spel de finishlijn te halen.
 
 **/docs**: Hierin staan kleine afbeeldingen, waaronder de grafieken die dit programma kan aanmaken met matplotlib.
 
@@ -70,7 +70,7 @@ Zodra het algoritme en het bord zijn gekozen, wordt elke move die één van deze
 
 ![itworks](https://github.com/20928Tijmen/TTJ/assets/144214560/f259db68-f935-4473-98fd-51b99028f42c)
 
-Nadat de rode auto de exit heeft bereikt, ziet men een boodschap waarin staat dat bepaalde resultaten in twee 'output'-bestanden zijn opgeslagen. Het eerste 'output'-bestand bevat alle moves die zijn gezet om de auto de uitgang te laten bereiken. Deze moves kan men terugvinden in de bijbehorende 'results'-map in de 'data'-map.
+Nadat de rode auto de exit heeft bereikt, ziet men een boodschap waarin staat dat bepaalde resultaten in twee 'output'-bestanden zijn opgeslagen. Het eerste 'output'-bestand bevat alle moves die zijn gezet om de auto de uitgang te laten bereiken. Deze moves kan men terugvinden in de bijbehorende 'results'-map die wordt aangemaakt in de 'data'-map.
 
 Het andere output-bestand, 'data/algoritmen_data' geeft statistieken over hoe de algoritmen tot nu hebben gepresteert.
 
