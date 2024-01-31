@@ -76,15 +76,15 @@ Het andere output-bestand, 'data/algoritmen_data' geeft statistieken over hoe de
 
 ![itworks2](https://github.com/20928Tijmen/TTJ/assets/144214560/2ea04859-f608-4caf-a8f0-1acbf6c2b34e)
 
-Als men hier op 'c' klikt, gaat me niet terug naar introductiescherm. Bij 'manual_algo' krijg je dan juist de mogelijkheid om direct een ander algoritme en/of een ander bord te testen in dezelfde modus.
+Als je hier op 'c' klikt, ga je niet terug naar introductiescherm. Bij 'manual_algo' krijg je dan juist de mogelijkheid om direct een ander algoritme en/of een ander bord te testen in dezelfde modus.
 
-![pictar](https://github.com/20928Tijmen/TTJ/assets/144214560/377064d7-14d1-449f-81d7-9875f137c4a9)
+![print3](https://github.com/20928Tijmen/TTJ/assets/144214560/af0c3cf0-4c17-4d1c-856f-5bc6638f8b1b)
 
-Als je bij 'manual_algo' op 'q' drukt wordt het programma niet meteen afgesloten - in plaats daarvan krijg je eerst een resultatenlijst waarin men ziet hoe elk algoritme in de 'algo'-modus heeft gepresteerd. Elk algoritme wordt beoordeeld op verscheidene attributen. Dit geeft mogelijkheid om elk algoritme te vergelijken. Wij hebben deze manual modes vooral gebruiktom de 9x9 borden te runnen, omdat die veel tijd en computer geheugen in beslag nemen.
+Als je bij 'manual_algo' op 'q' drukt wordt het programma niet meteen afgesloten - in plaats daarvan krijg je eerst een resultatenlijst waarin men ziet hoe elk algoritme in de 'algo'-modus heeft gepresteerd. Elk algoritme wordt beoordeeld op verscheidene attributen. Dit geeft mogelijkheid om elk algoritme te vergelijken. Wij hebben deze manual modes vooral gebruikt om de 9x9 borden te runnen, omdat die veel tijd en computer geheugen in beslag nemen.
 
 ![print2](https://github.com/20928Tijmen/TTJ/assets/144214560/5d4af9a1-5506-4b4d-8067-e585c47f1d47)
 
-Als men in het introductiescherm voor 'auto' kiest, spelen alledrie de algoritmen 'BFS', 'DFS' en 'Astar' opeenvolgend af, waarbij elk algoritme drie keer wordt afgespeeld (één keer voor elk Grootte-bij-Grootte bord).
+Als men in het introductiescherm voor 'auto' kiest, worden de algoritmen 'BFS', 'DFS' en 'Astar' opeenvolgend afgespeeld, waarbij elk algoritme drie keer wordt afgespeeld (één keer voor elk Grootte-bij-Grootte bord).
 
 Na het kiezen van 'auto' krijg je dan ook de keuze tussen het afspelen van de 6x6, de 9x9, of de 12x12 borden.
 
@@ -97,3 +97,6 @@ Zodra het uitgespeeld is met de 6x6 borden is er een mogelijkheid om het te prin
 ![hallo](https://github.com/20928Tijmen/TTJ/assets/144214560/99c5c4c1-2825-4c69-ba12-99ec504dd1a6)
 
 De twee matplot-libgrafieken kan je op een mac systeem saven door middel van plt.show, maar anders hebben wij het voor windows users zo ingesteld dat je met plt.savefig de grafieken kan saven. De optie om de grafieken te zien krijg je als je quit drukt. Lukt dat niet? Dan kan je main.py weer runnen en p als input typen.
+
+![pictar](https://github.com/20928Tijmen/TTJ/assets/144214560/9d6c0355-c52e-40d7-9412-b3f33f0d2c85)
+
