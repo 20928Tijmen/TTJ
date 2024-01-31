@@ -1,5 +1,6 @@
 import pygame
 
+
 class Visualisers:
 
     def draw_colors(self, value: str) -> [tuple[int, int, int]]:

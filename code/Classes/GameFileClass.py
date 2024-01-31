@@ -1,4 +1,5 @@
-import re # (REGEX!! gekke throwback naar DataRepresentaties)
+import re  # (= REGEX!!)
+
 
 class GameFile:
     '''
@@ -14,6 +15,7 @@ class GameFile:
     number: int = boards of same width have differnt numbers
     car_info = all data from the csv file
     '''
+
     def __init__(self, path: str) -> None:
         self.path: str = path
         self.board_size: str = self._set_board_size()
@@ -23,7 +25,7 @@ class GameFile:
     def _set_board_size(self) -> str:
         return re.search(r'(\d+)x\d+_', self.path).group(1)
         # Gebruik regex om de size direct uit de path te plukken
-        # uitleg regex: 
+        # uitleg regex:
         # kijk in self.path naar \d+, 1 op meer digits, opgevolgd door een x, dus de dimensions
 
     def _set_board_number(self) -> str:
@@ -32,7 +34,7 @@ class GameFile:
         # uitleg regex:
         # $ betekend dat daar het einde is, en weer is de (\d+) dat je 1+ getallen zoekt op die plek
         # echt top spul dit
-    
+
     def _read_car_data(self) -> list[tuple[str, str, int, int, int]]:
         """
         Reads car data from the CSV file specified in the path attribute.

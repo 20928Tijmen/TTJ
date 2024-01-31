@@ -1,38 +1,37 @@
-from code.Algorithms import DFS, BFS, Astar,\
-RandomMove, RandomLegalMove, RandomLegalRepeatMove
+from code.Algorithms import DFS, BFS, Astar, RandomMove, RandomLegalMove, RandomLegalRepeatMove
 from code.Classes import GameBoard, GameFile, History
 from code.Visualisation import visualise
-    
 import numpy as np
 import matplotlib.pyplot as plt
-
-import os, random
-
+import os
+import random
 import pygame
 import timeit
-
 import csv
+
 
 def load_board_opstellingen(path: str) -> list[str]:
     '''
     Zet alle gegeven bord csv's in een folder
     geef van deze folder de path als input
     krijg een mooie lijst me paths naar elke bord file terug
-    input: 
+    input:
     - path: string = het relative path voor de folder waarin alle csv files voor de borden in staan
-    
-    output:  
+
+    output:
     - return: list[string] = voor elke file in de aangewezen folder -> relatieve pad + filenaam
-    
+
     '''
 
     return [os.path.join(path, file) for file in os.listdir(path)]
+
 
 def pick_board_random() -> str:
     '''
     spreekt voorzich denk ik
     '''
     return random.choice(load_board_opstellingen('data'))
+
 
 def available_boards():
     print("\nAvailable boards:\n")
@@ -46,7 +45,7 @@ def available_boards():
         '6': "data/Rushhour9x9_6.csv",
         '7': "data/Rushhour12x12_7.csv",
     }
-    
+
     board_sizes = ['6x6', '6x6', '6x6', '9x9', '9x9', '9x9', '12x12']
 
     for i in range(len(boards_dictionary)):
@@ -66,10 +65,11 @@ def available_algorithms():
 
     algorithm_names = ['RandomLegalMove', 'RandomLegalRepeatMove', 'RandomMove']
 
-    for i in range (len(algorithms_dictionary)):
+    for i in range(len(algorithms_dictionary)):
         print(f'{i + 1}: {algorithm_names[i]}\n')
 
     return algorithms_dictionary
+
 
 def visualize_random():
     """
@@ -97,49 +97,27 @@ def visualize_random():
 
     game_file = GameFile(file_path)
     game = GameBoard(game_file)
-    
-    # Initializes the 'pygame'-part of the code.
-    pygame.init()
 
-    # This sets up the display of the pygame.
-    rows = len(game._board)
-    cols = len(game._board[0])
-    screen = pygame.display.set_mode((cols * 50, rows * 50))
-    pygame.display.set_caption("Rush-Hour Board")
+    while True:
 
-    clock = pygame.time.Clock() 
-
-    running = True
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-
-        # This script plays when the game is won
         if game.is_won():
+            iterative_gameplay(history.get_move_history(), file_path)
             print("Congratulations, you found your way out!")
             print('Total moves:', history.get_counter())
-            running = False 
-
+            break
 
         random_move_algorithm = selected_algorithm(game, history, game_file)
         random_car, random_direction = random_move_algorithm.make_move()
 
-        if game.move_car(random_car, random_direction) is not False:
+        if game.move_car(random_car, random_direction):
             history.add_move(random_car, random_direction)
             history.add_board(game.get_board())
 
-        screen.fill((127, 127, 127))
-        # For every move, the pygame board is updated.
-        game.draw_board(screen)
-        pygame.display.flip()
-
-        clock.tick(15)
-
-    pygame.display.quit()
-
 
 def experiment():
+    """
+    Used for comparing the random algorithms, runs the rushhour game as many times as the input given in main().
+    """
 
     # needed moves word hierin opgeslagen na solve
     total_moves = []
@@ -148,7 +126,7 @@ def experiment():
     total_loops = []
 
     number_of_games = int(input("\nHow many games do you want to run for this experiment? "))
-    
+
     available_board_dictionary = available_boards()
     board_pick = str
     while board_pick not in available_board_dictionary:
@@ -161,7 +139,7 @@ def experiment():
 
     if select_algorithm in ['1', '2', '3']:
         selected_algorithm = algorithms[select_algorithm]
-    
+
     for i in range(number_of_games):
 
         history = History()
@@ -174,13 +152,12 @@ def experiment():
         loop_counter = 0
 
         while True:
-            
+
             if game.is_won():
                 print(f"game {i + 1} was solved in {history.get_counter()} moves, and {loop_counter} game loops")
                 total_moves.append(history.get_counter())
                 total_loops.append(loop_counter)
                 break
-
 
             random_move_algorithm = selected_algorithm(game, history, game_file)
             random_car, random_direction = random_move_algorithm.make_move()
@@ -188,14 +165,14 @@ def experiment():
             if game.move_car(random_car, random_direction):
                 history.add_move(random_car, random_direction)
                 history.add_board(game.get_board())
-            
+
             loop_counter += 1
 
     average_moves = (sum(total_moves) / len(total_moves))
     average_loops = (sum(total_loops) / len(total_loops))
-    
 
     print(f"\nThe average amount of moves needed for {number_of_games} games was {average_moves} moves, and {average_loops} game loops")
+
 
 def breadth_first_search(board_path=None):
 
@@ -211,7 +188,7 @@ def breadth_first_search(board_path=None):
 
     game_file = GameFile(file_path)
     game = GameBoard(game_file)
-    
+
     game.get_board_for_player()
 
     # start timer for data here
@@ -242,6 +219,7 @@ def breadth_first_search(board_path=None):
     else:
         print("BFS did not find a solution.")
 
+
 def depth_first_search(board_path=None):
     # If board_path is not provided, prompt the user
     if board_path is None:
@@ -255,7 +233,7 @@ def depth_first_search(board_path=None):
 
     game_file = GameFile(file_path)
     game = GameBoard(game_file)
-    
+
     game.get_board_for_player()
 
     # start timer for data here
@@ -269,7 +247,7 @@ def depth_first_search(board_path=None):
     compute_time = end_time - start_time
 
     if dfs_result is not None:
-        solution_path, visited_states_count = dfs_result 
+        solution_path, visited_states_count = dfs_result
         iterative_gameplay(solution_path, file_path)
         print(f"results: \n solution_path = {len(solution_path)}\n visited_states_count: {visited_states_count}")
 
@@ -286,6 +264,7 @@ def depth_first_search(board_path=None):
     else:
         print("DFS did not find a solution.")
 
+
 def astar_algorithm(board_path=None):
     # If board_path is not provided, prompt the user
     if board_path is None:
@@ -299,7 +278,7 @@ def astar_algorithm(board_path=None):
 
     game_file = GameFile(file_path)
     game = GameBoard(game_file)
-    
+
     game.get_board_for_player()
 
     # start timer for data here
@@ -313,7 +292,7 @@ def astar_algorithm(board_path=None):
     compute_time = end_time - start_time
 
     if astar_result is not None:
-        solution_path, visited_states_count = astar_result 
+        solution_path, visited_states_count = astar_result
         iterative_gameplay(solution_path, file_path)
         print(f"results: \n solution_path = {len(solution_path)}\n visited_states_count: {visited_states_count}")
 
@@ -330,6 +309,7 @@ def astar_algorithm(board_path=None):
         print(f"Results saved in {output_file_path}")
     else:
         print("Astar did not find a solution.")
+
 
 def compare_BFS_DFS_ASTAR(csv_data_file):
     """
@@ -386,10 +366,8 @@ def compare_BFS_DFS_ASTAR(csv_data_file):
     picture_solution_path = str(input("Picture name for Solution Path Length? "))
     plt.savefig(picture_solution_path)
 
-
     # Display a message to the user
     print(f"The result for Solution Path Length is saved as {picture_solution_path}. Please check the files!")
-
 
     # Create grouped bar chart for Visited States Count
     # Generated with chatgpt because of its complexity
@@ -408,11 +386,10 @@ def compare_BFS_DFS_ASTAR(csv_data_file):
     plt.title("Comparison of Visited States Count on 6x6 boards")
     plt.xticks(x_pos, unique_boards)
     plt.legend()
-    
+
     # Save the plot to a file
     picture_visited_states = str(input("Picture name for Visited States Count? "))
     plt.savefig(picture_visited_states)
-
 
 
 def manual_algo_comparisons():
@@ -425,7 +402,7 @@ def manual_algo_comparisons():
 
     while True:
         mode = str
-        while mode not in ['b', 'd', 'q','a']:
+        while mode not in ['b', 'd', 'q', 'a']:
             mode = input("\nbfs or dfs or astar or quit? (b/d/a/q) ").lower()
         if mode == 'b':
             breadth_first_search()
@@ -448,6 +425,7 @@ def manual_algo_comparisons():
         elif continu == 'c':
             continue
 
+
 def get_csv_row_count(csv_file):
     """
     looks at the algoritmen_data.csv file row count
@@ -456,6 +434,7 @@ def get_csv_row_count(csv_file):
         reader = csv.reader(file)
         return sum(1 for _ in reader)
 
+
 def print_added_rows(csv_file, initial_row_count, new_row_count):
     """
     prints the newest rows added to the algoritmen_data.csv when using algo mode
@@ -463,10 +442,10 @@ def print_added_rows(csv_file, initial_row_count, new_row_count):
     with open(csv_file, mode='r') as file:
         reader = csv.reader(file)
         rows = list(reader)[initial_row_count:new_row_count]
-        
+
         header = ["Algorithm", "Board", "Compute Time", "Solution Path Length", "Visited States Count"]
         for row in rows:
-            print(f"\nNew Test Results:")
+            print("\nNew Test Results:")
             for key, value in zip(header, row):
                 print(f"{key}: {value}")
 
@@ -507,7 +486,7 @@ def iterative_gameplay(paths: list[tuple[int, int]], file: str) -> None:
     cols = len(visual._board[0])
     screen = pygame.display.set_mode((cols * 50, rows * 50))
     pygame.display.set_caption("Rush-Hour Board")
-    clock = pygame.time.Clock() 
+    clock = pygame.time.Clock()
 
     for move in paths:
         for event in pygame.event.get():
@@ -523,13 +502,14 @@ def iterative_gameplay(paths: list[tuple[int, int]], file: str) -> None:
 
         clock.tick(15)
 
-    pygame.quit()   
+    pygame.quit()
+
 
 def main():
 
     while True:
         mode = str
-        while mode not in ['v', 'e','algo','auto','p']:
+        while mode not in ['v', 'e', 'algo', 'auto', 'p']:
             mode = input("\nDo you want to run the game in the Visualize-random mode, Experiment mode, manual_algo_comparison,\
 OR automatical_algo_comparison OR print results from automatical_algo_comparison? (v/e/algo/auto/p) ").lower()
         if mode == 'v':
@@ -566,6 +546,7 @@ OR automatical_algo_comparison OR print results from automatical_algo_comparison
             break
         elif continu == 'c':
             continue
+
 
 if __name__ == '__main__':
     main()

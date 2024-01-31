@@ -1,6 +1,6 @@
-import random
 from code.Classes.CarClass import Car
 import pygame
+
 
 class GameBoard:
     """
@@ -24,14 +24,12 @@ class GameBoard:
 
         self._original_board = [row[:] for row in self._board]
 
-
     def _create_empty_board(self):
         """
         Creates an empty board based on the size specified in the game file.
         """
         size = int(self.game_file.board_size)
         return [[0 for _ in range(size)] for _ in range(size)]
-
 
     def _create_cars(self):
         """
@@ -42,7 +40,6 @@ class GameBoard:
             new_car = Car(name, orientation, row, col, length)
             car_dict[new_car.get_name()] = new_car
         return car_dict
-
 
     def _place_cars(self):
         """
@@ -55,12 +52,11 @@ class GameBoard:
             for i in range(car.get_length()):
                 self._board[base_row + i * d_row][base_col + i * d_col] = name
 
-
     def move_car(self, letter: str, direction):
         car = self._dictionary_of_cars[letter]
         base = car.get_base()
         rotation = car.get_rotation()
-        length = car.get_length()        
+        length = car.get_length()
 
         if direction == 1:
             target_row = base[0] + (rotation[0] * length)
@@ -73,12 +69,12 @@ class GameBoard:
         else:
             print("Invalid move!")
             return False
-        
+
         if self._board[target_row][target_col] != 0 or target_col < 0 or target_row < 0:
             return False
 
         elif self._board[target_row][target_col] == 0:
-            
+
             # Clear the current car
             for i in range(car.get_length()):
                 self._board[base[0] + i * rotation[0]][base[1] + i * rotation[1]] = 0
@@ -88,7 +84,7 @@ class GameBoard:
                 new_row = target_row - i * direction * rotation[0]
                 new_col = target_col - i * direction * rotation[1]
                 self._board[new_row][new_col] = car.get_name()
-            
+
             # Update car's base position
             new_base_row = base[0] + direction * rotation[0]
             new_base_col = base[1] + direction * rotation[1]
@@ -97,7 +93,6 @@ class GameBoard:
 
         return True
 
-    
     def make_move_back(self, history):
         """
         this function makes a move where you go back
@@ -171,7 +166,7 @@ class GameBoard:
 
     # This defines a new board with pygame!
     def draw_board(self, screen):
-        
+
         # These loops decide the size of the code
         for row_index, row in enumerate(self._board):
             for col_index, cell_value in enumerate(row):
@@ -202,7 +197,7 @@ class GameBoard:
 
         def draw_line(size):
             print("\n+" + "====+" * size)
-        
+
         draw_line(size)
 
         for i, row in enumerate(self._board):
@@ -215,19 +210,16 @@ class GameBoard:
             else:
                 draw_line(size)
 
-
     def is_won(self):
         if (self._dictionary_of_cars['X'].get_base()[1]) >= ((len(self.get_board()[0])) - 2):
             return True
         return False
-
 
     def get_board(self):
         """
         Returns the current state of the game board.
         """
         return self._board
-    
 
     def is_legal_move(self, letter, direction) -> bool:
         """
@@ -258,7 +250,6 @@ class GameBoard:
 
         return True
 
-
     def get_all_legal_moves(self):
 
         moves = []
@@ -268,14 +259,12 @@ class GameBoard:
                 if self.is_legal_move(name, direction):
                     moves.append((name, direction))
         return moves
-    
 
     def get_board_as_hash(self, board):
         """
         Elk bord kan je zien als string ja.
         Maak van die string een hash
         Dit is een int uniek voor deze string
-        
         """
         board_string = ''
         for row in board:
@@ -292,7 +281,6 @@ class GameBoard:
         self._board = [row[:] for row in new_board]  # je kan niet gwn = doen want list list
         self._update_car_bases()
 
-
     def _update_car_bases(self):
         """
         Updates the base of the cars in _dictionary_of_cars based on the current board state.
@@ -305,11 +293,10 @@ class GameBoard:
         # The base of the car is always the first it finds
         for row_idx, row in enumerate(self._board):
             for col_idx, cell in enumerate(row):
-                if cell != 0: 
+                if cell != 0:
                     car = self._dictionary_of_cars[cell]
                     if not car.is_base_set():
-                        car.set_base(row_idx, col_idx) # Update the car's base
-
+                        car.set_base(row_idx, col_idx)  # Update the car's base
 
     def generate_all_possible_successor_boards(self):
         """
@@ -317,7 +304,7 @@ class GameBoard:
         Return a list of tuples, (successor board, and the move that led to it)
         """
         successor_states = []
-        original_board = [row[:] for row in self._board]  # Make a copy, cant do just = 
+        original_board = [row[:] for row in self._board]  # Make a copy, cant do just =
 
         all_legal_moves = self.get_all_legal_moves()
 
@@ -327,7 +314,7 @@ class GameBoard:
             # Add the board and move to list
             new_state_board = [row[:] for row in self._board]
             successor_states.append((new_state_board, move))
-            
+
             # Reset board to original
             self.set_board(original_board)
 

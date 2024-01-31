@@ -1,5 +1,7 @@
 from collections import deque
-import csv, os
+import csv
+import os
+
 
 class BFS:
     """
@@ -12,14 +14,12 @@ class BFS:
     methods:
     run = the actual search algoritm. returns found path + stores it in path_found
     csv_output = turns the found path into a csv file where repeated moves are compressed
-    
-    """
 
+    """
 
     def __init__(self, game) -> None:
         self.game = game
         self._path_found = []
-
 
     def run(self) -> list:
         self.queue = deque()
@@ -38,11 +38,11 @@ class BFS:
 
                 if board_hash not in self.visited:
 
-                    if self.game.red_at_exit(successor_board): 
+                    if self.game.red_at_exit(successor_board):
                         self._path_found = path + [move]
                         self.game.set_board(successor_board)
                         return path, len(self.visited)
-                    
+
                     self.visited.add(board_hash)
 
                     new_path = path + [move]
@@ -50,7 +50,6 @@ class BFS:
                     self.queue.append((successor_board, new_path))
 
         return None  # No solution found
-
 
     def csv_output(self):
         """
@@ -71,7 +70,7 @@ class BFS:
 
         if os.path.exists(file_path):
             print(f"{file_name} already exists. csv not created.")
-            return 
+            return
 
         compressed_history = [self._path_found[0]]
 

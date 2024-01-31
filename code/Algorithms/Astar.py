@@ -1,6 +1,7 @@
 from code.Classes import Node
 import heapq
-import csv, os
+import csv
+import os
 
 
 class Astar:
@@ -24,7 +25,6 @@ class Astar:
 
     """
 
-
     def __init__(self, game):
         self.game = game
         self._path_found = []
@@ -45,18 +45,17 @@ class Astar:
                 board_hash = self.game.get_board_as_hash(successor_board)
 
                 if board_hash not in visited:
-                    if self.game.red_at_exit(successor_board): 
+                    if self.game.red_at_exit(successor_board):
                         self._path_found = path + [move]
                         self.game.set_board(successor_board)
                         return path, len(visited)
-                    
+
                     visited.add(board_hash)
                     new_path = path + [move]
                     node = Node(self.game.score(successor_board) + depth, depth + 1, successor_board, new_path)
                     heapq.heappush(priority_q, node)
 
         return None  # No solution found
-
 
     def csv_output(self):
         """
@@ -79,7 +78,7 @@ class Astar:
 
         if os.path.exists(file_path):
             print(f"{file_name} already exists. csv not created.")
-            return 
+            return
 
         compressed_history = [self._path_found[0]]
 

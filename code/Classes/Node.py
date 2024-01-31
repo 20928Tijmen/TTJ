@@ -1,14 +1,10 @@
-
 class Node:
     '''
     voor A* heeft elk bord:
-    
-    - een score adhv heuristieken 
+    - een score adhv heuristieken
     - een diepte / hoeveel moves naar deze opstelling
     - een bord opstelling
     - een pad ernaartoe, de moves in volgorde
-    
-    
     '''
     def __init__(self, score, depth, current_board, path):
         self.score = score

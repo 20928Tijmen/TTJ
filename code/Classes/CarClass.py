@@ -1,5 +1,6 @@
 import random
 
+
 class Car:
     """
     Represents a car in the Rush Hour game.
@@ -7,7 +8,7 @@ class Car:
     input:
     name: string = the letter representing the car
     orientation: string = either H for horizontal, V for vertical
-    row, col: int = the row, col the cars base it at 
+    row, col: int = the row, col the cars base it at
     length: int = how many cells long the car is
 
     Attributes:
@@ -20,7 +21,6 @@ class Car:
         _base (list): The base position [row, col] of the car on the board.
     """
 
-
     colors = [
     "\033[42m", "\033[43m", "\033[44m", "\033[45m", "\033[46m", "\033[47m",
     "\033[100m", "\033[102m", "\033[103m", "\033[104m", "\033[105m", "\033[106m", "\033[107m",
@@ -31,11 +31,10 @@ class Car:
     "\033[48;5;75m", "\033[48;5;102m", "\033[48;5;138m", "\033[48;5;183m", "\033[48;5;55m",
     "\033[48;5;94m", "\033[48;5;123m", "\033[48;5;177m"
 ]
-    
+
     red =  "\033[48;5;196m"
 
     reset_color = "\033[0m"  # end the formated string with this to reset the background color
-
 
     def __init__(self, name, orientation, row, col, length):
         self._name: str = name
@@ -48,14 +47,13 @@ class Car:
 
         self._available_colors = self.colors
         self._color = self._set_color()
-    
+
     def _set_color(self):
 
         if self._name != 'X':
             return random.choice(self._available_colors)
         else:
             return self.red
-
 
     def get_color(self):
         """
@@ -87,7 +85,7 @@ class Car:
         Returns the name (identifier) of the car.
         """
         return self._name
-    
+
     def get_name_colored(self) -> str:
         """
         Returns the formated string with backgroundcolor - car name - reset color

@@ -1,7 +1,5 @@
-from collections import deque
-import csv, os, heapq
-
-
+import csv
+import os
 
 
 class DFS:
@@ -46,7 +44,7 @@ class DFS:
                         self._path_found = path + [move]
                         self.game.set_board(successor_board)
                         return path, len(self.visited)
-                    
+
                     # Mark the successor board as visited
                     self.visited.add(board_hash)
                     # Update the path with the current move
@@ -55,8 +53,7 @@ class DFS:
                     self.stack.append((successor_board, new_path))
 
         # If the stack becomes empty and no solution is found returns None
-        return None  
-
+        return None
 
     def csv_output(self):
         """
@@ -76,7 +73,7 @@ class DFS:
 
         if os.path.exists(file_path):
             print(f"{file_name} already exists. csv not created.")
-            return 
+            return
 
         compressed_history = [self._path_found[0]]
 
