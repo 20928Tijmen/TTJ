@@ -20,15 +20,13 @@ def load_board_opstellingen(path: str) -> list[str]:
 
     output:
     - return: list[string] = voor elke file in de aangewezen folder -> relatieve pad + filenaam
-
     '''
-
     return [os.path.join(path, file) for file in os.listdir(path)]
 
 
 def pick_board_random() -> str:
     '''
-    spreekt voorzich denk ik
+    Kiest een random board
     '''
     return random.choice(load_board_opstellingen('data'))
 
