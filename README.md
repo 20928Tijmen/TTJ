@@ -53,19 +53,22 @@ Als je in het introductiescherm voor 'algo' gaat, krijg je de mogelijkheid om al
 
 Zodra het algoritme en het bord zijn gekozen, wordt elke move die één van deze drie algoritmes aflegd, afgespeeld als bewegingen op een pygame-bord.
 
-Nadat de rode auto de exit heeft bereikt, ziet men een boodschap waarin staat dat de resultaten in een bepaald 'output'-bestand zijn opgeslagen. Dit 'output'-bestand bevat alle moves die zijn gezet om de auto de uitgang te laten bereiken. Deze moves kan men terugvinden in de bijbehorende 'results'-map in de 'data'-map.
+![itworks](https://github.com/20928Tijmen/TTJ/assets/144214560/f259db68-f935-4473-98fd-51b99028f42c)
 
- Nadat je meerder of enkele tests hebt gedaan, kun je weer op 'c' of 'q' indrukken. Als je hier op 'q' drukt wordt het programma niet meteen afgesloten - in plaats daarvan krijg je eerst een resultatenlijst waarin men ziet hoe elk algoritme in de 'algo'-modus heeft gepresteerd. Elk algoritme wordt beoordeeld op verscheidene attributen. Dit geeft mogelijkheid om elk algoritme te vergelijken. Wij hebben deze manual modes vooral gebruiktom de 9x9 borden te runnen, omdat die veel tijd en computer geheugen in beslag nemen.
+Nadat de rode auto de exit heeft bereikt, ziet men een boodschap waarin staat dat de resultaten in een bepaald 'output'-bestand zijn opgeslagen. Dit 'output'-bestand bevat alle moves die zijn gezet om de auto de uitgang te laten bereiken. Deze moves kan men terugvinden in de bijbehorende 'results'-map in de 'data'-map.
 
 ![itworks2](https://github.com/20928Tijmen/TTJ/assets/144214560/2ea04859-f608-4caf-a8f0-1acbf6c2b34e)
 
+Nadat je meerder of enkele tests hebt gedaan, kun je weer op 'c' of 'q' indrukken. Als je hier op 'q' drukt wordt het programma niet meteen afgesloten - in plaats daarvan krijg je eerst een resultatenlijst waarin men ziet hoe elk algoritme in de 'algo'-modus heeft gepresteerd. Elk algoritme wordt beoordeeld op verscheidene attributen. Dit geeft mogelijkheid om elk algoritme te vergelijken. Wij hebben deze manual modes vooral gebruiktom de 9x9 borden te runnen, omdat die veel tijd en computer geheugen in beslag nemen.
+
 ![screenshotsix](https://github.com/20928Tijmen/TTJ/assets/144214560/f691ad9d-b695-48b5-af10-0c9a6b8c6f66)
 
-**De "script" is dit: Auto**
 Als men in het introductiescherm voor 'auto' kiest, spelen alledrie de algoritmen 'BFS', 'DFS' en 'Astar' opeenvolgend af, waarbij elk algoritme drie keer wordt afgespeeld (één keer voor elk Grootte-bij-Grootte bord).
 
 Na het kiezen van 'auto' krijg je dan ook de keuze tussen het afspelen van de 6x6, de 9x9, of de 12x12 borden.
 
 Ook hiervoor wordt bij elke game het pygame-bord vertoond om elke move te vertonen als bewegingen op een spelbord.
 
-Zodra het gespeeld is op de 6x6 borden is er een mogelijkheid om het te printen in twee matplotlib grafieken (bij 6x6 is dit geimplementeerd omdat bij 9x9 het te lang duurt om alle data te verzamelen). Om ervoor te zorgen dat dit werkt moet je algoritmen_data.csv alleen de negen results hebben van auto. De twee grafieken kan je op een mac systeem saven door middel van plt.show, maar anders hebben wij het voor windows users zo ingesteld dat je met plt.savefig de grafieken kan saven. De optie om de grafieken te zien krijg je als je quit drukt. Lukte dat niet dan kan je main.py weer runnen en p als input typen.
+Zodra het gespeeld is op de 6x6 borden is er een mogelijkheid om het te printen in twee matplotlib grafieken (bij 6x6 is dit geimplementeerd omdat bij 9x9 het te lang duurt om alle data te verzamelen). Om ervoor te zorgen dat dit werkt moet je algoritmen_data.csv alleen de negen results hebben van auto. De twee grafieken kan je op een mac systeem saven door middel van plt.show, maar anders hebben wij het voor windows users zo ingesteld dat je met plt.savefig de grafieken kan saven. De optie om de grafieken te zien krijg je als je quit drukt.
+
+Lukt dat niet? Dan kan je main.py weer runnen en p als input typen.
