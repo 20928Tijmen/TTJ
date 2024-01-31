@@ -97,45 +97,21 @@ def visualize_random():
     game_file = GameFile(file_path)
     game = GameBoard(game_file)
     
-    # Initializes the 'pygame'-part of the code.
-    pygame.init()
-
-    # This sets up the display of the pygame.
-    rows = len(game._board)
-    cols = len(game._board[0])
-    screen = pygame.display.set_mode((cols * 50, rows * 50))
-    pygame.display.set_caption("Rush-Hour Board")
-
-    clock = pygame.time.Clock() 
-
-    running = True
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-
-        # This script plays when the game is won
+    while True:
+            
         if game.is_won():
+            iterative_gameplay(history.get_move_history(), file_path)
             print("Congratulations, you found your way out!")
             print('Total moves:', history.get_counter())
-            running = False 
+            break
 
 
         random_move_algorithm = selected_algorithm(game, history, game_file)
         random_car, random_direction = random_move_algorithm.make_move()
 
-        if game.move_car(random_car, random_direction) is not False:
+        if game.move_car(random_car, random_direction):
             history.add_move(random_car, random_direction)
             history.add_board(game.get_board())
-
-        screen.fill((127, 127, 127))
-        # For every move, the pygame board is updated.
-        game.draw_board(screen)
-        pygame.display.flip()
-
-        clock.tick(15)
-
-    pygame.display.quit()
 
 # list of algorithms used
 algorithms_used_and_their_average_moves = {}
