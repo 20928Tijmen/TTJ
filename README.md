@@ -61,4 +61,10 @@ Als je in het introductiescherm voor 'algo' gaat, krijg je de mogelijkheid om al
 
 ![screenshotsix](https://github.com/20928Tijmen/TTJ/assets/144214560/f691ad9d-b695-48b5-af10-0c9a6b8c6f66)
 
-Als men in het introductiescherm voor 'auto' kiest, spelen alledrie de algoritmen 'BFS', 'DFS' en 'Astar' opeenvolgend af, waarbij elk algoritme drie keer wordt afgespeeld (één keer voor elk 6x6 bord). Ook hiervoor wordt bij elke game het pygame-bord vertoond om elke move te vertonen als bewegingen op een spelbord. Zodra het gespeeld is op de 6x6 borden is er een mogelijkheid om het te printen in twee matplotlib grafieken(bij 6x6 is dit geimplementeerd omdat bij 9x9 het te lang duurt om alle data te verzamelen). Om ervoor te zorgen dat dit werkt moet je algoritmen_data.csv alleen de negen results hebben van auto. De twee grafieken kan je op een mac systeem saven door middel van plt.show, maar anders hebben wij het voor windows users zo ingesteld dat je met plt.savefig de grafieken kan saven.
+Als men in het introductiescherm voor 'auto' kiest, spelen alledrie de algoritmen 'BFS', 'DFS' en 'Astar' opeenvolgend af, waarbij elk algoritme drie keer wordt afgespeeld (één keer voor elk Grootte-bij-Grootte bord).
+
+Na het kiezen van 'auto' krijg je dan ook de keuze tussen het afspelen van de 6x6, de 9x9, of de 12x12 borden.
+
+Ook hiervoor wordt bij elke game het pygame-bord vertoond om elke move te vertonen als bewegingen op een spelbord.
+
+Zodra het gespeeld is op de 6x6 borden is er een mogelijkheid om het te printen in twee matplotlib grafieken (bij 6x6 is dit geimplementeerd omdat bij 9x9 het te lang duurt om alle data te verzamelen). Om ervoor te zorgen dat dit werkt moet je algoritmen_data.csv alleen de negen results hebben van auto. De twee grafieken kan je op een mac systeem saven door middel van plt.show, maar anders hebben wij het voor windows users zo ingesteld dat je met plt.savefig de grafieken kan saven.
