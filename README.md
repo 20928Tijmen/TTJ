@@ -50,15 +50,15 @@ Na het klikken op 'Enter', speelt het programma meerdere spellen af, waarbij voo
 
 ![screenshotfive](https://github.com/20928Tijmen/TTJ/assets/144214560/6b8a5f65-8663-4c12-8793-d5b80c03f353)
 
-Als men voor 'b', 'd', of 'a', kiest op het introductiescherm, wordt respectievelijk gekozen voor BFS, DFS of Astar. In alle drie de gevallen krijgt men de vraag welk bord ze willen kiezen. Zodra dat is gedaan, wordt elke move die één van deze drie algoritmes aflegd, afgespeeld als bewegingen op een pygame-bord.
+Als je in het introductiescherm voor 'algo' gaat, krijg je de mogelijkheid om algoritmen te testen en te vergelijken. In deze modus krijg je dan de mogelijkheid om te kiezen of je BFS, DFS of Astar wil laten afspelen. Als men een algoritme heeft gekozen, kan men voor een bord kiezen.
 
-![itworks](https://github.com/20928Tijmen/TTJ/assets/144214560/f0795c54-595d-4bac-85e3-96190e8f22d8)
+Zodra het algoritme en het bord zijn gekozen, wordt elke move die één van deze drie algoritmes aflegd, afgespeeld als bewegingen op een pygame-bord.
 
 Nadat de rode auto de exit heeft bereikt, ziet men een boodschap waarin staat dat de resultaten in een bepaald 'output'-bestand zijn opgeslagen. Dit 'output'-bestand bevat alle moves die zijn gezet om de auto de uitgang te laten bereiken. Deze moves kan men terugvinden in de bijbehorende 'results'-map in de 'data'-map.
 
 ![itworks2](https://github.com/20928Tijmen/TTJ/assets/144214560/2ea04859-f608-4caf-a8f0-1acbf6c2b34e)
 
-Als je in het introductiescherm voor 'algo' gaat, krijg je de mogelijkheid om algoritmen te testen en te vergelijken. In deze modus krijg je dan weer de mogelijkheid om te kiezen of je BFS, DFS of Astar wil laten afspelen. Nadat je dat hebt gedaan, kun je weer op 'c' of 'q' indrukken. Als je hier op 'q' drukt wordt het programma niet meteen afgesloten - in plaats daarvan krijg je eerst een resultatenlijst waarin men ziet hoe elk algoritme in de 'algo'-modus heeft gepresteerd. Elk algoritme wordt beoordeeld op verscheidene attributen. Dit geeft mogelijkheid om elk algoritme te vergelijken.
+Nadat je dat hebt gedaan, kun je weer op 'c' of 'q' indrukken. Als je hier op 'q' drukt wordt het programma niet meteen afgesloten - in plaats daarvan krijg je eerst een resultatenlijst waarin men ziet hoe elk algoritme in de 'algo'-modus heeft gepresteerd. Elk algoritme wordt beoordeeld op verscheidene attributen. Dit geeft mogelijkheid om elk algoritme te vergelijken.
 
 ![screenshotsix](https://github.com/20928Tijmen/TTJ/assets/144214560/f691ad9d-b695-48b5-af10-0c9a6b8c6f66)
 
