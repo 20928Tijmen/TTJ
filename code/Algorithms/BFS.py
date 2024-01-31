@@ -60,7 +60,7 @@ class BFS:
 
         """
         data_dir = 'data'
-        results_subdir = 'results_DFS'
+        results_subdir = 'results_BFS'
         results_dir = os.path.join(data_dir, results_subdir)
         if not os.path.exists(results_dir):
             os.makedirs(results_dir)
