@@ -463,16 +463,13 @@ def print_added_rows(csv_file, initial_row_count, new_row_count):
                 print(f"{key}: {value}")
 
 
-def run_algorithms_on_6x6_boards():
-    board_paths = [
-        "data/Rushhour6x6_1.csv",
-        "data/Rushhour6x6_2.csv",
-        "data/Rushhour6x6_3.csv"
-    ]
-
+def run_algorithms_on_boards(board_paths):
+    """
+    run the boards automatically on their board-length size
+    """
     for board_path in board_paths:
         print(f"\nRunning algorithms on board: {board_path}")
-        
+
         # BFS
         print("Running BFS:")
         breadth_first_search(board_path)
@@ -485,81 +482,40 @@ def run_algorithms_on_6x6_boards():
         print("Running Astar:")
         astar_algorithm(board_path)
 
-def run_algorithms_on_9x9_boards():
-    board_paths = [
-        "data/Rushhour9x9_4.csv",
-        "data/Rushhour9x9_5.csv",
-        "data/Rushhour9x9_6.csv"
-    ]
 
-    for board_path in board_paths:
-        print(f"\nRunning algorithms on board: {board_path}")
-        
-        # BFS
-        print("Running BFS:")
-        breadth_first_search(board_path)
+def iterative_gameplay(paths: list[tuple[int, int]], file: str) -> None:
+    """
+    This function simulates gameplay on a Rush-Hour board using provided move paths.
 
-        # DFS
-        print("Running DFS:")
-        depth_first_search(board_path)
+    Pre: A path, including all the moves, is given, alongside game_file for simulation.
+    Post: A pygame, displaying all the moves, is shown.
+    """
+    game_file = GameFile(file)
+    visual = GameBoard(game_file)
 
-        # Astar
-        print("Running Astar:")
-        astar_algorithm(board_path)
+    pygame.init()
+    # The screen is established with the size of the rows and colums
+    rows = len(visual._board)
+    cols = len(visual._board[0])
+    screen = pygame.display.set_mode((cols * 50, rows * 50))
+    pygame.display.set_caption("Rush-Hour Board")
+    clock = pygame.time.Clock() 
 
-def run_algorithms_on_12x12_board():
-    board_paths = [
-        "data/Rushhour12x12_7.csv",
-    ]
+    for move in paths:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return
 
-    for board_path in board_paths:
-        print(f"\nRunning algorithms on board: {board_path}")
-        
-        # BFS
-        print("Running BFS:")
-        breadth_first_search(board_path)
+        # For every move in the given path, the board is updated.
+        visual.move_car(move[0], move[1])
+        screen.fill((127, 127, 127))
+        visual.draw_board(screen)
+        pygame.display.flip()
 
-        # DFS
-        print("Running DFS:")
-        depth_first_search(board_path)
+        clock.tick(15)
 
-        # Astar
-        print("Running Astar:")
-        astar_algorithm(board_path) 
-
-    def iterative_gameplay(paths: list[tuple[int, int]], file: str) -> None:
-        """
-        This function simulates gameplay on a Rush-Hour board using provided move paths.
-
-        Pre: A path, including all the moves, is given, alongside game_file for simulation.
-        Post: A pygame, displaying all the moves, is shown.
-        """
-        game_file = GameFile(file)
-        visual = GameBoard(game_file)
-
-        pygame.init()
-        # The screen is established with the size of the rows and colums
-        rows = len(visual._board)
-        cols = len(visual._board[0])
-        screen = pygame.display.set_mode((cols * 50, rows * 50))
-        pygame.display.set_caption("Rush-Hour Board")
-        clock = pygame.time.Clock() 
-
-        for move in paths:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    return
-
-            # For every move in the given path, the board is updated.
-            visual.move_car(move[0], move[1])
-            screen.fill((127, 127, 127))
-            visual.draw_board(screen)
-            pygame.display.flip()
-
-            clock.tick(15)
-
-        pygame.quit()   
+    pygame.quit()   
 
 
 def main():
@@ -576,13 +532,18 @@ OR automatical_algo_comparison OR print results from automatical_algo_comparison
         elif mode == 'algo':
             manual_algo_comparisons()
         elif mode == 'auto':
-            board_size = int(input("on which boards? 6, 9, or 12 "))
+            board_size = int(input("Enter the board size (6, 9, or 12): "))
             if board_size == 6:
-                run_algorithms_on_6x6_boards()
+                board_paths = ["data/Rushhour6x6_1.csv", "data/Rushhour6x6_2.csv", "data/Rushhour6x6_3.csv"]
             elif board_size == 9:
-                run_algorithms_on_9x9_boards()
+                board_paths = ["data/Rushhour9x9_4.csv", "data/Rushhour9x9_5.csv", "data/Rushhour9x9_6.csv"]
             elif board_size == 12:
-                run_algorithms_on_12x12_board()
+                board_paths = ["data/Rushhour12x12_7.csv"]
+            else:
+                print("Invalid board size. Please enter 6, 9, or 12.")
+                continue
+
+            run_algorithms_on_boards(board_paths)
         elif mode == 'p':
             csv_data_file = 'data/algoritmen_data.csv'
             compare_BFS_DFS_ASTAR(csv_data_file)
