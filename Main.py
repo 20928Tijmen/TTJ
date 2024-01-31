@@ -385,8 +385,6 @@ def compare_BFS_DFS_ASTAR(csv_data_file):
     plt.xticks(x_pos, unique_boards)
     plt.legend()
 
-    plt.show()
-
     # Save the plot to a file
     picture_solution_path = str(input("Picture name for Solution Path Length? "))
     plt.savefig(picture_solution_path)
@@ -413,8 +411,6 @@ def compare_BFS_DFS_ASTAR(csv_data_file):
     plt.title("Comparison of Visited States Count on 6x6 boards")
     plt.xticks(x_pos, unique_boards)
     plt.legend()
-
-    plt.show()
     
     # Save the plot to a file
     picture_visited_states = str(input("Picture name for Visited States Count? "))
